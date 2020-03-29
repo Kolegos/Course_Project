@@ -9,7 +9,7 @@ import SignUp from "./components/login-signup/Signup";
 import ForgotPassword from "./components/login-signup/ForgotPassword";
 import ProfilePage from "./components/login-signup/ProfilePage";
 import ChangePassword from "./components/login-signup/ChangePassword";
-import Categories from "./components/Categories.jsx";
+import Categories from "./components/Categories";
 import Test from "./components/Test";
 import PageNotFound from "./components/PageNotFound";
 
