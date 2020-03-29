@@ -4,11 +4,11 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import NaviBar from "./components/navigation/Navibar";
-import Login from "./components/login-signup/Login";
-import SignUp from "./components/login-signup/Signup";
-import ForgotPassword from "./components/login-signup/ForgotPassword";
-import ProfilePage from "./components/login-signup/ProfilePage";
-import ChangePassword from "./components/login-signup/ChangePassword";
+import Login from "./components/login_signup/Login";
+import SignUp from "./components/login_signup/Signup";
+import ForgotPassword from "./components/login_signup/ForgotPassword";
+import ProfilePage from "./components/login_signup/ProfilePage";
+import ChangePassword from "./components/login_signup/ChangePassword";
 import Categories from "./components/Categories";
 import Test from "./components/Test";
 import PageNotFound from "./components/PageNotFound";
