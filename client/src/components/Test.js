@@ -7,10 +7,13 @@ import TestList from "./TestList";
 
 function Test({ load, posts = [] }) {
   useEffect(() => {
-    load().catch(error => {
-      alert("Posts failed to load " + error);
-    });
+    if (posts.length === 0) {
+      load().catch(error => {
+        alert("loading posts failed " + error);
+      });
+    }
   });
+
   return (
     <div>
       <h1>Database Test</h1>

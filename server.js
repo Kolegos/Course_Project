@@ -6,11 +6,10 @@ const { connectDB } = require("./connect-db");
 require("./initialize-db");
 
 const app = express();
-const http = require("http").createServer(app);
-app.set("port", process.env.PORT || 5000);
 
 app.use(cors());
-app.use(express.json());
+const port = process.env.PORT || 5000;
+const http = require("http").createServer(app);
 
 addNewPost = async post => {
   try {
@@ -56,14 +55,16 @@ app.post("/post/new", async (req, res) => {
   res.status(200).send();
 });
 
-app.use(express.static(path.join(__dirname, "client/build")));
+app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
-  app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
   });
+  console.log("production build");
 }
 
-http.listen(app.get("port"), () => {
-  console.log(`listening on ${app.get("port")}`);
+http.listen(port, () => {
+  console.log(`listening on ${port}`);
 });

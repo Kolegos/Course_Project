@@ -7,6 +7,7 @@
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "md5": "^2.2.1",
     "mongodb": "^3.5.5",
@@ -23,7 +24,7 @@
     "build": "cd client && npm run build",
     "install-client": "cd client && npm install",
     "heroku-postbuild": "npm run install-client && npm run build",
-    "start": "node server.js",
+    "start": "cross-env NODE_ENV=production node server.js",
     "client": "cd client && npm start",
     "dev": "concurrently -n 'server,client' -c 'red,green'  \"nodemon server.js\" \"npm run client\""
   },

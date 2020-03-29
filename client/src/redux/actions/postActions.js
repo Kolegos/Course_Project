@@ -1,7 +1,7 @@
 import * as types from "./actionTypes";
 import axios from "axios";
 const url =
-  process.env.NODE_ENV === `production` ? `` : "http://localhost:7777";
+  process.env.NODE_ENV === `production` ? `` : "http://localhost:5000";
 
 export function loadPostsSuccess(posts) {
   return { type: types.LOAD_POSTS_SUCCESS, posts };
