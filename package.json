@@ -1,0 +1,40 @@
+{
+  "name": "my-app",
+  "version": "1.0.0",
+  "description": "Prerequisite node modules (type this in the terminal):  \r npm install bootstrap  \r npm install --save react-router-dom  \r npm install --save react-mdl\r npm install --save react-infinite-scroll-component\r npm install axios\r npm install node-sass",
+  "main": "server.js",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "md5": "^2.2.1",
+    "mongodb": "^3.5.5",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.2",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.2"
+  },
+  "scripts": {
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
+    "heroku-postbuild": "npm run install-client && npm run build",
+    "start": "node server.js",
+    "client": "cd client && npm start",
+    "dev": "concurrently -n 'server,client' -c 'red,green'  \"nodemon server.js\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kolegos/Course_Project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kolegos/Course_Project/issues"
+  },
+  "homepage": "https://github.com/Kolegos/Course_Project#readme"
+}
