@@ -2,8 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
-const { connectDB } = require("./connect-db");
-require("./initialize-db");
+const { connectDB } = require("./database/connect-db");
+require("./database/initialize-db");
 
 const app = express();
 
@@ -37,9 +37,6 @@ async function getPosts() {
   }
 }
 
-module.exports.getPosts = this.getPosts;
-module.exports.addNewPost = this.addNewPost;
-
 app.get("/dash", (req, res) => {
   res.send("hello world");
 });
@@ -68,3 +65,6 @@ if (process.env.NODE_ENV === "production") {
 http.listen(port, () => {
   console.log(`listening on ${port}`);
 });
+
+module.exports.getPosts = this.getPosts;
+module.exports.addNewPost = this.addNewPost;

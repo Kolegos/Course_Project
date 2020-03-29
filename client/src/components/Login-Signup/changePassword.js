@@ -1,26 +1,38 @@
 import React, { Component } from "react";
 
 export default class changePassword extends Component {
-    render() {
-        return (
-            <form>
-                <h3>Change password</h3>
+  render() {
+    return (
+      <form>
+        <h3>Change password</h3>
 
-                <div className="form-group">
-                    
-                    <label>Old password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+        <div className="form-group">
+          <label>Old password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+          />
 
-                    <label>New password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+          <label>New password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+          />
 
-                    <label>Retype new password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
+          <label>Retype new password</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Enter password"
+          />
+        </div>
 
-                </div>
-
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
-            </form>
-        );
-    }
+        <button type="submit" className="btn btn-primary btn-block">
+          Submit
+        </button>
+      </form>
+    );
+  }
 }
