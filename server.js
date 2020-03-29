@@ -5,20 +5,12 @@ const path = require("path");
 const { connectDB } = require("./connect-db");
 require("./initialize-db");
 
-let port = process.env.PORT || 7777;
-let app = express();
+const app = express();
+const http = require("http").createServer(app);
+app.set("port", process.env.PORT || 5000);
 
-app.listen(port, "0.0.0.0", console.log("listening on " + port));
-
-app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
-
-app.use(express.static(path.join(__dirname, "client/build")));
-
-if (process.env.NODE_ENV === "production") {
-  app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname + "/client/build/index.html"));
-  });
-}
+app.use(cors());
+app.use(express.json());
 
 addNewPost = async post => {
   try {
@@ -62,4 +54,16 @@ app.post("/post/new", async (req, res) => {
   let post = req.body.post;
   await addNewPost(post);
   res.status(200).send();
+});
+
+app.use(express.static(path.join(__dirname, "client/build")));
+
+if (process.env.NODE_ENV === "production") {
+  app.get("/", (req, res) => {
+    res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  });
+}
+
+http.listen(app.get("port"), () => {
+  console.log(`listening on ${app.get("port")}`);
 });
