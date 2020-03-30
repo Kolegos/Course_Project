@@ -11,6 +11,7 @@
     "express": "^4.17.1",
     "md5": "^2.2.1",
     "mongodb": "^3.5.5",
+    "mongoose": "^5.9.6",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.2",
     "react-redux": "^7.2.0",
