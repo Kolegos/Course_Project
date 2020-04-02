@@ -75,6 +75,9 @@ class Navibar extends React.Component {
               <a className="dropdown-item" href="/profilePage">
                 Personal information
               </a>
+              <a className="dropdown-item" href="/postsPage">
+                A Add poss
+              </a>
             </NavDropDown>
           </ul>
         </div>
