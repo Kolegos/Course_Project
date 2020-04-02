@@ -1,50 +1,10 @@
 import React, { Component } from "react";
+import { Grid, Cell } from "react-mdl";
 
-import { Table, Button, Form } from "react-bootstrap";
-import { FormRow } from "react-bootstrap/Form";
-import { Grid, Row, Col } from "react-bootstrap";
-
-export default class profilePage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      file: null
-    };
-    this.uploadSingleFile = this.uploadSingleFile.bind(this);
-    this.upload = this.upload.bind(this);
-  }
-
-  uploadSingleFile(e) {
-    this.setState({
-      file: URL.createObjectURL(e.target.files[0])
-    });
-  }
-
-  upload(e) {
-    e.preventDefault();
-    console.log(this.state.file);
-  }
-
+export default class PostsPage extends Component {
   render() {
-    let imgPreview;
-
-    if (this.state.file) {
-      imgPreview = (
-        <img src={this.state.file} alt="avatar" className="avatar-img" />
-      );
-    }
     return (
       <div style={{ width: "80%", margin: "auto" }}>
-        <form>
-          <div className="form-group preview">{imgPreview}</div>
-
-          <div className="form-group">
-            <button>
-              <input type="file" onChange={this.uploadSingleFile} />
-            </button>
-          </div>
-        </form>
-
         <div className="form-group">
           <label>First name</label>
           <input type="text" className="form-control" placeholder="Vardenis" />
