@@ -76,7 +76,7 @@ class Navibar extends React.Component {
                 Personal information
               </a>
               <a className="dropdown-item" href="/postsPage">
-                Add post
+                A Add poss
               </a>
             </NavDropDown>
           </ul>
