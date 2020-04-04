@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import { Router, Switch, Route } from "react-router-dom";
+import { history } from "./redux/history";
 import NaviBar from "./components/navigation/Navibar";
 import Login from "./components/login_signup/Login";
 import SignUp from "./components/login_signup/Signup";
@@ -12,16 +12,25 @@ import ChangePassword from "./components/login_signup/ChangePassword";
 import Categories from "./components/Categories";
 import Test from "./components/Test";
 import PageNotFound from "./components/PageNotFound";
+//import Session from "./components/Session";
+
+// const RouteGuard = (Component) => ({ match }) => {
+//   console.info("route guard", match);
+//   if (5 == 6) {
+//     return <Redirect to="/login"></Redirect>;
+//   } else {
+//     return <Component match={match} />;
+//   }
+// };
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <NaviBar></NaviBar>
           <div className="container"></div>
         </div>
-
         <div className="auth-wrapper">
           <div className="auth-inner">
             <Switch>
