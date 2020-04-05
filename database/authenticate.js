@@ -4,10 +4,10 @@ const { connectDB } = require("./connect-db");
 async function assembleUserState(user) {
   let db = await connectDB();
 
-  let tasks = await db.collection(`posts`).find({ owner: user.id }).toArray();
+  let posts = await db.collection(`posts`).find({ owner: user.id }).toArray();
 
   return {
-    tasks,
+    posts,
     session: { authenticated: `AUTHENTICATED` },
     id: user.id,
   };
@@ -25,8 +25,7 @@ const authenticationRoute = (app) => {
       return res.status(500).send("User not found");
     }
 
-    let hash = md5(password);
-    let passwordCorrect = hash === user.passwordHash;
+    let passwordCorrect = password === user.passwordHash;
 
     if (!passwordCorrect) {
       console.log("Psw");
