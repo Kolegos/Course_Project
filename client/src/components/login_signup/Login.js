@@ -3,16 +3,11 @@ import { connect } from "react-redux";
 import * as sessionActions from "../../redux/actions/sessionActions";
 import { bindActionCreators } from "redux";
 import * as sessionTypes from "../../redux/actions/actionTypes";
-import { Types } from "mongoose";
 
-const Login = ({
-  authenticateUser,
-  authenticated = sessionTypes.NOT_AUTHENTICATED,
-}) => {
+const Login = ({ authenticateUser, authenticated }) => {
   return (
     <form onSubmit={authenticateUser}>
       <h3>Login</h3>
-
       <div className="form-group">
         <label>Email address</label>
         <input
@@ -32,9 +27,11 @@ const Login = ({
           placeholder="Enter password"
         />
       </div>
-      {authenticated === sessionTypes.NOT_AUTHENTICATED ? (
-        <p> Login incorrect </p>
-      ) : null}
+      <div>
+        {authenticated === sessionTypes.NOT_AUTHENTICATED ? (
+          <p> Login incorrect </p>
+        ) : null}
+      </div>
 
       <div className="form-group">
         <div className="custom-control custom-checkbox">
@@ -59,11 +56,8 @@ const Login = ({
   );
 };
 
-const mapStateToProps = ({ session }) => ({
-  authenticated:
-    session.authenticated != null
-      ? session.authenticated
-      : sessionTypes.NOT_AUTHENTICATED,
+const mapStateToProps = ({ sessions }) => ({
+  authenticated: sessions != undefined ? sessions.authenticated : null,
 });
 
 const mapDispatchToProps = (dispatch) => ({
