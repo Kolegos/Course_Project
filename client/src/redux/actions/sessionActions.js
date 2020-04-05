@@ -5,11 +5,6 @@ import { history } from "../history";
 const url =
   process.env.NODE_ENV === `production` ? `` : "http://localhost:5000";
 
-// export const requestAuthenticateUser = (email, password) => ({
-//   type: types.REQUEST_AUTHENTICATE_USER,
-//   email,
-//   password,
-// });
 export function authenticateUser(email, password) {
   return function (dispatch) {
     axios
