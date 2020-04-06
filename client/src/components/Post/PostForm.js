@@ -15,7 +15,7 @@ class PostForm extends Component {
       editing: false,
     };
     const post = {
-      userId: "gaidy",
+      userId: "N/A",
       title: title,
       category: "category",
       description: description,
