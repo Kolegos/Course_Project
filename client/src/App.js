@@ -12,6 +12,7 @@ import ChangePassword from "./components/login_signup/ChangePassword";
 import Categories from "./components/Categories";
 import Test from "./components/Test";
 import PageNotFound from "./components/PageNotFound";
+import PostsPage from "./components/Post/Page";
 
 class App extends Component {
   render() {
@@ -32,6 +33,7 @@ class App extends Component {
               <Route path="/profilePage" component={ProfilePage} />
               <Route path="/changePassword" component={ChangePassword} />
               <Route path="/categories" component={Categories} />
+              <Route path="/Page" component={PostsPage} />
               <Route component={PageNotFound} />
             </Switch>
           </div>
