@@ -4,11 +4,11 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const { connectDB } = require("./database/connect-db");
 const mongoose = require("mongoose");
+const { authenticationRoute } = require("./database/authenticate");
 require("./database/initialize-db");
 
 const app = express();
-
-app.use(cors());
+app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
 const port = process.env.PORT || 5000;
 const http = require("http").createServer(app);
 
@@ -27,6 +27,7 @@ connection.once("open", () => {
 });
 
 app.use(express.json());
+authenticationRoute(app);
 
 addNewPost = async (post) => {
   try {

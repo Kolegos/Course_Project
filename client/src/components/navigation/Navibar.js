@@ -49,7 +49,6 @@ class Navibar extends React.Component {
             <NavItem path="/" name="Home" />
             <NavItem path="/login" name="Login" />
             <NavItem path="/signup" name="Sign up" />
-            <NavItem path="/Infinite_Posts/collage" name="Collage" />
             <form className="form-inline my-2 my-lg-0">
               <input
                 className="form-control mr-sm-2"

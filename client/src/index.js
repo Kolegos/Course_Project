@@ -14,6 +14,5 @@ ReactDOM.render(
       <App />
     </BrowserRouter>
   </ReduxProvider>,
-
   document.getElementById("root")
 );
