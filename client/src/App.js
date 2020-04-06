@@ -14,7 +14,9 @@ import ChangePassword from "./components/login_signup/ChangePassword";
 import Categories from "./components/Categories";
 import Test from "./components/Test";
 import PageNotFound from "./components/PageNotFound";
+import PostsPage from "./components/Post/Page";
 import LoginFirst from "./components/LoginFirst";
+
 
 function App({ authenticated }) {
   return (
@@ -38,6 +40,7 @@ function App({ authenticated }) {
             <Route path="/changePassword" component={ChangePassword} />
             <Route path="/categories" component={Categories} />
             <Route path="/loginFirst" component={LoginFirst} />
+            <Route path="/Page" component={PostsPage} />
             <Route component={PageNotFound} />
           </Switch>
         </div>
@@ -45,6 +48,7 @@ function App({ authenticated }) {
     </Router>
   );
 }
+
 
 function mapStateToProps({ sessions }) {
   return {

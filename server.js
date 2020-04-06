@@ -3,6 +3,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { connectDB } = require("./database/connect-db");
+const mongoose = require("mongoose");
 const { authenticationRoute } = require("./database/authenticate");
 require("./database/initialize-db");
 
@@ -11,6 +12,21 @@ app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
 const port = process.env.PORT || 5000;
 const http = require("http").createServer(app);
 
+const uri =
+  process.env.ATLAS_URI ||
+  "mongodb+srv://Kolegos:kolegos@kolegos-1q2nc.mongodb.net/test?retryWrites=true&w=majority";
+mongoose.connect(uri, {
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useCreateIndex: true,
+});
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("MongoDB database connection established successfully");
+});
+
+app.use(express.json());
 authenticationRoute(app);
 
 addNewPost = async (post) => {
@@ -36,12 +52,33 @@ async function getPosts() {
   }
 }
 
-app.get("/get", async (req, res) => {
+const Post = require("./models/post");
+app.get("/api/posts/", (req, res) => {
+  console.log(req.query.userId);
+  Post.find({ userId: req.query.userId }).exec((err, posts) => {
+    if (err) return console.log(err);
+
+    posts.map((post) => {
+      console.log(post);
+    });
+    res.send(posts);
+  });
+});
+
+app.post("/api/posts/add", (req, res) => {
+  const post = new Post(req.body).save();
+});
+
+app.get("/api/dash", (req, res) => {
+  res.send("hello world");
+});
+
+app.get("/api/get", async (req, res) => {
   let state = await getPosts();
   res.send(state.posts);
 });
 
-app.post("/post/new", async (req, res) => {
+app.post("/api/post/new", async (req, res) => {
   let post = req.body.post;
   await addNewPost(post);
   res.status(200).send();
