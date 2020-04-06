@@ -8,7 +8,7 @@ import TestList from "./TestList";
 function Test({ load, posts = [] }) {
   useEffect(() => {
     if (posts.length === 0) {
-      load().catch(error => {
+      load().catch((error) => {
         alert("loading posts failed " + error);
       });
     }
@@ -24,13 +24,13 @@ function Test({ load, posts = [] }) {
 
 function mapStateToProps(state) {
   return {
-    posts: state.posts.data
+    posts: state.posts.data,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    load: bindActionCreators(postActions.loadPosts, dispatch)
+    load: bindActionCreators(postActions.loadPosts, dispatch),
   };
 }
 

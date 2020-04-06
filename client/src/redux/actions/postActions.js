@@ -8,9 +8,9 @@ export function loadPostsSuccess(posts) {
 }
 
 export function loadPosts() {
-  return function(dispatch) {
+  return function (dispatch) {
     return axios
       .get(url + `/get`)
-      .then(posts => dispatch(loadPostsSuccess(posts)));
+      .then((posts) => dispatch(loadPostsSuccess(posts)));
   };
 }

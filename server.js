@@ -3,15 +3,17 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { connectDB } = require("./database/connect-db");
+const { authenticationRoute } = require("./database/authenticate");
 require("./database/initialize-db");
 
 const app = express();
-
-app.use(cors());
+app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
 const port = process.env.PORT || 5000;
 const http = require("http").createServer(app);
 
-addNewPost = async post => {
+authenticationRoute(app);
+
+addNewPost = async (post) => {
   try {
     let db = await connectDB();
     let collection = db.collection(`posts`);
@@ -25,21 +27,14 @@ async function getPosts() {
   try {
     let db = await connectDB();
 
-    let posts = await db
-      .collection(`posts`)
-      .find()
-      .toArray();
+    let posts = await db.collection(`posts`).find().toArray();
     return {
-      posts
+      posts,
     };
   } catch (error) {
     console.log(error);
   }
 }
-
-app.get("/dash", (req, res) => {
-  res.send("hello world");
-});
 
 app.get("/get", async (req, res) => {
   let state = await getPosts();
@@ -51,8 +46,6 @@ app.post("/post/new", async (req, res) => {
   await addNewPost(post);
   res.status(200).send();
 });
-
-app.use(express.json());
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
