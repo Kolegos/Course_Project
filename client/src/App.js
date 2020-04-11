@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Router, Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { history } from "./redux/history";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import NaviBar from "./components/navigation/Navibar";
 import Login from "./components/login_signup/Login";
 import SignUp from "./components/login_signup/Signup";
@@ -16,7 +18,6 @@ import Test from "./components/Test";
 import PageNotFound from "./components/PageNotFound";
 import PostsPage from "./components/Post/Page";
 import LoginFirst from "./components/LoginFirst";
-
 
 function App({ authenticated }) {
   return (
@@ -42,13 +43,13 @@ function App({ authenticated }) {
             <Route path="/loginFirst" component={LoginFirst} />
             <Route path="/Page" component={PostsPage} />
             <Route component={PageNotFound} />
-          </Switch>
+          </Switch>{" "}
+          <ToastContainer autoClose={5000} hideProgressBar />
         </div>
       </div>
     </Router>
   );
 }
-
 
 function mapStateToProps({ sessions }) {
   return {

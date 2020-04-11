@@ -6,6 +6,8 @@ const { connectDB } = require("./database/connect-db");
 const mongoose = require("mongoose");
 const { authenticationRoute } = require("./database/authenticate");
 require("./database/initialize-db");
+const csprng = require("csprng");
+const pbdkdf2 = require("pbkdf2");
 
 const app = express();
 app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
@@ -38,6 +40,33 @@ addNewPost = async (post) => {
     console.log(error);
   }
 };
+
+const User = require("./models/user");
+
+app.post("/api/users/create", (req, res) => {
+  const salt = csprng(64);
+  const hashedPassword = pbdkdf2
+    .pbkdf2Sync(req.body.password, salt, 1, 32, "sha512")
+    .toString("hex");
+  User.findById(req.body._id, (err, user) => {
+    if (err) console.log(err);
+    if (user == null) {
+      const hashedUser = {
+        _id: req.body._id,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        hash: hashedPassword,
+        salt: salt,
+      };
+      User(hashedUser).save();
+      res.status(200).send("zjbs senelyzai");
+    } else {
+      console.log("already registered");
+      res.status(204).send("nezjbs senelyzai");
+    }
+  });
+});
 
 async function getPosts() {
   try {
