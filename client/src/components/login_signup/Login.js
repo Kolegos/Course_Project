@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import * as sessionActions from "../../redux/actions/sessionActions";
 import * as sessionTypes from "../../redux/actions/actionTypes";
-import md5 from "md5";
 
 const Login = ({ authenticateUser, authenticated }) => {
   return (

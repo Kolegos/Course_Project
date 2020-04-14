@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 import TestList from "./TestList";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "./misc/Spinner";
-import { toast } from "react-toastify";
 
 function Test({ loadMore, loadLength, length = 0, posts = [] }) {
   const [continueLoading, setLoad] = useState(true);
@@ -19,10 +18,6 @@ function Test({ loadMore, loadLength, length = 0, posts = [] }) {
       } else lengthToSend = tempLength;
 
       if (lengthToSend - 10 <= 0) {
-        loadMore(1).catch((error) => {
-          alert("loading posts failed " + error);
-        });
-        console.log("liudeselis");
         setLoad(false);
       }
       if (lengthToSend - 10 > 0) {
