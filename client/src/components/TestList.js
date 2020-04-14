@@ -3,7 +3,6 @@ import React from "react";
 
 const TestList = ({ posts }) => (
   <div>
-    <div></div>
     <table className="table table-hover" style={{ width: "100%" }}>
       <tbody>
         {posts.map((post) => {

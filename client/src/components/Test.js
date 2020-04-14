@@ -5,6 +5,11 @@ import { bindActionCreators } from "redux";
 import TestList from "./TestList";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "./misc/Spinner";
+import ScrollUpButton from "react-scroll-up-button";
+
+const testas = () => {
+  console.log("paskrolinau");
+};
 
 function Test({ loadMore, loadLength, length = 0, posts = [] }) {
   const [continueLoading, setLoad] = useState(true);
@@ -30,6 +35,10 @@ function Test({ loadMore, loadLength, length = 0, posts = [] }) {
   }
 
   useEffect(() => {
+    console.log("dar ir efektas");
+  }, [testas]);
+
+  useEffect(() => {
     if (length === 0) {
       loadLength().catch((error) => {
         alert("loading length failed" + error);
@@ -46,11 +55,13 @@ function Test({ loadMore, loadLength, length = 0, posts = [] }) {
     <Spinner />
   ) : (
     <div>
+      <ScrollUpButton style={{ color: "white", backgroundColor: "#1c8ef9" }} />
       <InfiniteScroll
         dataLength={posts.length}
         next={loadNewPosts}
         hasMore={continueLoading}
         loader={<h4>Loading...</h4>}
+        onScroll={testas}
         endMessage={
           <h3 className="text-center">There are no more posts to show</h3>
         }
