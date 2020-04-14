@@ -2,21 +2,44 @@
 import React from "react";
 
 const TestList = ({ posts }) => (
-  <table className="table table-hover">
+  <table className="table table-hover" style={{ width: "100%" }}>
     <tbody>
       {posts.map((post) => {
         return (
-          <tr key={post._id}>
-            <td class="w-25" style={{ width: "20%" }}>
+          <tr style={{ minWidth: "800" }} key={post._id}>
+            <td style={{ width: "30%" }}>
               <img
-                src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
+                src="https://images.unsplash.com/photo-1533299346856-b1a85808f2ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"
                 className="img-fluid img-thumbnail"
                 alt="Sheep"
               />
             </td>
-            <td style={{ width: "10%", align: "right" }}>{post.title}</td>
-            <td style={{ width: "60%" }}>{post.description}</td>
-            <td style={{ width: "10%" }}>{post.category}</td>
+            <td
+              style={{
+                width: "60%",
+                maxWidth: "0",
+                overflowWrap: "break-word",
+                textOverflow: "ellipsis",
+              }}
+            >
+              <div>
+                <h6>{post.title}</h6>
+              </div>
+              <div
+                style={{
+                  maxHeight: 150,
+                  overflow: "auto",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                <p>{post.description}</p>
+              </div>
+            </td>
+            <td style={{ width: "15%" }}>
+              <h6>{post.price} €</h6>
+              <p>{post.category}</p>
+            </td>
           </tr>
         );
       })}
