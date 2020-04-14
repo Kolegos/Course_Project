@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../redux/actions/postActions";
@@ -17,16 +16,20 @@ function Test({ loadMore, loadLength, length = 0, posts = [] }) {
         lengthToSend = length;
       } else lengthToSend = tempLength;
 
-      if (lengthToSend - 4 <= 0) {
+      if (lengthToSend - 10 <= 0) {
+        loadMore(1).catch((error) => {
+          alert("loading posts failed " + error);
+        });
+        console.log(lengthToSend + "bybis");
         console.log("liudeselis");
         setLoad(false);
       }
-      if (lengthToSend - 4 > 0) {
-        loadMore(lengthToSend - 4).catch((error) => {
+      if (lengthToSend - 10 > 0) {
+        loadMore(lengthToSend - 10).catch((error) => {
           alert("loading posts failed " + error);
         });
       }
-      setLength(lengthToSend - 4);
+      setLength(lengthToSend - 10);
     }
   }
 
@@ -43,16 +46,18 @@ function Test({ loadMore, loadLength, length = 0, posts = [] }) {
     }
   });
 
-  return (
+  return posts.length === 0 ? (
+    <h1> Loading latest posts</h1>
+  ) : (
     <div>
       <InfiniteScroll
         dataLength={posts.length}
         next={loadNewPosts}
         hasMore={continueLoading}
         loader={<h4>Loading...</h4>}
-        endMessage={<p>this is the end my friend</p>}
+        endMessage={<h3>There are no more posts to show</h3>}
       >
-        <h1>Database Test</h1>
+        <h1 className="text-center">Check out the latests posts</h1>
         <TestList posts={posts} />
       </InfiniteScroll>
     </div>

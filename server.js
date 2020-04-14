@@ -95,15 +95,15 @@ async function getPosts() {
 }
 async function getMorePosts(number) {
   try {
-    console.log("laba diena", number);
+    console.log(number);
     let db = await connectDB();
     let posts = await db
       .collection(`posts`)
       .aggregate([
-        { $sort: { updatedAt: -1 } },
-        { $limit: parseInt(number) }, //mazinant sita imi sekancius elementus nuo virsaus
         { $sort: { updatedAt: 1 } },
-        { $limit: 4 },
+        { $limit: parseInt(number) }, //mazinant sita imi sekancius elementus nuo virsaus
+        { $sort: { updatedAt: -1 } },
+        { $limit: 10 },
       ])
       .toArray();
     return {
