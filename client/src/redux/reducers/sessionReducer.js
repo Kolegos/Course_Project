@@ -13,6 +13,8 @@ export default function sessionReducer(
       return { ...userSession, authenticated: types.AUTHENTICATING };
     case types.PROCESSING_AUTHENTICATE_USER:
       return { ...userSession, authenticated };
+    case types.AUTHENTICATED:
+      return { ...userSession, ...authenticated, user: action.user };
     default:
       return userSession;
   }

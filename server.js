@@ -1,10 +1,15 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { connectDB } = require("./database/connect-db");
 const mongoose = require("mongoose");
-const { authenticationRoute } = require("./database/authenticate");
+const {
+  authenticationRoute,
+  authenticateToken,
+  tokenRoute,
+} = require("./database/authenticate");
 require("./database/initialize-db");
 const csprng = require("csprng");
 const pbdkdf2 = require("pbkdf2");
@@ -30,6 +35,7 @@ connection.once("open", () => {
 
 app.use(express.json());
 authenticationRoute(app);
+tokenRoute(app);
 
 addNewPost = async (post) => {
   try {
@@ -80,6 +86,21 @@ async function getLength() {
     console.log(error);
   }
 }
+app.post("/api/users/", (req, res) => {
+  User.findById(req.body.id, (err, user) => {
+    if (err) console.log(err);
+
+    if (user == null) return res.status(204).send("Nėra tokio vartotojo");
+
+    const userData = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    };
+    res.status(200).send(userData);
+  });
+});
 
 async function getPosts() {
   try {
@@ -116,7 +137,7 @@ async function getMorePosts(number) {
 
 const Post = require("./models/post");
 app.get("/api/posts/", (req, res) => {
-  console.log(req.query.userId);
+  console.log(req.user);
   Post.find({ userId: req.query.userId }).exec((err, posts) => {
     if (err) return console.log(err);
 
@@ -135,7 +156,7 @@ app.get("/api/dash", (req, res) => {
   res.send("hello world");
 });
 
-app.get("/api/get", async (req, res) => {
+app.get("/api/get", authenticateToken, async (req, res) => {
   let state = await getPosts();
   res.send(state.posts);
 });
