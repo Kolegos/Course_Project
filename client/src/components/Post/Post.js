@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 
-const Post = ({ posts }) => (
+const Post = ({ post }) => (
   <table className="table" style={{ width: 800 }}>
     <thead>
       <tr>
@@ -16,21 +16,16 @@ const Post = ({ posts }) => (
       </tr>
     </thead>
     <tbody>
-      {posts.map((post) => {
-        console.log(post);
-        return (
-          <tr key={post.id}>
-            <td>{post.userId}</td>
-            <td>{post.title}</td>
-            <td>{post.description}</td>
-            <td>{post.category}</td>
-            <td>{post.price}</td>
-            <td>
-              <a href="login">View</a>
-            </td>
-          </tr>
-        );
-      })}
+      <tr key={post._id}>
+        <td>{post.userId}</td>
+        <td>{post.title}</td>
+        <td>{post.description}</td>
+        <td>{post.category}</td>
+        <td>{post.price}</td>
+        <td>
+          <a href="login">View</a>
+        </td>
+      </tr>
     </tbody>
   </table>
 );

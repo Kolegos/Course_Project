@@ -1,7 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import * as sessionActions from "../../redux/actions/sessionActions";
-import { bindActionCreators } from "redux";
 import * as sessionTypes from "../../redux/actions/actionTypes";
 import md5 from "md5";
 
@@ -66,8 +65,7 @@ const mapDispatchToProps = (dispatch) => ({
     e.preventDefault();
     let email = e.target[`email`].value;
     let password = e.target[`password`].value;
-    let hashedPassword = md5(password);
-    dispatch(sessionActions.authenticateUser(email, hashedPassword));
+    dispatch(sessionActions.authenticateUser(email, password));
   },
 });
 

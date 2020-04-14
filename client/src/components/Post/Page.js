@@ -13,6 +13,7 @@ class Page extends Component {
     return (
       <div>
         <PostForm />
+        <AllPost />
       </div>
     );
   }

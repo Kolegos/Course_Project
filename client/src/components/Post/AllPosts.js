@@ -8,36 +8,39 @@ const url =
   process.env.NODE_ENV === `production` ? `/api` : "http://localhost:5000/api";
 
 class AllPost extends Component {
-  addPost() {
-    return;
-    const newPost = {
-      userId: "gaidy",
-      title: "title",
-      category: "category",
-      description: "description",
-      photos: "photos",
-      phoneNumber: "phoneNumber",
+  constructor() {
+    super();
+    this.state = {
+      posts: [],
     };
+  }
+
+  componentDidMount() {
+    this.getPosts();
   }
 
   getPosts() {
     axios
       .get(url + "/posts", { params: { userId: "Dima" } })
       .then((posts) => {
-        return posts.map((post) => {
-          return <Post post={post} key={post._id} />;
-        });
+        console.log(posts.data);
+        this.setState({ posts: posts.data });
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
+  mapPosts() {
+    console.log(this.state.posts);
+    return <Post post={this.state.posts} key={this.state.posts._id} />;
+  }
+
   render() {
     return (
       <div>
         <h1 className="post_heading">All Posts</h1>
-        {this.getPosts()}
+        {this.mapPosts()}
         {this.props.posts.posts2.map((post) => (
           <div key={post.id}>
             <Post post={post} key={post.id} />

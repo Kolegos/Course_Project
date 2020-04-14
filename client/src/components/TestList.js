@@ -21,12 +21,18 @@ const TestList = ({ posts }) => (
       {posts.map((post) => {
         console.log(post);
         return (
-          <tr key={post.id}>
-            <td>{post.userId}</td>
-            <td>{post.title}</td>
-            <td>{post.description}</td>
-            <td>{post.category}</td>
-            <td>{post.price}</td>
+          <tr key={post._id}>
+            <td class="w-25" style={{ width: "20%" }}>
+              <img
+                src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/sheep-3.jpg"
+                className="img-fluid img-thumbnail"
+                alt="Sheep"
+              />
+            </td>
+            <td style={{ width: "10%", align: "right" }}>{post.title}</td>
+            <td style={{ width: "50%" }}>{post.description}</td>
+            <td style={{ width: "10%" }}>{post.category}</td>
+            <td style={{ width: "10%" }}>{post.price}</td>
           </tr>
         );
       })}

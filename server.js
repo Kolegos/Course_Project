@@ -1,11 +1,18 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { connectDB } = require("./database/connect-db");
 const mongoose = require("mongoose");
-const { authenticationRoute } = require("./database/authenticate");
+const {
+  authenticationRoute,
+  authenticateToken,
+  tokenRoute,
+} = require("./database/authenticate");
 require("./database/initialize-db");
+const csprng = require("csprng");
+const pbdkdf2 = require("pbkdf2");
 
 const app = express();
 app.use(cors(), bodyParser.urlencoded({ extended: true }), bodyParser.json());
@@ -28,6 +35,7 @@ connection.once("open", () => {
 
 app.use(express.json());
 authenticationRoute(app);
+tokenRoute(app);
 
 addNewPost = async (post) => {
   try {
@@ -38,6 +46,61 @@ addNewPost = async (post) => {
     console.log(error);
   }
 };
+
+const User = require("./models/user");
+
+app.post("/api/users/create", (req, res) => {
+  const salt = csprng(64);
+  const hashedPassword = pbdkdf2
+    .pbkdf2Sync(req.body.password, salt, 1, 32, "sha512")
+    .toString("hex");
+  User.findById(req.body._id, (err, user) => {
+    if (err) console.log(err);
+    if (user == null) {
+      const hashedUser = {
+        _id: req.body._id,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        hash: hashedPassword,
+        salt: salt,
+      };
+      User(hashedUser).save();
+      res.status(200).send("zjbs senelyzai");
+    } else {
+      console.log("already registered");
+      res.status(204).send("nezjbs senelyzai");
+    }
+  });
+});
+
+async function getLength() {
+  try {
+    let db = await connectDB();
+
+    let length = await db.collection(`posts`).countDocuments();
+    return {
+      length,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+app.post("/api/users/", (req, res) => {
+  User.findById(req.body.id, (err, user) => {
+    if (err) console.log(err);
+
+    if (user == null) return res.status(204).send("Nėra tokio vartotojo");
+
+    const userData = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+    };
+    res.status(200).send(userData);
+  });
+});
 
 async function getPosts() {
   try {
@@ -51,10 +114,31 @@ async function getPosts() {
     console.log(error);
   }
 }
+async function getMorePosts(number) {
+  try {
+    console.log(number);
+    let db = await connectDB();
+    let posts = await db
+      .collection(`posts`)
+      .aggregate([
+        { $sort: { updatedAt: 1 } },
+        { $limit: parseInt(number) }, //mazinant sita imi sekancius elementus nuo virsaus
+        { $sort: { updatedAt: -1 } },
+        { $limit: 10 },
+      ])
+      .toArray();
+    return {
+      posts,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const Post = require("./models/post");
 app.get("/api/posts/", (req, res) => {
   //console.log(req.query.userId);
+  console.log(req.user);
   Post.find({ userId: req.query.userId }).exec((err, posts) => {
     if (err) return console.log(err);
 
@@ -73,9 +157,19 @@ app.get("/api/dash", (req, res) => {
   res.send("hello world");
 });
 
-app.get("/api/get", async (req, res) => {
+app.get("/api/get", authenticateToken, async (req, res) => {
   let state = await getPosts();
   res.send(state.posts);
+});
+
+app.get("/api/getMore", async (req, res) => {
+  let state = await getMorePosts(req.query.number);
+  res.send(state.posts);
+});
+
+app.get("/api/postsLength", async (req, res) => {
+  let state = await getLength();
+  res.send(state.length.toString());
 });
 
 app.post("/api/post/new", async (req, res) => {

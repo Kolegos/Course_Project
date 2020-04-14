@@ -12,13 +12,19 @@ class PostForm extends Component {
     super(props);
     this.state = {
       selectValue: "",
+      photos: [],
     };
 
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
+    this.handleFilesChange = this.handleFilesChange.bind(this);
   }
 
   handleDropdownChange(e) {
     this.setState({ selectValue: e.target.value });
+  }
+
+  handleFilesChange(e) {
+    this.setState({ photos: e.target.files });
   }
 
   handleSubmit = (e) => {
@@ -27,7 +33,7 @@ class PostForm extends Component {
     const description = this.getDescription.value;
     const price = this.getPrice.value;
     const phoneNumber = this.getPhoneNumber.value;
-    const photos = [];
+    const photos = this.state.photos;
     const category = (this.handleDropdownChange = this.handleDropdownChange.bind(
       this
     ));
@@ -51,6 +57,7 @@ class PostForm extends Component {
       description: description,
       photos: photos,
     };
+    console.log(post);
     this.props.addPost(post);
 
     this.getTitle.value = "";
@@ -108,7 +115,7 @@ class PostForm extends Component {
             <option value="Skaudvile">Skaudvile</option>
             <option value="yra">yra</option>
             <option value="didelis">didelis</option>
-            <option value="kaimas">kaimas</option>
+            <option value="miestas">kaimas</option>
           </select>
           <br />
           <br />
@@ -125,14 +132,7 @@ class PostForm extends Component {
             type="file"
             id="file"
             multiple
-            onBlur={(e) => {
-              let ph = [];
-              for (let i = 0; i < e.currentTarget.files.length; i++) {
-                ph.push(e.currentTarget.files[i]);
-              }
-              console.log(ph);
-            }}
-            //ref={(input) => (this.getPhotos = input)}
+            onChange={this.handleFilesChange}
           />
           <br />
           <br />
@@ -145,3 +145,14 @@ class PostForm extends Component {
 }
 
 export default connect(null, { addPost })(PostForm);
+
+/* onBlur={(e) => {
+              let ph = [];
+              for (let i = 0; i < e.currentTarget.files.length; i++) {
+                ph.push(e.currentTarget.files[i]);
+              }
+              this.getPhotos = ph;
+              console.log(this.getPhotos);
+              
+            }}
+              */
