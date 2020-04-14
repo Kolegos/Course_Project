@@ -13,6 +13,7 @@ export function authenticateUser(email, password) {
         password,
       })
       .then((response) => {
+        //sutvarkyti kad veiktu su status errorsai
         dispatch(continueAuthenticateUser(response.data));
       })
       .catch((error) => {

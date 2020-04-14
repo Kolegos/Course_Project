@@ -17,6 +17,7 @@
     "mysql": "^2.18.1",
     "nodemon": "^2.0.2",
     "pbkdf2": "^3.0.17",
+    "react-infinite-scroll-component": "^5.0.4",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
     "react-router-guard": "^2.3.0",

@@ -68,11 +68,44 @@ app.post("/api/users/create", (req, res) => {
   });
 });
 
+async function getLength() {
+  try {
+    let db = await connectDB();
+
+    let length = await db.collection(`posts`).countDocuments();
+    return {
+      length,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function getPosts() {
   try {
     let db = await connectDB();
 
     let posts = await db.collection(`posts`).find().toArray();
+    return {
+      posts,
+    };
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getMorePosts(number) {
+  try {
+    console.log("laba diena", number);
+    let db = await connectDB();
+    let posts = await db
+      .collection(`posts`)
+      .aggregate([
+        { $sort: { updatedAt: -1 } },
+        { $limit: parseInt(number) }, //mazinant sita imi sekancius elementus nuo virsaus
+        { $sort: { updatedAt: 1 } },
+        { $limit: 4 },
+      ])
+      .toArray();
     return {
       posts,
     };
@@ -105,6 +138,16 @@ app.get("/api/dash", (req, res) => {
 app.get("/api/get", async (req, res) => {
   let state = await getPosts();
   res.send(state.posts);
+});
+
+app.get("/api/getMore", async (req, res) => {
+  let state = await getMorePosts(req.query.number);
+  res.send(state.posts);
+});
+
+app.get("/api/postsLength", async (req, res) => {
+  let state = await getLength();
+  res.send(state.length.toString());
 });
 
 app.post("/api/post/new", async (req, res) => {

@@ -8,12 +8,36 @@ export function loadPostsSuccess(posts) {
   return { type: types.LOAD_POSTS_SUCCESS, posts };
 }
 
+export function loadMorePosts(number) {
+  return function (dispatch) {
+    return axios
+      .get(url + `/getMore`, {
+        params: {
+          number,
+        },
+      })
+      .then((posts) => dispatch(loadPostsSuccess(posts)));
+  };
+}
+
 export function loadPosts() {
   return function (dispatch) {
     return axios
       .get(url + `/get`)
       .then((posts) => dispatch(loadPostsSuccess(posts)));
   };
+}
+
+export function loadLength() {
+  return function (dispatch) {
+    return axios
+      .get(url + `/postsLength`)
+      .then((length) => dispatch(loadLengthSuccess(length)));
+  };
+}
+
+export function loadLengthSuccess(length) {
+  return { type: types.LOAD_LENGTH_SUCCESS, length };
 }
 
 export const addPost = (newPost) => (dispatch) => {
