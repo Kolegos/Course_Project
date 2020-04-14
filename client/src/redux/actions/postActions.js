@@ -1,5 +1,6 @@
 import * as types from "./actionTypes";
 import axios from "axios";
+import { history } from "../../redux/history";
 
 const url =
   process.env.NODE_ENV === `production` ? `/api` : "http://localhost:5000/api";
@@ -11,8 +12,15 @@ export function loadPostsSuccess(posts) {
 export function loadPosts() {
   return function (dispatch) {
     return axios
-      .get(url + `/get`)
-      .then((posts) => dispatch(loadPostsSuccess(posts)));
+      .get(url + `/get`, {
+        headers: { authorization: "Bearer " + localStorage.getItem("token") },
+      })
+      .then((posts) => {
+        dispatch(loadPostsSuccess(posts));
+      })
+      .catch(() => {
+        history.push("/login");
+      });
   };
 }
 

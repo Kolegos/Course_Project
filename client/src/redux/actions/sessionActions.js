@@ -3,7 +3,7 @@ import axios from "axios";
 import { history } from "../history";
 
 const url =
-  process.env.NODE_ENV === `production` ? `` : "http://localhost:5000";
+  process.env.NODE_ENV === `production` ? `` : "http://localhost:5000/api";
 
 export function authenticateUser(email, password) {
   return function (dispatch) {
@@ -13,7 +13,8 @@ export function authenticateUser(email, password) {
         password,
       })
       .then((response) => {
-        dispatch(continueAuthenticateUser(response.data));
+        localStorage.setItem("token", response.data.accessToken);
+        dispatch(continueAuthenticateUser(response.data.user));
       })
       .catch((error) => {
         if (error.response) {
@@ -24,22 +25,43 @@ export function authenticateUser(email, password) {
   };
 }
 
-export function continueAuthenticateUser(data) {
+export function checkToken() {
   return function (dispatch) {
-    console.log("Authenticated!", data);
-
-    dispatch(processAuthenticateUser(types.AUTHENTICATED));
-    dispatch(setState(data));
-    history.push("/profilePage");
+    if (!localStorage.token) {
+      dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
+    } else {
+      dispatch(processAuthenticateUser());
+      axios
+        .get(url + "/checktoken")
+        .then((res) => {
+          dispatch(continueAuthenticateUser(res.data.user));
+        })
+        .catch((err) => {
+          dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
+        });
+    }
   };
 }
-export function processAuthenticateUser(
-  status = types.AUTHENTICATING,
-  session = null
-) {
+
+export default function setAuthToken(token) {
+  if (token) {
+    axios.defaults.headers.common["authorization"] = `Bearer ${token}`;
+  } else {
+    delete axios.defaults.headers.common["authorization"];
+  }
+}
+
+export function continueAuthenticateUser(user) {
+  return function (dispatch) {
+    axios.post(url + "/users", { id: user }).then((res) => {
+      dispatch({ type: types.AUTHENTICATED, user: res.data });
+    });
+    dispatch(processAuthenticateUser(types.AUTHENTICATED));
+  };
+}
+export function processAuthenticateUser(status = types.AUTHENTICATING) {
   return {
     type: types.PROCESSING_AUTHENTICATE_USER,
-    session,
     authenticated: status,
   };
 }
