@@ -54,14 +54,14 @@ async function getPosts() {
 
 const Post = require("./models/post");
 app.get("/api/posts/", (req, res) => {
-  console.log(req.query.userId);
+  //console.log(req.query.userId);
   Post.find({ userId: req.query.userId }).exec((err, posts) => {
     if (err) return console.log(err);
 
     posts.map((post) => {
-      console.log(post);
+      //console.log(post);
+      res.send(post);
     });
-    res.send(posts);
   });
 });
 

@@ -15,11 +15,18 @@ export function loadPosts() {
       .then((posts) => dispatch(loadPostsSuccess(posts)));
   };
 }
-
+export const editPost = (editedPost) => (dispatch) => {
+  axios.post(url + "/posts/edit", editedPost).then((post) =>
+    dispatch({
+      type: types.EDIT_POST,
+      data: post,
+    })
+  );
+};
 export const addPost = (newPost) => (dispatch) => {
   axios.post(url + "/posts/add", newPost).then((post) =>
     dispatch({
-      type: "ADD_POST",
+      type: types.ADD_POST,
       data: post,
     })
   );

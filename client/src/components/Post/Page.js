@@ -6,16 +6,13 @@ import { bindActionCreators, compose } from "redux";
 
 import PostForm from "./PostForm";
 import AllPost from "./AllPosts";
+import CurrentPost from "./CurrentPost";
 
 class Page extends Component {
   render() {
     return (
       <div>
-        <div>
-          <h2 className="center ">Post It</h2>
-        </div>
         <PostForm />
-        <AllPost />
       </div>
     );
   }

@@ -21,9 +21,8 @@ class AllPost extends Component {
   }
 
   getPosts() {
-    console.log("getting");
     axios
-      .get(url + "/posts", { params: { userId: "gaidy" } })
+      .get(url + "/posts", { params: { userId: "Dima" } })
       .then((posts) => {
         return posts.map((post) => {
           return <Post post={post} key={post._id} />;
@@ -41,11 +40,7 @@ class AllPost extends Component {
         {this.getPosts()}
         {this.props.posts.posts2.map((post) => (
           <div key={post.id}>
-            {post.editing ? (
-              <EditComponent post={post} key={post.id} />
-            ) : (
-              <Post post={post} key={post.id} />
-            )}
+            <Post post={post} key={post.id} />
           </div>
         ))}
       </div>

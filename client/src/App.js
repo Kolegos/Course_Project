@@ -17,7 +17,6 @@ import PageNotFound from "./components/PageNotFound";
 import PostsPage from "./components/Post/Page";
 import LoginFirst from "./components/LoginFirst";
 
-
 function App({ authenticated }) {
   return (
     <Router history={history}>
@@ -48,7 +47,6 @@ function App({ authenticated }) {
     </Router>
   );
 }
-
 
 function mapStateToProps({ sessions }) {
   return {

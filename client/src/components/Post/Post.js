@@ -3,36 +3,36 @@ import { connect } from "react-redux";
 import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 
-class Post extends Component {
-  render() {
-    return (
-      <div className="post">
-        <h2 className="post_title">{this.props.post.title}</h2>
-        <p className="post_description">{this.props.post.description}</p>
-        <div className="control-buttons">
-          <button
-            className="edit"
-            onClick={() =>
-              this.props.dispatch({ type: "EDIT_POST", id: this.props.post.id })
-            }
-          >
-            Edit
-          </button>
-          <button
-            className="delete"
-            onClick={() =>
-              this.props.dispatch({
-                type: "DELETE_POST",
-                id: this.props.post.id,
-              })
-            }
-          >
-            Delete
-          </button>
-        </div>
-      </div>
-    );
-  }
-}
+const Post = ({ posts }) => (
+  <table className="table" style={{ width: 800 }}>
+    <thead>
+      <tr>
+        <th>user</th>
+        <th>title</th>
+        <th style={{ width: 400 }}>description</th>
+        <th>category</th>
+        <th>price</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {posts.map((post) => {
+        console.log(post);
+        return (
+          <tr key={post.id}>
+            <td>{post.userId}</td>
+            <td>{post.title}</td>
+            <td>{post.description}</td>
+            <td>{post.category}</td>
+            <td>{post.price}</td>
+            <td>
+              <a href="login">View</a>
+            </td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+);
 
 export default connect()(Post);
