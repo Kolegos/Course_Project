@@ -48,8 +48,9 @@ class PostForm extends Component {
       photos,
       editing: false,
     };
+    console.log(this.props.user.email);
     const post = {
-      userId: "N/A",
+      userId: this.props.user.email,
       title: title,
       category: this.state.selectValue,
       price: price,
@@ -57,7 +58,6 @@ class PostForm extends Component {
       description: description,
       photos: photos,
     };
-    console.log(post);
     this.props.addPost(post);
 
     this.getTitle.value = "";
@@ -143,16 +143,12 @@ class PostForm extends Component {
     );
   }
 }
-
-export default connect(null, { addPost })(PostForm);
-
-/* onBlur={(e) => {
-              let ph = [];
-              for (let i = 0; i < e.currentTarget.files.length; i++) {
-                ph.push(e.currentTarget.files[i]);
-              }
-              this.getPhotos = ph;
-              console.log(this.getPhotos);
-              
-            }}
-              */
+function mapStateToProps(state) {
+  const defaultUser = {
+    userId: "Undefined",
+  };
+  return {
+    user: state.sessions.user ? state.sessions.user : defaultUser,
+  };
+}
+export default connect(mapStateToProps, { addPost })(PostForm);
