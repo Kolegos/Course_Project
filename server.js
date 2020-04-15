@@ -137,6 +137,17 @@ async function getMorePosts(number) {
 }
 
 const Post = require("./models/post");
+
+app.get("/api/posts/getOne", (req, res) => {
+  console.log(req.query.id);
+  Post.find({ _id: req.query.id }).exec((err, post) => {
+    if (err) {
+      return console.log(err);
+    }
+    res.send(post);
+  });
+});
+
 app.get("/api/posts/", (req, res) => {
   //console.log(req.query.userId);
   console.log(req.user);

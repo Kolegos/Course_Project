@@ -11,6 +11,7 @@ import Categories from "./components/Categories";
 import Test from "./components/Test";
 import PageNotFound from "./components/PageNotFound";
 import PostsPage from "./components/Post/Page";
+import Post from "./components/Post/Post";
 import LoginFirst from "./components/LoginFirst";
 import requireAuth from "./components/login_signup/RequireAuth";
 import { ToastContainer } from "react-toastify";
@@ -29,6 +30,8 @@ export default (
             <Route path="/profilePage" component={RequireAuth(ProfilePage)} />
             <Route path="/changePassword" component={ChangePassword} />
             <Route path="/categories" component={Categories} />
+            <Route path="/post/:id" component={Post} />
+            <Route path="/post" component={Post} />
             <Route path="/loginFirst" component={LoginFirst} />
             <Route path="/Page" component={PostsPage} />
             <Route component={PageNotFound} />

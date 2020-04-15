@@ -9,6 +9,10 @@ export function loadPostsSuccess(posts) {
   return { type: types.LOAD_POSTS_SUCCESS, posts };
 }
 
+export function loadOnePostSuccess(post) {
+  return { type: types.LOAD_ONE_POST_SUCCESS, post };
+}
+
 export function loadMorePosts(number) {
   return function (dispatch) {
     return axios
@@ -20,6 +24,19 @@ export function loadMorePosts(number) {
       .then((posts) => dispatch(loadPostsSuccess(posts)));
   };
 }
+
+export function loadOnePost(id) {
+  return function (dispatch) {
+    return axios
+      .get(url + `/posts/getOne`, {
+        params: {
+          id,
+        },
+      })
+      .then((post) => dispatch(loadOnePostSuccess(post)));
+  };
+}
+
 export const editPost = (editedPost) => (dispatch) => {
   axios.post(url + "/posts/edit", editedPost).then((post) =>
     dispatch({

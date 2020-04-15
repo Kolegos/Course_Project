@@ -28,9 +28,10 @@ export default function postReducer(state = [], action) {
         let postsToReturn = state.posts.concat(action.posts.data);
         return { ...state, posts: postsToReturn };
       } else {
-        console.log("taiva");
         return { ...state, posts: action.posts.data };
       }
+    case types.LOAD_ONE_POST_SUCCESS:
+      return { ...state, onePost: action.post.data[0] };
     case types.LOAD_LENGTH_SUCCESS:
       return { ...state, length: action.length.data };
     default:

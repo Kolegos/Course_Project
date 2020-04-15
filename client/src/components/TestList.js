@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
+import { Link } from "react-router-dom";
 
 const TestList = ({ posts }) => (
   <div>
@@ -24,7 +25,7 @@ const TestList = ({ posts }) => (
                 }}
               >
                 <div>
-                  <h6>{post.title}</h6>
+                  <Link to={"/post/" + post._id}>{post.title}</Link>
                 </div>
                 <div
                   style={{
