@@ -66,10 +66,10 @@ app.post("/api/users/create", (req, res) => {
         salt: salt,
       };
       User(hashedUser).save();
-      res.status(200).send("zjbs senelyzai");
+      res.status(200).send("registered successfully");
     } else {
       console.log("already registered");
-      res.status(204).send("nezjbs senelyzai");
+      res.status(204).send("already registered");
     }
   });
 });
@@ -127,6 +127,7 @@ async function getMorePosts(number) {
         { $limit: 10 },
       ])
       .toArray();
+    console.log(posts.map((p) => p.title));
     return {
       posts,
     };
