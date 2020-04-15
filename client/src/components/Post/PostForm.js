@@ -6,8 +6,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 class PostForm extends Component {
-  notify = () => toast.success("Post successfully added");
-
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +16,9 @@ class PostForm extends Component {
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.handleFilesChange = this.handleFilesChange.bind(this);
   }
-
+  notify() {
+    toast.success("Post successfully added");
+  }
   handleDropdownChange(e) {
     this.setState({ selectValue: e.target.value });
   }
@@ -48,7 +48,7 @@ class PostForm extends Component {
       photos,
       editing: false,
     };
-    console.log(this.props.user.email);
+
     const post = {
       userId: this.props.user.email,
       title: title,
@@ -59,6 +59,10 @@ class PostForm extends Component {
       photos: photos,
     };
     this.props.addPost(post);
+
+    if (!this.post) {
+      this.notify();
+    }
 
     this.getTitle.value = "";
     this.getDescription.value = "";
@@ -136,7 +140,7 @@ class PostForm extends Component {
           />
           <br />
           <br />
-          <button onClick={this.notify}>Post</button>
+          <button>Post</button>
           <ToastContainer />
         </form>
       </div>
