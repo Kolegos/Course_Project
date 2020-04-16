@@ -35,7 +35,6 @@ function Test({ loadMore, loadLength, length = 0, posts = [] }) {
   }
 
   useEffect(() => {
-    debugger;
     if (length === 0) {
       loadLength().catch((error) => {
         alert("loading length failed" + error);

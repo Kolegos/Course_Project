@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
@@ -68,10 +68,10 @@ function Post({ loadOnePost, id, post = null }) {
   ) : (
     <div>
       <div className="row">
-        <div className="col-sm-8">
+        <div className="col-lg-8">
           {images.length !== 0 ? (
             <ImageGallery
-              slideOnThumbnailOver={true}
+              slideOnThumbnailOver={false}
               onImageLoad={handleLoad}
               onErrorImageURL="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg"
               useBrowserFullscreen={false}
@@ -84,7 +84,7 @@ function Post({ loadOnePost, id, post = null }) {
             <h1>There are no images :(</h1>
           )}
         </div>
-        <div className="col-sm-4">
+        <div className=" col-lg-4">
           <table className="table table-striped table-borderless">
             <tbody>
               <tr>
@@ -128,7 +128,7 @@ function Post({ loadOnePost, id, post = null }) {
         </div>
       </div>
       <div className="row">
-        <div className="col-sm">
+        <div className="col col-lg">
           <div className="card bg-light mb-3 card border-light mb-3">
             <div className="card-body">
               <h4 className="card-title">{post.title}</h4>
@@ -136,16 +136,16 @@ function Post({ loadOnePost, id, post = null }) {
             </div>
           </div>
         </div>
-        <div className="col-sm">
+        <div className="col col-lg">
           <div className="row">
-            <div className="col-sm">
+            <div className="col-lg">
               <img
                 src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
                 className="img-fluid img-thumbnail"
                 alt="ProfilePicture"
               />
             </div>
-            <div className="col-sm">
+            <div className="col col-lg">
               <table>
                 <tbody>
                   <tr>
@@ -167,13 +167,13 @@ function Post({ loadOnePost, id, post = null }) {
               </table>
             </div>
           </div>
-          <div className="col-sm">
+          <div className="col col-lg">
             <h3>
               Kolegos
-              <small className="text-muted">
+              <lgall className="text-muted">
                 {" "}
                 geriausias skelbimų portalas
-              </small>
+              </lgall>
             </h3>
           </div>
         </div>
