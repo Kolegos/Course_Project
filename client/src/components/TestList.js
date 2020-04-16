@@ -25,7 +25,9 @@ const TestList = ({ posts }) => (
                 }}
               >
                 <div>
-                  <Link to={"/post/" + post._id}>{post.title}</Link>
+                  <Link to={"/post/" + post._id}>
+                    <h4>{post.title}</h4>
+                  </Link>
                 </div>
                 <div
                   style={{
