@@ -9,6 +9,8 @@ const {
   authenticationRoute,
   authenticateToken,
   tokenRoute,
+  refreshTokenRoute,
+  logoutRoute,
 } = require("./database/authenticate");
 require("./database/initialize-db");
 const csprng = require("csprng");
@@ -36,6 +38,8 @@ connection.once("open", () => {
 app.use(express.json());
 authenticationRoute(app);
 tokenRoute(app);
+refreshTokenRoute(app);
+logoutRoute(app);
 
 addNewPost = async (post) => {
   try {

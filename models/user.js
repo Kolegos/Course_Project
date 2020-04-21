@@ -7,6 +7,8 @@ const userSchema = new Schema(
     _id: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    city: { type: String, required: true },
+    profilePicture: { type: String, required: true },
     email: { type: String, required: true },
     hash: { type: String, required: true },
     salt: { type: String, required: true },

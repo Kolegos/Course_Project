@@ -3,6 +3,7 @@ const { connectDB } = require("./connect-db");
 const mongoose = require("mongoose");
 const User = require("../models/user");
 const pbdkdf2 = require("pbkdf2");
+const RefreshToken = require("../models/refreshToken");
 
 const jwt = require("jsonwebtoken");
 
@@ -38,9 +39,19 @@ const authenticationRoute = (app) => {
           console.log("Psw");
           return res.status(500).send("Password incorrect");
         }
-        console.log(user._id);
-        const accessToken = jwt.sign(user._id, process.env.ACCESS_TOKEN_SECRET);
-        res.json({ accessToken: accessToken, user: user });
+
+        const accessToken = generateAccessToken(user._id);
+        const refreshToken = jwt.sign(
+          user._id,
+          process.env.REFRESH_TOKEN_SECRET
+        );
+        RefreshToken({ token: refreshToken }).save();
+
+        res.json({
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+          user: user,
+        });
       }
     });
   });
@@ -57,19 +68,70 @@ async function sendState(user, res) {
   res.send(state);
 }
 
+const refreshTokenRoute = (app) => {
+  app.post("/api/refreshToken", (req, res) => {
+    const refreshToken = req.body.token;
+    if (refreshToken == null) return res.sendStatus(401);
+
+    RefreshToken.findOne({ token: refreshToken }).exec((err, token) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(401);
+      }
+
+      jwt.verify(
+        refreshToken,
+        process.env.REFRESH_TOKEN_SECRET,
+        (err, user) => {
+          if (err) return res.sendStatus(403);
+          const accessToken = generateAccessToken(user);
+          res.json({ accessToken: accessToken, user: user });
+        }
+      );
+    });
+  });
+};
+
+const logoutRoute = (app) => {
+  app.post("/api/logout", (req, res) => {
+    const refreshToken = req.body.token;
+    if (refreshToken == null) return res.sendStatus(401);
+
+    RefreshToken.findOneAndDelete({ token: refreshToken }).exec(
+      (err, token) => {
+        if (err) {
+          console.log(err);
+          return res.sendStatus(401);
+        }
+        res.sendStatus(200);
+      }
+    );
+  });
+};
+
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
+    if (err) {
+      return res.sendStatus(403);
+    }
 
     req.user = user;
     next();
   });
 }
 
+function generateAccessToken(id) {
+  return jwt.sign({ _id: id }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "1m",
+  });
+}
+
 module.exports.authenticationRoute = authenticationRoute;
 module.exports.authenticateToken = authenticateToken;
 module.exports.tokenRoute = tokenRoute;
+module.exports.refreshTokenRoute = refreshTokenRoute;
+module.exports.logoutRoute = logoutRoute;
