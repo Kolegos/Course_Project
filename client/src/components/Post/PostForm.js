@@ -89,9 +89,7 @@ class PostForm extends Component {
           },
         })
         .then((response) => {
-          this.nameAppoint(response);
           this.setState({ isLoading: false });
-          console.log("res", response.data.locationArray);
           if (200 === response.status) {
             // If file size is larger than expected.
             if (response.data.error) {
@@ -100,21 +98,12 @@ class PostForm extends Component {
               } else if ("LIMIT_UNEXPECTED_FILE" === response.data.error.code) {
                 this.ocShowAlert("Max 4 images allowed", "red");
               } else {
-                // If not the given ile type
+                // If not the given file type
                 this.ocShowAlert(response.data.error, "red");
               }
             } else {
               // Success
-              const data = {
-                id: new Date(),
-                title,
-                description,
-                price,
-                category,
-                phoneNumber,
-                photos,
-                editing: false,
-              };
+              this.nameAppoint(response);
               const post = {
                 userId: this.props.user.email,
                 title: title,
@@ -122,11 +111,10 @@ class PostForm extends Component {
                 price: price,
                 phoneNumber: phoneNumber,
                 description: description,
-                photos: photos,
+                photos: this.state.photos,
               };
               this.props.addPost(post);
-              let fileName = response.data;
-              console.log("fileName", fileName);
+              this.notify("success");
             }
           }
         })
@@ -142,51 +130,6 @@ class PostForm extends Component {
       isLoading: true,
     });
     //console.log(event.target.files);
-  };
-
-  multipleFileUploadHandler = (event) => {
-    const data = new FormData();
-    let selectedFiles = this.state.selectedFiles;
-    // If file selected
-    if (selectedFiles) {
-      for (let i = 0; i < selectedFiles.length; i++) {
-        data.append("galleryImage", selectedFiles[i], selectedFiles[i].name);
-      }
-      this.setState({ isLoading: true });
-      axios
-        .post(url + "/multi", data, {
-          headers: {
-            accept: "application/json",
-            "Accept-Language": "en-US,en;q=0.8",
-            "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-          },
-        })
-        .then((response) => {
-          this.nameAppoint(response);
-          this.setState({ isLoading: false });
-          console.log("res", response.data.locationArray);
-          if (200 === response.status) {
-            // If file size is larger than expected.
-            if (response.data.error) {
-              if ("LIMIT_FILE_SIZE" === response.data.error.code) {
-                this.ocShowAlert("Max size: 2MB", "red");
-              } else if ("LIMIT_UNEXPECTED_FILE" === response.data.error.code) {
-                this.ocShowAlert("Max 4 images allowed", "red");
-              } else {
-                // If not the given ile type
-                this.ocShowAlert(response.data.error, "red");
-              }
-            } else {
-              // Success
-              let fileName = response.data;
-              console.log("fileName", fileName);
-            }
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
   };
 
   ifUploaded = (arr) => {
@@ -267,12 +210,15 @@ class PostForm extends Component {
             <div className="pt-4">
               <h5>Photos</h5>
               <input
+                id="input-b1"
+                name="input-b1"
                 type="file"
                 multiple
+                className="file"
                 onChange={this.multipleFileChangedHandler}
-              />
+                data-browse-on-zone-click="true"
+              ></input>
             </div>
-            <button onClick={this.multipleFileUploadHandler}>Upload</button>
           </div>
           <form className="form" onSubmit={this.handleSubmit}>
             <button className="mt-4 btn btn-primary">Post</button>
