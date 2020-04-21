@@ -72,7 +72,6 @@ app.post("/api/users/create", (req, res) => {
       User(hashedUser).save();
       res.status(200).send("registered successfully");
     } else {
-      console.log("already registered");
       res.status(204).send("already registered");
     }
   });
@@ -120,7 +119,6 @@ async function getPosts() {
 }
 async function getMorePosts(number) {
   try {
-    console.log(number);
     let db = await connectDB();
     let posts = await db
       .collection(`posts`)
@@ -131,7 +129,6 @@ async function getMorePosts(number) {
         { $limit: 10 },
       ])
       .toArray();
-    console.log(posts.map((p) => p.title));
     return {
       posts,
     };
@@ -153,13 +150,10 @@ app.get("/api/posts/getOne", (req, res) => {
 });
 
 app.get("/api/posts/", (req, res) => {
-  //console.log(req.query.userId);
-  console.log(req.user);
   Post.find({ userId: req.query.userId }).exec((err, posts) => {
     if (err) return console.log(err);
 
     posts.map((post) => {
-      //console.log(post);
       res.send(post);
     });
   });

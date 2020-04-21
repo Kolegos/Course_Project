@@ -5,8 +5,10 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import { history } from "../../redux/history";
 
-const SignUp = ({ createUser, created }) => {
+const SignUp = ({ createUser, created, authenticated }) => {
   useEffect(() => {
+    if (authenticated === userTypes.AUTHENTICATED) history.push("/profilePage");
+
     if (created === userTypes.CREATE_USER_FAILED) {
       toast.error("This e-mail address is already registered", {
         position: toast.POSITION.TOP_LEFT,
@@ -78,7 +80,8 @@ const SignUp = ({ createUser, created }) => {
   );
 };
 
-const mapStateToProps = ({ users }) => ({
+const mapStateToProps = ({ users, sessions }) => ({
+  authenticated: sessions != undefined ? sessions.authenticated : null,
   created: users != undefined ? users.created : null,
 });
 

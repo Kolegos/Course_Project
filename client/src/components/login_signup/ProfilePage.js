@@ -76,7 +76,6 @@ function ProfilePage({ user = null, logout }) {
 
 function mapStateToProps(state) {
   let id;
-  debugger;
   if (state.sessions.user) {
     id = state.sessions.user._id;
   }

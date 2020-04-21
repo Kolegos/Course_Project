@@ -11,9 +11,9 @@ const router = express.Router();
  * PROFILE IMAGE STORING STARTS
  */
 const s3 = new aws.S3({
-  accessKeyId: "AKIAQQQWIECYAB7OZKWJ",
-  secretAccessKey: "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",
-  Bucket: "kolegosnewbucket",
+  accessKeyId: process.env.ACCESS_KEY_ID,
+  secretAccessKey: process.env.SECRET_ACCESS_KEY,
+  Bucket: process.env.BUCKET,
 });
 
 /**
@@ -43,8 +43,6 @@ function checkFileType(file, cb) {
  */
 router.post("/profile-img-upload", (req, res) => {
   profileImgUpload(req, res, (error) => {
-    console.log("requestOkokok", req.file);
-    // console.log( 'error', error );
     if (error) {
       console.log("errors", error);
       res.json({ error: error });
@@ -99,7 +97,6 @@ const uploadsBusinessGallery = multer({
  */
 router.post("/multi", (req, res) => {
   uploadsBusinessGallery(req, res, (error) => {
-    //console.log( 'files', req.files);
     if (error) {
       console.log("errors", error);
       res.json({ error: error });
