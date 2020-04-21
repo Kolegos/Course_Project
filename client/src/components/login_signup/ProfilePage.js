@@ -3,12 +3,13 @@ import React, { Component } from "react";
 import { Table, Button, Form } from "react-bootstrap";
 import { FormRow } from "react-bootstrap/Form";
 import { Grid, Row, Col } from "react-bootstrap";
+import { connect } from "react-redux";
 
-export default class profilePage extends Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      file: null
+      file: null,
     };
     this.uploadSingleFile = this.uploadSingleFile.bind(this);
     this.upload = this.upload.bind(this);
@@ -16,7 +17,7 @@ export default class profilePage extends Component {
 
   uploadSingleFile(e) {
     this.setState({
-      file: URL.createObjectURL(e.target.files[0])
+      file: URL.createObjectURL(e.target.files[0]),
     });
   }
 
@@ -26,6 +27,7 @@ export default class profilePage extends Component {
   }
 
   render() {
+    console.log(this.props.user);
     let imgPreview;
 
     if (this.state.file) {
@@ -46,19 +48,31 @@ export default class profilePage extends Component {
         </form>
 
         <div className="form-group">
+          <img
+            src="https://kolegosnewbucket.s3.us-east-2.amazonaws.com/Annotation+2020-04-15+143942-1587063592781.png"
+            alt="avatar"
+            className="avatar-img"
+          />
           <label>First name</label>
-          <input type="text" className="form-control" placeholder="Vardenis" />
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Vardenis"
+            value={this.props.user.firstName}
+          />
           <label>Last name</label>
           <input
             type="text"
             className="form-control"
             placeholder="Pavardenis"
+            value={this.props.user.lastName}
           />
           <label>Email address</label>
           <input
             type="email"
             className="form-control"
             placeholder="s@gmail.com"
+            value={this.props.user.email}
           />
           <Form>
             <Form.Group>
@@ -86,3 +100,16 @@ export default class profilePage extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  const defaultUser = {
+    firstName: "Vardenis",
+    lastName: "Pavardenis",
+    email: "email@domain.com",
+  };
+  return {
+    user: state.sessions.user ? state.sessions.user : defaultUser,
+  };
+}
+
+export default connect(mapStateToProps)(ProfilePage);
