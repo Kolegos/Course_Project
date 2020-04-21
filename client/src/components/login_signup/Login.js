@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as sessionActions from "../../redux/actions/sessionActions";
 import * as sessionTypes from "../../redux/actions/actionTypes";
+import { history } from "../../redux/history";
 
 const Login = ({ authenticateUser, authenticated }) => {
+  useEffect(() => {
+    if (authenticated === sessionTypes.AUTHENTICATED)
+      history.push("/profilePage");
+  });
+
   return (
     <form onSubmit={authenticateUser}>
       <h3>Login</h3>

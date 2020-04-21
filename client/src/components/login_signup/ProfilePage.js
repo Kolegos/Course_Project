@@ -1,8 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import Spinner from "../misc/Spinner";
+import { logOut } from "../../redux/actions/sessionActions";
+import { history } from "../../redux/history";
+import { bindActionCreators } from "redux";
 
-function ProfilePage({ user = null }) {
+function ProfilePage({ user = null, logout }) {
+  function handleLogout() {
+    logout();
+    history.push("/");
+  }
   return user === null ? (
     <Spinner />
   ) : (
@@ -54,13 +61,15 @@ function ProfilePage({ user = null }) {
           />
         </div>
       </div>
-
       <div className="col col-lg">
         <h3>
           Kolegos
           <small className="text-muted"> geriausias skelbimų portalas</small>
         </h3>
       </div>
+      <button className="btn btn-secondary btn-block" onClick={handleLogout}>
+        logout
+      </button>
     </div>
   );
 }
@@ -79,4 +88,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, null)(ProfilePage);
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: bindActionCreators(logOut, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
