@@ -170,10 +170,10 @@ function Post({ loadOnePost, id, post = null }) {
           <div className="col col-lg">
             <h3>
               Kolegos
-              <lgall className="text-muted">
+              <small className="text-muted">
                 {" "}
                 geriausias skelbimų portalas
-              </lgall>
+              </small>
             </h3>
           </div>
         </div>
