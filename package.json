@@ -4,6 +4,7 @@
   "description": "Prerequisite node modules (type this in the terminal):  \r npm install bootstrap  \r npm install --save react-router-dom  \r npm install --save react-mdl\r npm install --save react-infinite-scroll-component\r npm install axios\r npm install node-sass",
   "main": "server.js",
   "dependencies": {
+    "aws-sdk": "^2.657.0",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -16,8 +17,11 @@
     "md5": "^2.2.1",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.2",
+    "path": "^0.12.7",
     "pbkdf2": "^3.0.17",
     "react-image-gallery": "^1.0.7",
     "react-images": "^1.1.2",
@@ -30,7 +34,8 @@
     "react-toastify": "^5.5.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "concurrently": "^4.1.2"
