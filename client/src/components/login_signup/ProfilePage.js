@@ -48,6 +48,11 @@ class ProfilePage extends Component {
         </form>
 
         <div className="form-group">
+          <img
+            src="https://kolegosnewbucket.s3.us-east-2.amazonaws.com/Annotation+2020-04-15+143942-1587063592781.png"
+            alt="avatar"
+            className="avatar-img"
+          />
           <label>First name</label>
           <input
             type="text"

@@ -8,7 +8,7 @@ const postSchema = new Schema(
     title: { type: String, required: true },
     category: { type: String, required: true },
     description: { type: String, required: true },
-    photos: { data: Buffer, contentType: String, required: false },
+    photos: { type: [String], required: false },
     phoneNumber: { type: String, required: false },
     price: { type: String, required: true },
   },

@@ -1,53 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 import Spinner from "../misc/Spinner";
 import ImageGallery from "react-image-gallery";
 
-const images = [
-  {
-    original: "https://picsum.photos/id/1018/1000/600/",
-    thumbnail: "https://picsum.photos/id/1018/250/150/",
-    media: "(max-width: 100px)",
-  },
-  {
-    original: "https://picsum.photos/id/1015/1000/600/",
-    thumbnail: "https://picsum.photos/id/1015/250/150/",
-  },
-  {
-    original: "https://picsum.photos/id/1019/1000/600/",
-    thumbnail: "https://picsum.photos/id/1019/250/150/",
-  },
-  {
-    original: "https://www.bigstockphoto.com/images/homepage/module-6.jpg",
-    thumbnail: "https://www.bigstockphoto.com/images/homepage/module-6.jpg",
-  },
-  {
-    original:
-      "https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg",
-    thumbnail:
-      "https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-1029171697.jpg",
-  },
-  {
-    original: "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-    thumbnail: "https://miro.medium.com/max/1200/1*mk1-6aYaf_Bes1E3Imhc0A.jpeg",
-  },
-  {
-    original:
-      "https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg",
-    thumbnail:
-      "https://cdn.pixabay.com/photo/2015/02/24/15/41/dog-647528__340.jpg",
-  },
-  {
-    original:
-      "https://www.logolynx.com/images/logolynx/43/430c07f27af3fda19373042528edbe3d.jpeg",
-    thumbnail:
-      "https://www.logolynx.com/images/logolynx/43/430c07f27af3fda19373042528edbe3d.jpeg",
-  },
-];
-
 function Post({ loadOnePost, id, post = null }) {
+  const [images, setImages] = useState([]);
+
   useEffect(() => {
     if (post === null) {
       loadOnePost(id)
@@ -55,6 +15,19 @@ function Post({ loadOnePost, id, post = null }) {
           alert("loading post failed " + error);
         })
         .then();
+    }
+    if (post !== null && post.photos.length !== 0 && images.length === 0) {
+      console.log(post);
+      setImages([
+        {
+          original: post.photos[0],
+          thumbnail: post.photos[0],
+        },
+        {
+          original: post.photos[1],
+          thumbnail: post.photos[1],
+        },
+      ]);
     }
   });
 
@@ -68,12 +41,13 @@ function Post({ loadOnePost, id, post = null }) {
   ) : (
     <div>
       <div className="row">
-        <div className="col-sm-8">
+        <div className="col-lg-8">
           {images.length !== 0 ? (
             <ImageGallery
-              slideOnThumbnailOver={true}
+              slideOnThumbnailOver={false}
               onImageLoad={handleLoad}
-              onErrorImageURL="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg"
+              onErrorImageURL="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg
+"
               useBrowserFullscreen={false}
               lazyLoad={true}
               thumbnailPosition="bottom"
@@ -84,7 +58,7 @@ function Post({ loadOnePost, id, post = null }) {
             <h1>There are no images :(</h1>
           )}
         </div>
-        <div className="col-sm-4">
+        <div className=" col-lg-4">
           <table className="table table-striped table-borderless">
             <tbody>
               <tr>
@@ -128,7 +102,7 @@ function Post({ loadOnePost, id, post = null }) {
         </div>
       </div>
       <div className="row">
-        <div className="col-sm">
+        <div className="col col-lg">
           <div className="card bg-light mb-3 card border-light mb-3">
             <div className="card-body">
               <h4 className="card-title">{post.title}</h4>
@@ -136,16 +110,17 @@ function Post({ loadOnePost, id, post = null }) {
             </div>
           </div>
         </div>
-        <div className="col-sm">
+        <div className="col col-lg">
           <div className="row">
-            <div className="col-sm">
+            <div className="col-lg">
               <img
-                src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
+                src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png
+"
                 className="img-fluid img-thumbnail"
                 alt="ProfilePicture"
               />
             </div>
-            <div className="col-sm">
+            <div className="col col-lg">
               <table>
                 <tbody>
                   <tr>
@@ -167,13 +142,13 @@ function Post({ loadOnePost, id, post = null }) {
               </table>
             </div>
           </div>
-          <div className="col-sm">
+          <div className="col col-lg">
             <h3>
               Kolegos
-              <small className="text-muted">
+              <lgall className="text-muted">
                 {" "}
                 geriausias skelbimų portalas
-              </small>
+              </lgall>
             </h3>
           </div>
         </div>
