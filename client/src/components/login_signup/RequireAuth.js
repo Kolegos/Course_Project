@@ -13,6 +13,12 @@ export default function (ComposedComponent) {
       };
     }
 
+    componentDidMount() {
+      if (this.props.authenticated === sessionTypes.AUTHENTICATED) {
+        this.setState({ loading: false });
+      }
+    }
+
     componentDidUpdate(prevProps) {
       if (prevProps.authenticated !== this.props.authenticated) {
         const authed = this.props.authenticated;

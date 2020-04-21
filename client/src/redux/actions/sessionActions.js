@@ -14,6 +14,7 @@ export function authenticateUser(email, password) {
       })
       .then((response) => {
         localStorage.setItem("token", response.data.accessToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
         dispatch(continueAuthenticateUser(response.data.user));
       })
       .catch((error) => {
@@ -37,9 +38,38 @@ export function checkToken() {
           dispatch(continueAuthenticateUser(res.data.user));
         })
         .catch((err) => {
-          dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
+          if (localStorage.refreshToken)
+            axios
+              .post(url + "/refreshtoken", { token: localStorage.refreshToken })
+              .then((res) => {
+                localStorage.setItem("token", res.data.accessToken);
+                setAuthToken(localStorage.token);
+                dispatch(continueAuthenticateUser(res.data.user));
+              })
+              .catch((err) => {
+                dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
+              });
+          else dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
         });
     }
+  };
+}
+
+export function logOut() {
+  return function (dispatch) {
+    axios
+      .post(url + "/logout", { token: localStorage.refreshToken })
+      .then((res) => {
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("token");
+        dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
+      })
+      .catch((err) => {
+        localStorage.removeItem("refreshToken");
+        localStorage.removeItem("token");
+        dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
+        console.log("err");
+      });
   };
 }
 

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-
-import { Table, Button, Form } from "react-bootstrap";
-import { FormRow } from "react-bootstrap/Form";
-import { Grid, Row, Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { connect } from "react-redux";
+import { logOut } from "../../redux/actions/sessionActions";
+import { history } from "../../redux/history";
 
 class ProfilePage extends Component {
   constructor(props) {
@@ -12,7 +11,13 @@ class ProfilePage extends Component {
       file: null,
     };
     this.uploadSingleFile = this.uploadSingleFile.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
     this.upload = this.upload.bind(this);
+  }
+
+  handleLogout() {
+    this.props.logOut();
+    history.push("/");
   }
 
   uploadSingleFile(e) {
@@ -91,6 +96,12 @@ class ProfilePage extends Component {
         <button type="submit" className="btn btn-primary btn-block">
           Submit
         </button>
+        <button
+          className="btn btn-secondary btn-block"
+          onClick={this.handleLogout}
+        >
+          logout
+        </button>
       </div>
     );
   }
@@ -107,4 +118,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ProfilePage);
+export default connect(mapStateToProps, { logOut })(ProfilePage);
