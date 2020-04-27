@@ -1,9 +1,6 @@
 const md5 = require("md5");
 
 const defaultState = {
-  session: {
-    authenticated: false
-  },
   users: [
     {
       id: "U1",

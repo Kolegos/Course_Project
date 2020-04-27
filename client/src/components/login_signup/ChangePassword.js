@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class ChangePassword extends Component {
+export default class changePassword extends Component {
   render() {
     return (
       <form>
