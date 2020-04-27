@@ -7,12 +7,12 @@ class Navibar extends React.Component {
     super(props);
     this.toggleNavBar = this.toggleNavBar.bind(this);
     this.state = {
-      collapsed: true
+      collapsed: true,
     };
   }
   toggleNavBar() {
     this.setState({
-      collapsed: !this.state.collapsed
+      collapsed: !this.state.collapsed,
     });
   }
   render() {
@@ -24,7 +24,7 @@ class Navibar extends React.Component {
       ? "navbar-toggler vanbar-toggler-right-collapsed"
       : "navbar-toggler navbar - toggler-right";
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-info">
+      <nav className="navbar sticky-top navbar-expand-md navbar-light bg-info">
         <a className="navbar-brand" href="/">
           <h4>
             Kolegos
@@ -49,7 +49,6 @@ class Navibar extends React.Component {
             <NavItem path="/" name="Home" />
             <NavItem path="/login" name="Login" />
             <NavItem path="/signup" name="Sign up" />
-            <NavItem path="/Infinite_Posts/collage" name="Collage" />
             <form className="form-inline my-2 my-lg-0">
               <input
                 className="form-control mr-sm-2"
@@ -74,6 +73,9 @@ class Navibar extends React.Component {
               <div className="dropdown-divider"></div>
               <a className="dropdown-item" href="/profilePage">
                 Personal information
+              </a>
+              <a className="dropdown-item" href="/Page">
+                Add post
               </a>
             </NavDropDown>
           </ul>
