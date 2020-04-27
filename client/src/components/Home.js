@@ -2,16 +2,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../redux/actions/postActions";
 import { bindActionCreators } from "redux";
-import TestList from "./TestList";
+import PostList from "./post/PostList";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "./misc/Spinner";
 import ScrollUpButton from "react-scroll-up-button";
 
-const testas = () => {
-  console.log("paskrolinau");
-};
-
-function Test({ loadMore, loadLength, length = 0, posts = [] }) {
+function Home({ loadMore, loadLength, length = 0, posts = [] }) {
   const [continueLoading, setLoad] = useState(true);
   const [tempLength, setLength] = useState(length);
 
@@ -57,13 +53,12 @@ function Test({ loadMore, loadLength, length = 0, posts = [] }) {
         next={loadNewPosts}
         hasMore={continueLoading}
         loader={<h4>Loading...</h4>}
-        onScroll={testas}
         endMessage={
           <h3 className="text-center">There are no more posts to show</h3>
         }
       >
         <h1 className="text-center">Check out the latests posts</h1>
-        <TestList posts={posts} />
+        <PostList posts={posts} />
       </InfiniteScroll>
     </div>
   );
@@ -84,4 +79,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Test);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

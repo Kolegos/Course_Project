@@ -6,7 +6,6 @@ import { bindActionCreators, compose } from "redux";
 
 import PostForm from "./PostForm";
 import AllPost from "./AllPosts";
-import CurrentPost from "./CurrentPost";
 
 class Page extends Component {
   render() {

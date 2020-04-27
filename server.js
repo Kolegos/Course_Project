@@ -140,7 +140,6 @@ async function getMorePosts(number) {
 const Post = require("./models/post");
 
 app.get("/api/posts/getOne", (req, res) => {
-  console.log(req.query.id);
   Post.find({ _id: req.query.id }).exec((err, post) => {
     if (err) {
       return console.log(err);
@@ -161,10 +160,6 @@ app.get("/api/posts/", (req, res) => {
 
 app.post("/api/posts/add", (req, res) => {
   const post = new Post(req.body).save();
-});
-
-app.get("/api/dash", (req, res) => {
-  res.send("hello world");
 });
 
 app.get("/api/get", authenticateToken, async (req, res) => {

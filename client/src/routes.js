@@ -8,11 +8,11 @@ import ForgotPassword from "./components/login_signup/ForgotPassword";
 import ProfilePage from "./components/login_signup/ProfilePage";
 import ChangePassword from "./components/login_signup/ChangePassword";
 import Categories from "./components/Categories";
-import Test from "./components/Test";
-import PageNotFound from "./components/PageNotFound";
-import PostsPage from "./components/Post/Page";
-import Post from "./components/Post/Post";
-import LoginFirst from "./components/LoginFirst";
+import Home from "./components/Home";
+import PageNotFound from "./components/misc/PageNotFound";
+import PostsPage from "./components/post/Page";
+import Post from "./components/post/Post";
+import LoginFirst from "./components/login_signup/LoginFirst";
 import requireAuth from "./components/login_signup/RequireAuth";
 import { ToastContainer } from "react-toastify";
 import RequireAuth from "./components/login_signup/RequireAuth";
@@ -23,7 +23,7 @@ export default (
       <div className="auth-wrapper">
         <div className="auth-inner">
           <Switch>
-            <Route exact path="/" component={Test} />
+            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
             <Route path="/forgotpassword" component={ForgotPassword} />
@@ -42,22 +42,3 @@ export default (
     </App>
   </Router>
 );
-
-/*function NonAuthedRoute({ component: Component, authenticated }) {
-  return (
-    <Route
-      render={(props) =>
-        authenticated === sessionTypes.NOT_AUTHENTICATED ? (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        ) : authenticated === sessionTypes.AUTHENTICATED ? (
-          <Component {...props} />
-        ) : (
-          <div>Loading</div>
-        )
-      }
-    />
-  );
-}
-*/

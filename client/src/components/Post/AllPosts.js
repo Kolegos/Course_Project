@@ -51,18 +51,6 @@ class AllPost extends Component {
   }
 }
 
-/*
-        {this.props.posts.posts2.map((post) => (
-          <div key={post.id}>
-            {post.editing ? (
-              <EditComponent post={post} key={post.id} />
-            ) : (
-              <Post post={post} key={post.id} />
-            )}
-          </div>
-        ))}
-*/
-
 const mapStateToProps = (state) => {
   return {
     posts: state,

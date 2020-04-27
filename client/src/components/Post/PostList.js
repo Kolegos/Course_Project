@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const TestList = ({ posts }) => (
+const PostList = ({ posts }) => (
   <div>
     <table className="table table-hover" style={{ width: "100%" }}>
       <tbody>
@@ -52,4 +52,4 @@ const TestList = ({ posts }) => (
   </div>
 );
 
-export default TestList;
+export default PostList;

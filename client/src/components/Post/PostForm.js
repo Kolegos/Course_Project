@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addPost } from "../../redux/actions/postActions";
-import { Form } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import Spinner from "../misc/Spinner";
-import { BrowserRouter as Router, Route } from "react-router-dom";
 const url =
   process.env.NODE_ENV === `production`
     ? ``
@@ -37,7 +34,6 @@ class PostForm extends Component {
     else if (arr == "photos") toast.error("Photos are required", {});
     else if (arr == "category") toast.error("Category is required", {});
     else toast.success("Post added");
-    //toast.success("Post successfully added");
   };
 
   handleDropdownChange(e) {
@@ -129,7 +125,6 @@ class PostForm extends Component {
       selectedFiles: event.target.files,
       isLoading: true,
     });
-    //console.log(event.target.files);
   };
 
   ifUploaded = (arr) => {

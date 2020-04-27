@@ -37,7 +37,7 @@ function Post({ loadOnePost, id, post = null }) {
   }
 
   return post === null ? (
-    <Spinner /> //history push i home
+    <Spinner />
   ) : (
     <div>
       <div className="row">
@@ -46,8 +46,7 @@ function Post({ loadOnePost, id, post = null }) {
             <ImageGallery
               slideOnThumbnailOver={false}
               onImageLoad={handleLoad}
-              onErrorImageURL="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg
-"
+              onErrorImageURL="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg"
               useBrowserFullscreen={false}
               lazyLoad={true}
               thumbnailPosition="bottom"
