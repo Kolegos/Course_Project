@@ -16,6 +16,8 @@ export default function postReducer(state = [], action) {
       }
     case types.LOAD_ONE_POST_SUCCESS:
       return { ...state, onePost: action.post.data[0] };
+    case types.CLEAN_ONE_POST_SUCCESS:
+      return { ...state, onePost: null };
     case types.LOAD_LENGTH_SUCCESS:
       return { ...state, length: action.length.data };
     default:
