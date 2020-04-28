@@ -11,10 +11,16 @@ const PostList = ({ posts }) => (
             <tr style={{ minWidth: "800" }} key={post._id}>
               <td style={{ width: "30%" }}>
                 <img
-                  src="https://images.unsplash.com/photo-1533299346856-b1a85808f2ec?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"
+                  src={
+                    typeof post.photos === "undefined" ||
+                    typeof post.photos[0] === "undefined"
+                      ? "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"
+                      : post.photos[0]
+                  }
                   className="img-fluid img-thumbnail"
-                  alt="Sheep"
+                  alt={post.title}
                 />
+                <p>{console.log(post.photos)}</p>
               </td>
               <td
                 style={{
