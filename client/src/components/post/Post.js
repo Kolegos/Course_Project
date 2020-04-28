@@ -23,17 +23,11 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
         .then();
     }
     if (post !== null && post.photos.length !== 0 && images.length === 0) {
-      console.log(post);
-      setImages([
-        {
-          original: post.photos[0],
-          thumbnail: post.photos[0],
-        },
-        {
-          original: post.photos[1],
-          thumbnail: post.photos[1],
-        },
-      ]);
+      let photos = [];
+      post.photos.map((photo) => {
+        photos.push({ original: photo, thumbnail: photo });
+      });
+      setImages(photos);
     }
   });
 
@@ -149,10 +143,10 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
           <div className="col col-lg">
             <h3>
               Kolegos
-              <lgall className="text-muted">
+              <small className="text-muted">
                 {" "}
                 geriausias skelbimų portalas
-              </lgall>
+              </small>
             </h3>
           </div>
         </div>
