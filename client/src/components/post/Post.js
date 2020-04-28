@@ -5,8 +5,14 @@ import { bindActionCreators } from "redux";
 import Spinner from "../misc/Spinner";
 import ImageGallery from "react-image-gallery";
 
-function Post({ loadOnePost, id, post = null }) {
+function Post({ loadOnePost, cleanOnePost, id, post = null }) {
   const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    window.onpopstate = (e) => {
+      cleanOnePost();
+    };
+  });
 
   useEffect(() => {
     if (post === null) {
@@ -33,7 +39,6 @@ function Post({ loadOnePost, id, post = null }) {
 
   function handleLoad(e) {
     e.preventDefault();
-    console.log("loading");
   }
 
   return post === null ? (
@@ -169,6 +174,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
+    cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
   };
 }
 
