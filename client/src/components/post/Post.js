@@ -5,8 +5,14 @@ import { bindActionCreators } from "redux";
 import Spinner from "../misc/Spinner";
 import ImageGallery from "react-image-gallery";
 
-function Post({ loadOnePost, id, post = null }) {
+function Post({ loadOnePost, cleanOnePost, id, post = null }) {
   const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    window.onpopstate = (e) => {
+      cleanOnePost();
+    };
+  });
 
   useEffect(() => {
     if (post === null) {
@@ -17,23 +23,16 @@ function Post({ loadOnePost, id, post = null }) {
         .then();
     }
     if (post !== null && post.photos.length !== 0 && images.length === 0) {
-      console.log(post);
-      setImages([
-        {
-          original: post.photos[0],
-          thumbnail: post.photos[0],
-        },
-        {
-          original: post.photos[1],
-          thumbnail: post.photos[1],
-        },
-      ]);
+      let photos = [];
+      post.photos.map((photo) => {
+        photos.push({ original: photo, thumbnail: photo });
+      });
+      setImages(photos);
     }
   });
 
   function handleLoad(e) {
     e.preventDefault();
-    console.log("loading");
   }
 
   return post === null ? (
@@ -144,10 +143,10 @@ function Post({ loadOnePost, id, post = null }) {
           <div className="col col-lg">
             <h3>
               Kolegos
-              <lgall className="text-muted">
+              <small className="text-muted">
                 {" "}
                 geriausias skelbimų portalas
-              </lgall>
+              </small>
             </h3>
           </div>
         </div>
@@ -169,6 +168,7 @@ function mapStateToProps(state, ownProps) {
 function mapDispatchToProps(dispatch) {
   return {
     loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
+    cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
   };
 }
 

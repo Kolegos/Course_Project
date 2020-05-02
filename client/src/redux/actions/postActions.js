@@ -37,6 +37,10 @@ export function loadOnePost(id) {
   };
 }
 
+export function cleanOnePost() {
+  return { type: types.CLEAN_ONE_POST_SUCCESS };
+}
+
 export const editPost = (editedPost) => (dispatch) => {
   axios.post(url + "/posts/edit", editedPost).then((post) =>
     dispatch({
