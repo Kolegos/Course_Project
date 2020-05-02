@@ -183,6 +183,28 @@ app.post("/api/post/new", async (req, res) => {
   res.status(200).send();
 });
 
+const Category = require("./models/category");
+
+app.post("/api/categories/add", (req, res) => {
+  console.log(req.body);
+  const category = new Category(req.body).save();
+  res.send(req.body);
+});
+
+app.get("/api/categories/getAll", async (req, res) => {
+  let db = await connectDB();
+  let categories = await db.collection(`categories`).find().toArray();
+  res.send(categories);
+});
+
+app.post("/api/categories/delete", async (req, res) => {
+  let db = await connectDB();
+  let collection = db.collection(`categories`);
+  let regex = new RegExp("^" + req.body.category);
+  collection.deleteMany({ category: regex });
+  res.send(req.body);
+});
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
