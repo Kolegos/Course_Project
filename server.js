@@ -76,6 +76,47 @@ app.post("/api/users/create", (req, res) => {
     }
   });
 });
+app.post("/api/edit/EditProfilePage", (req, res) => {
+  User.findById({ _id: req.body._id }, function (err, foundObject) {
+    if (err) {
+      console.log(err);
+      res.status(500).send();
+    } else {
+      //console.log(foundObject);
+      if (!foundObject) {
+        res.status(404).send();
+      } else {
+        if (req.body.firstName) {
+          foundObject.firstName = req.body.firstName;
+        }
+        if (req.body.lastName) {
+          foundObject.lastName = req.body.lastName;
+        }
+        if (req.body.city) {
+          foundObject.city = req.body.city;
+        }
+        if (req.body.email) {
+          foundObject.email = req.body.email;
+        }
+        if (req.body.phoneNumber) {
+          foundObject.phoneNumber = req.body.phoneNumber;
+        }
+        if (req.body.profileImage) {
+          foundObject.profilePicture = req.body.profileImage;
+        }
+
+        foundObject.save(function (err, updatedObject) {
+          if (err) {
+            console.log(err);
+            res.status(500).send();
+          } else {
+            res.send(updatedObject);
+          }
+        });
+      }
+    }
+  });
+});
 
 async function getLength() {
   try {
@@ -100,6 +141,9 @@ app.post("/api/users/", (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      city: user.city,
+      phoneNumber: user.phoneNumber,
+      profilePicture: user.profilePicture,
     };
     res.status(200).send(userData);
   });
