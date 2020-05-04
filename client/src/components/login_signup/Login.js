@@ -12,7 +12,7 @@ const Login = ({ authenticateUser, authenticated }) => {
 
   return (
     <div id="container-wrapper" className="container-wrapper">
-      <div id="container-inner" className="container-inner">
+      <div id="container-inner" className="container-inner small">
         <form onSubmit={authenticateUser}>
           <h3>Login</h3>
           <div className="form-group">
