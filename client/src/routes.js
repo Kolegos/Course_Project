@@ -15,10 +15,9 @@ import PageNotFound from "./components/misc/PageNotFound";
 import PostsPage from "./components/post/Page";
 import Post from "./components/post/Post";
 import LoginFirst from "./components/login_signup/LoginFirst";
-import requireAuth from "./components/login_signup/RequireAuth";
 import { ToastContainer } from "react-toastify";
 import RequireAuth from "./components/login_signup/RequireAuth";
-
+import Test from "./test";
 export default (
   <Router history={history}>
     <App>
@@ -41,6 +40,7 @@ export default (
             />
             <Route path="/admin/categories/create" component={CreateCategory} />
             <Route path="/admin/categories" component={Categories} />
+            <Route path="/test/:id+" component={Test} />
             <Route component={PageNotFound} />
           </Switch>
           <ToastContainer autoClose={5000} hideProgressBar />

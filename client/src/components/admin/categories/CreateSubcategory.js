@@ -15,6 +15,8 @@ const CreateSubcategory = ({
     features: [],
   });
 
+  const [features, setFeatures] = useState([]);
+
   useEffect(() => {
     if (categories.length === 0) loadCategoriesFromDB();
   });
@@ -31,18 +33,32 @@ const CreateSubcategory = ({
       ...newCategory,
       [event.target.name]:
         event.target.name === "category"
-          ? `/${id}${event.target.value}`
+          ? `/${id}/${event.target.value}`
           : event.target.value,
     };
     setCategory(updatedCategory);
+    console.log(features[0]);
+  }
+
+  function handleFeatureChange(event) {
+    event.preventDefault();
+    const whichElement = event.target.name.slice(event.target.name.length - 1);
+    features.map((feature, index) => {
+      if (index.toString() === whichElement) {
+        features[index] = event.target.value;
+      }
+      return 0;
+    });
+  }
+
+  function handleFeatureClick(event) {
+    event.preventDefault();
+    setFeatures(features.concat({}));
   }
 
   function handleSave(event) {
     event.preventDefault();
-    categories.map((category) => {
-      if (category.name === newCategory.name) return;
-    });
-    newCategory.features = event.target[2].value.split(",");
+    newCategory.features = features;
     addCategory(newCategory).catch((error) => {
       console.log(error + "was not able to add category");
     });
@@ -53,7 +69,7 @@ const CreateSubcategory = ({
     <h1>loading...</h1>
   ) : (
     <div className="container">
-      <form onSubmit={handleSave}>
+      <form>
         <h2>Add subcategory of {id}</h2>
         <div>
           <label>
@@ -76,7 +92,6 @@ const CreateSubcategory = ({
               placeholder="category"
               name="category"
               className="form-control"
-              pattern="^\/.+"
               onChange={handleChange}
               required
             />
@@ -85,16 +100,49 @@ const CreateSubcategory = ({
         <div>
           <label>
             <span>Features</span>
-            <input
-              type="text"
-              placeholder="features"
-              name="features"
-              className="form-control"
-              required
-            />
+            {features.map((feature, index) => {
+              return (
+                <div key={`div${index}`}>
+                  <input
+                    key={`name${index}`}
+                    type="text"
+                    placeholder="feature"
+                    name={`name${index}`}
+                    className="form-control"
+                    onChange={handleFeatureChange}
+                  ></input>
+                  <button
+                    key={index}
+                    className="btn btn-sm btn-danger m-2"
+                    onClick={() => {
+                      setFeatures(
+                        features.filter((feature, id) => {
+                          return id !== index;
+                        })
+                      );
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              );
+            })}
           </label>
+          <div>
+            <button
+              className="btn btn-outline-secondary m-2"
+              onClick={handleFeatureClick}
+            >
+              Add Feature
+            </button>
+          </div>
         </div>
-        <button className="btn btn-info" type="submit">
+        <button
+          className="btn btn-info"
+          type="submit"
+          disabled={typeof features[0] === "undefined" ? true : false}
+          onClick={handleSave}
+        >
           Save
         </button>
       </form>

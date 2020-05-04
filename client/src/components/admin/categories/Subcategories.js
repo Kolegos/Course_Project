@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import * as categoriesActions from "../../../redux/actions/categoriesActions";
@@ -24,7 +24,7 @@ const Subcategories = ({ category, categories, deleteCategory }) => {
               if (categoryFromArray.category.match(regex)) {
                 //matches only the subcategories of given category
                 return (
-                  <tr>
+                  <tr key={categoryFromArray.category}>
                     <td>
                       <h4 style={{ textAlign: "left" }}>
                         {categoryFromArray.name}
@@ -41,6 +41,7 @@ const Subcategories = ({ category, categories, deleteCategory }) => {
                   </tr>
                 );
               }
+              return <tr key={`div${categoryFromArray.category}`}></tr>;
             })}
           </tbody>
         </table>

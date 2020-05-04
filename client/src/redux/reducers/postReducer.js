@@ -1,5 +1,4 @@
 import * as types from "../actions/actionTypes";
-import { bindActionCreators } from "redux";
 
 export default function postReducer(state = [], action) {
   switch (action.type) {

@@ -40,7 +40,7 @@ const Categories = ({ loadCategories, deleteCategory, categories = [] }) => {
                 if (category.parent.match(/^(?![\s\S])/)) {
                   //shows the main categories (blue buttons)
                   return (
-                    <tr>
+                    <tr key={category.category}>
                       <td>
                         <button
                           className="btn btn-primary btn-lg m-2"
@@ -60,6 +60,7 @@ const Categories = ({ loadCategories, deleteCategory, categories = [] }) => {
                     </tr>
                   );
                 }
+                return <tr key={`div${category.category}`}></tr>;
               })}
             </tbody>
           </table>

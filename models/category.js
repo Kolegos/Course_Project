@@ -7,7 +7,7 @@ const categorySchema = new Schema(
     name: { type: String, required: true },
     parent: { type: String, required: false },
     category: { type: String, required: true },
-    features: { type: [String], required: false },
+    features: { type: Array, required: false },
   },
   {
     timestamps: true,

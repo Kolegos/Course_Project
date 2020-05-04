@@ -28,13 +28,11 @@ const CreateCategory = ({ loadCategories, addCategory, categories = [] }) => {
   }
   function handleSave(event) {
     event.preventDefault();
-    categories.map((category) => {
-      if (category.name === newCategory.name) return;
-    });
     addCategory(newCategory).catch((error) => {
       console.log(error + "was not able to add category");
     });
     history.push("/admin/categories");
+    return;
   }
 
   return categories.length === 0 ? (
