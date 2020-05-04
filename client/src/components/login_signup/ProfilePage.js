@@ -4,6 +4,7 @@ import Spinner from "../misc/Spinner";
 import { logOut } from "../../redux/actions/sessionActions";
 import { history } from "../../redux/history";
 import { bindActionCreators } from "redux";
+import { Link } from "react-router-dom";
 
 function ProfilePage({ user = null, logout }) {
   function handleLogout() {
@@ -50,15 +51,32 @@ function ProfilePage({ user = null, logout }) {
                   {user.city}
                 </th>
               </tr>
+              <tr>
+                <th scope="col" style={{ width: "80%" }}>
+                  Phone number
+                </th>
+                <th scope="col" style={{ width: "20%" }}>
+                  {user.phoneNumber}
+                </th>
+              </tr>
             </tbody>
           </table>
         </div>
+        {console.log(user.profilePicture)}
         <div className=" col-lg-4">
-          <img
-            src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
-            className="img-fluid img-thumbnail"
-            alt="ProfilePicture"
-          />
+          {user.profilePicture == null ? (
+            <img
+              src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
+              className="img-fluid img-thumbnail"
+              alt="ProfilePicture"
+            />
+          ) : (
+            <img
+              src={user.profilePicture}
+              className="img-fluid img-thumbnail"
+              alt="ProfilePicture"
+            />
+          )}
         </div>
       </div>
       <div className="col col-lg">
@@ -67,6 +85,9 @@ function ProfilePage({ user = null, logout }) {
           <small className="text-muted"> geriausias skelbimų portalas</small>
         </h3>
       </div>
+      <Link to={"/EditProfilePage"}>
+        <button className="btn btn-secondary btn-block">Edit</button>
+      </Link>
       <button className="btn btn-secondary btn-block" onClick={handleLogout}>
         logout
       </button>
