@@ -7,16 +7,18 @@ import SignUp from "./components/login_signup/Signup";
 import ForgotPassword from "./components/login_signup/ForgotPassword";
 import ProfilePage from "./components/login_signup/ProfilePage";
 import ChangePassword from "./components/login_signup/ChangePassword";
-import Categories from "./components/Categories";
+import Categories from "./components/admin/categories/Categories";
+import CreateCategory from "./components/admin/categories/CreateCategory";
+import CreateSubcategory from "./components/admin/categories/CreateSubcategory";
 import Home from "./components/Home";
 import PageNotFound from "./components/misc/PageNotFound";
 import PostsPage from "./components/post/Page";
 import Post from "./components/post/Post";
 import LoginFirst from "./components/login_signup/LoginFirst";
-import requireAuth from "./components/login_signup/RequireAuth";
 import { ToastContainer } from "react-toastify";
 import RequireAuth from "./components/login_signup/RequireAuth";
 import EditProfilePage from "./components/login_signup/EditProfilePage";
+import Test from "./test";
 
 export default (
   <Router history={history}>
@@ -30,7 +32,6 @@ export default (
             <Route path="/forgotpassword" component={ForgotPassword} />
             <Route path="/profilePage" component={RequireAuth(ProfilePage)} />
             <Route path="/changePassword" component={ChangePassword} />
-            <Route path="/categories" component={Categories} />
             <Route path="/post/:id" component={Post} />
             <Route path="/post" component={Post} />
             <Route path="/loginFirst" component={LoginFirst} />
@@ -39,6 +40,12 @@ export default (
               path="/EditProfilePage"
               component={RequireAuth(EditProfilePage)}
             />
+              path="/admin/categories/createSubcategory/:id"
+              component={CreateSubcategory}
+            />
+            <Route path="/admin/categories/create" component={CreateCategory} />
+            <Route path="/admin/categories" component={Categories} />
+            <Route path="/test/:id+" component={Test} />4
             <Route component={PageNotFound} />
           </Switch>
           <ToastContainer autoClose={5000} hideProgressBar />

@@ -81,8 +81,8 @@ const SignUp = ({ createUser, created, authenticated }) => {
 };
 
 const mapStateToProps = ({ users, sessions }) => ({
-  authenticated: sessions != undefined ? sessions.authenticated : null,
-  created: users != undefined ? users.created : null,
+  authenticated: sessions !== undefined ? sessions.authenticated : null,
+  created: users !== undefined ? users.created : null,
 });
 
 const mapDispatchToProps = (dispatch) => ({

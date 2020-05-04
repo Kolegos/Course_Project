@@ -5,7 +5,7 @@ export default function sessionReducer(
   userSession = initialState.session || {},
   action
 ) {
-  let { type, authenticated, session } = action;
+  let { type, authenticated } = action;
   switch (type) {
     case types.SET_STATE:
       return { ...userSession, id: action.state.session.id };
