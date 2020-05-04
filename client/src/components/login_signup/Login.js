@@ -62,7 +62,7 @@ const Login = ({ authenticateUser, authenticated }) => {
 };
 
 const mapStateToProps = ({ sessions }) => ({
-  authenticated: sessions != undefined ? sessions.authenticated : null,
+  authenticated: sessions !== undefined ? sessions.authenticated : null,
 });
 
 const mapDispatchToProps = (dispatch) => ({

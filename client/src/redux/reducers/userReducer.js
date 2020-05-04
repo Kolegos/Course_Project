@@ -6,6 +6,8 @@ export default function userReducer(state = [], action) {
       return { ...state, created: types.CREATE_USER_SUCCESS };
     case types.CREATE_USER_FAILED:
       return { ...state, created: types.CREATE_USER_FAILED };
+    case types.EDIT_USER:
+      return { ...state, edited: types.EDIT_USER };
     default:
       return state;
   }

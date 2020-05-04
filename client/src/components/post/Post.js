@@ -26,10 +26,11 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
       let photos = [];
       post.photos.map((photo) => {
         photos.push({ original: photo, thumbnail: photo });
+        return 0;
       });
       setImages(photos);
     }
-  });
+  }, [post, images.length, loadOnePost, id]);
 
   function handleLoad(e) {
     e.preventDefault();

@@ -20,7 +20,6 @@ const PostList = ({ posts }) => (
                   className="img-fluid img-thumbnail"
                   alt={post.title}
                 />
-                <p>{console.log(post.photos)}</p>
               </td>
               <td
                 style={{
