@@ -23,7 +23,7 @@ const SignUp = ({ createUser, created, authenticated }) => {
   });
   return (
     <div id="container-wrapper" className="container-wrapper">
-      <div id="container-inner" className="container-inner">
+      <div id="container-inner" className="container-inner small">
         <div>
           <form onSubmit={createUser}>
             <h3>Sign Up</h3>
