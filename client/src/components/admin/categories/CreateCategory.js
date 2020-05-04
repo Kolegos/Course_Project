@@ -38,40 +38,44 @@ const CreateCategory = ({ loadCategories, addCategory, categories = [] }) => {
   return categories.length === 0 ? (
     <h1>loading...</h1>
   ) : (
-    <div className="container">
-      <form onSubmit={handleSave}>
-        <h2>Add category</h2>
-        <div>
-          <label>
-            <span>Name</span>
-            <input
-              type="text"
-              placeholder="name"
-              name="name"
-              className="form-control"
-              onChange={handleChange}
-              required
-            />
-          </label>
+    <div id="container-wrapper" className="container-wrapper">
+      <div id="container-inner" className="container-inner">
+        <div className="container">
+          <form onSubmit={handleSave}>
+            <h2>Add category</h2>
+            <div>
+              <label>
+                <span>Name</span>
+                <input
+                  type="text"
+                  placeholder="name"
+                  name="name"
+                  className="form-control"
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                <span>Category path</span>
+                <input
+                  type="text"
+                  placeholder="category"
+                  name="category"
+                  className="form-control"
+                  pattern="^\/.+"
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            </div>
+            <button className="btn btn-info" type="submit">
+              Save
+            </button>
+          </form>
         </div>
-        <div>
-          <label>
-            <span>Category path</span>
-            <input
-              type="text"
-              placeholder="category"
-              name="category"
-              className="form-control"
-              pattern="^\/.+"
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <button className="btn btn-info" type="submit">
-          Save
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

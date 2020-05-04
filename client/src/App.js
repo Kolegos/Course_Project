@@ -15,7 +15,7 @@ class App extends React.Component {
     return (
       <div>
         <NaviBar></NaviBar>
-        <div className="container">{this.props.children}</div>
+        <div style={{ margin: 50 }}>{this.props.children}</div>
       </div>
     );
   }
