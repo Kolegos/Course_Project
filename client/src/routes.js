@@ -40,6 +40,7 @@ export default (
               path="/EditProfilePage"
               component={RequireAuth(EditProfilePage)}
             />
+            <Route
               path="/admin/categories/createSubcategory/:id"
               component={CreateSubcategory}
             />
