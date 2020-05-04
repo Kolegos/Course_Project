@@ -42,7 +42,7 @@ const PostCard = (props) => {
       <p
         style={{
           height: 80,
-          overflow: "auto",
+          overflow: "hidden",
           textOverflow: "ellipsis",
           whiteSpace: "pre-wrap",
         }}
