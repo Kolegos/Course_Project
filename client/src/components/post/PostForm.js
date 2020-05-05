@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addPost } from "../../redux/actions/postActions";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 const url =
@@ -27,12 +27,12 @@ class PostForm extends Component {
   }
 
   notify = (arr) => {
-    if (arr == "title") toast.error("Title field is empty", {});
-    else if (arr == "description")
+    if (arr === "title") toast.error("Title field is empty", {});
+    else if (arr === "description")
       toast.error("Description field is empty!", {});
-    else if (arr == "price") toast.error("Price field is empty", {});
-    else if (arr == "photos") toast.error("Photos are required", {});
-    else if (arr == "category") toast.error("Category is required", {});
+    else if (arr === "price") toast.error("Price field is empty", {});
+    else if (arr === "photos") toast.error("Photos are required", {});
+    else if (arr === "category") toast.error("Category is required", {});
     else toast.success("Post added");
   };
 
@@ -54,16 +54,16 @@ class PostForm extends Component {
     const description = this.getDescription.value;
     const price = this.getPrice.value;
     const phoneNumber = this.getPhoneNumber.value;
-    const photos = this.state.photos;
     const category = (this.handleDropdownChange = this.handleDropdownChange.bind(
       this
     ));
 
     let valid = false;
-    if (title == "") this.notify("title");
-    else if (description == "") this.notify("description");
-    else if (price == "") this.notify("price");
-    else if (category == "") this.notify("category");
+    if (title === "") this.notify("title");
+    else if (description === "") this.notify("description");
+    else if (price === "") this.notify("price");
+    else if (category === "") this.notify("category");
+
     else valid = true;
 
     if (!valid) return;
@@ -128,8 +128,9 @@ class PostForm extends Component {
   };
 
   ifUploaded = (arr) => {
-    if (this.state.isLoading == true) {
-      if (arr.length == 0)
+    if (this.state.isLoading === true) {
+      if (arr.length === 0)
+
         return (
           <div
             class="p-3 mb-2 bg-danger text-white"

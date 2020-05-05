@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,7 +15,7 @@ class App extends React.Component {
     return (
       <div>
         <NaviBar></NaviBar>
-        <div className="container">{this.props.children}</div>
+        <div style={{ margin: 50 }}>{this.props.children}</div>
       </div>
     );
   }

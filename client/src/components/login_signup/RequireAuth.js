@@ -43,7 +43,7 @@ export default function (ComposedComponent) {
 
   function mapStateToProps({ sessions }) {
     return {
-      authenticated: sessions != undefined ? sessions.authenticated : null,
+      authenticated: sessions !== undefined ? sessions.authenticated : null,
     };
   }
 
