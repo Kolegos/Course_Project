@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+
 import React, { useEffect, Component } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../../redux/actions/postActions";
@@ -10,8 +11,10 @@ import AllPost from "./AllPosts";
 class Page extends Component {
   render() {
     return (
-      <div>
-        <PostForm />
+      <div id="container-wrapper" className="container-wrapper">
+        <div id="container-inner" className="container-inner">
+          <PostForm />
+        </div>
       </div>
     );
   }

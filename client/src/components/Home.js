@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../redux/actions/postActions";
 import { bindActionCreators } from "redux";
@@ -10,6 +10,8 @@ import ScrollUpButton from "react-scroll-up-button";
 function Home({ loadMore, loadLength, length = 0, posts = [] }) {
   const [continueLoading, setLoad] = useState(true);
   const [tempLength, setLength] = useState(length);
+  const [wrapper, setWrapper] = useState();
+  const [inner, setInner] = useState();
 
   function loadNewPosts() {
     if (length !== 0 && posts.length !== 0) {
@@ -49,6 +51,7 @@ function Home({ loadMore, loadLength, length = 0, posts = [] }) {
     <div>
       <ScrollUpButton style={{ color: "white", backgroundColor: "#1c8ef9" }} />
       <InfiniteScroll
+        style={{ overflow: "none" }}
         dataLength={posts.length}
         next={loadNewPosts}
         hasMore={continueLoading}
@@ -57,7 +60,6 @@ function Home({ loadMore, loadLength, length = 0, posts = [] }) {
           <h3 className="text-center">There are no more posts to show</h3>
         }
       >
-        <h1 className="text-center">Check out the latests posts</h1>
         <PostList posts={posts} />
       </InfiniteScroll>
     </div>

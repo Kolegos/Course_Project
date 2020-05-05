@@ -14,17 +14,6 @@ const postReducer2 = (state = [], action) => {
       return state.map((post) =>
         post.id === action.id ? { ...post, editing: !post.editing } : post
       );
-    case types.UPDATE:
-      return state.map((post) => {
-        if (post.id === action.id) {
-          return {
-            ...post,
-            title: action.data.newTitle,
-            message: action.data.newMessage,
-            editing: !post.editing,
-          };
-        } else return post;
-      });
     default:
       return state;
   }

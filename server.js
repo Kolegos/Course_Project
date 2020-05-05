@@ -76,6 +76,47 @@ app.post("/api/users/create", (req, res) => {
     }
   });
 });
+app.post("/api/edit/EditProfilePage", (req, res) => {
+  User.findById({ _id: req.body._id }, function (err, foundObject) {
+    if (err) {
+      console.log(err);
+      res.status(500).send();
+    } else {
+      //console.log(foundObject);
+      if (!foundObject) {
+        res.status(404).send();
+      } else {
+        if (req.body.firstName) {
+          foundObject.firstName = req.body.firstName;
+        }
+        if (req.body.lastName) {
+          foundObject.lastName = req.body.lastName;
+        }
+        if (req.body.city) {
+          foundObject.city = req.body.city;
+        }
+        if (req.body.email) {
+          foundObject.email = req.body.email;
+        }
+        if (req.body.phoneNumber) {
+          foundObject.phoneNumber = req.body.phoneNumber;
+        }
+        if (req.body.profileImage) {
+          foundObject.profilePicture = req.body.profileImage;
+        }
+
+        foundObject.save(function (err, updatedObject) {
+          if (err) {
+            console.log(err);
+            res.status(500).send();
+          } else {
+            res.send(updatedObject);
+          }
+        });
+      }
+    }
+  });
+});
 
 async function getLength() {
   try {
@@ -100,6 +141,9 @@ app.post("/api/users/", (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      city: user.city,
+      phoneNumber: user.phoneNumber,
+      profilePicture: user.profilePicture,
     };
     res.status(200).send(userData);
   });
@@ -181,6 +225,28 @@ app.post("/api/post/new", async (req, res) => {
   let post = req.body.post;
   await addNewPost(post);
   res.status(200).send();
+});
+
+const Category = require("./models/category");
+
+app.post("/api/categories/add", (req, res) => {
+  console.log(req.body);
+  const category = new Category(req.body).save();
+  res.send(req.body);
+});
+
+app.get("/api/categories/getAll", async (req, res) => {
+  let db = await connectDB();
+  let categories = await db.collection(`categories`).find().toArray();
+  res.send(categories);
+});
+
+app.post("/api/categories/delete", async (req, res) => {
+  let db = await connectDB();
+  let collection = db.collection(`categories`);
+  let regex = new RegExp("^" + req.body.category);
+  collection.deleteMany({ category: regex });
+  res.send(req.body);
 });
 
 if (process.env.NODE_ENV === "production") {
