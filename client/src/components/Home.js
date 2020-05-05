@@ -10,8 +10,6 @@ import ScrollUpButton from "react-scroll-up-button";
 function Home({ loadMore, loadLength, length = 0, posts = [] }) {
   const [continueLoading, setLoad] = useState(true);
   const [tempLength, setLength] = useState(length);
-  const [wrapper, setWrapper] = useState();
-  const [inner, setInner] = useState();
 
   function loadNewPosts() {
     if (length !== 0 && posts.length !== 0) {

@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import Spinner from "../misc/Spinner";
-import { logOut } from "../../redux/actions/sessionActions";
-import { history } from "../../redux/history";
-import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
-import { editUser } from "../../redux/actions/userActions";
 import * as userActions from "../../redux/actions/userActions";
 import axios from "axios";
 
@@ -52,7 +47,7 @@ const EditProfilePage = ({ user = null, editUser }) => {
               }
             } else {
               // Success
-              let fileName = response.data;
+              //let fileName = response.data;
             }
           }
         })
