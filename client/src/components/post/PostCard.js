@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { history } from "../../redux/history";
 
 const PostCard = (props) => {
-  useEffect(() => {
-    console.log(props);
-  }, []);
+  useEffect(() => {}, []);
   //to={"/post/" + props.post._id}
   return (
     <div
