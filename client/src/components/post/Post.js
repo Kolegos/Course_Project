@@ -172,6 +172,7 @@ function mapDispatchToProps(dispatch) {
   return {
     loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
     cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
+
   };
 }
 
