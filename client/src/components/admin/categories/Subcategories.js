@@ -21,7 +21,9 @@ const Subcategories = ({ category, categories, deleteCategory }) => {
           <tbody>
             {categories.map((categoryFromArray) => {
               let regex = new RegExp("^" + category + "/.+");
-              if (categoryFromArray.category.match(regex)) {
+              let mergedName =
+                categoryFromArray.parent + categoryFromArray.category;
+              if (mergedName.match(regex)) {
                 //matches only the subcategories of given category
                 return (
                   <tr key={categoryFromArray.category}>
@@ -61,6 +63,9 @@ const Subcategories = ({ category, categories, deleteCategory }) => {
 };
 
 function mapStateToProps(state) {
+  let kategorija =
+    state.categories.categories[1].parent +
+    state.categories.categories[1].category;
   return {
     categories: state.categories.categories,
   };
