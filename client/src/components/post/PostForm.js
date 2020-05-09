@@ -4,6 +4,9 @@ import { addPost } from "../../redux/actions/postActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { loadCategories } from "../../redux/actions/categoriesActions";
+import Dropdowns from "./Dropdowns";
+
 const url =
   process.env.NODE_ENV === `production`
     ? ``
@@ -21,9 +24,17 @@ class PostForm extends Component {
       isTitle: false,
       isDescription: false,
       isPrice: false,
+      categories: [],
     };
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.nameAppoint = this.nameAppoint.bind(this);
+  }
+
+  componentDidMount() {
+    debugger;
+    this.props.loadCategories().catch((error) => {
+      console.log(error + "Loading categories failed");
+    });
   }
 
   notify = (arr) => {
@@ -63,7 +74,6 @@ class PostForm extends Component {
     else if (description === "") this.notify("description");
     else if (price === "") this.notify("price");
     else if (category === "") this.notify("category");
-
     else valid = true;
 
     if (!valid) return;
@@ -130,7 +140,6 @@ class PostForm extends Component {
   ifUploaded = (arr) => {
     if (this.state.isLoading === true) {
       if (arr.length === 0)
-
         return (
           <div
             class="p-3 mb-2 bg-danger text-white"
@@ -187,13 +196,13 @@ class PostForm extends Component {
             </div>
             <div className="pt-4">
               <h5>Category</h5>
-              <select id="dropdown" onChange={this.handleDropdownChange}>
-                <option value="N/A">N/A</option>
-                <option value="Skaudvile">Skaudvile</option>
-                <option value="yra">yra</option>
-                <option value="didelis">didelis</option>
-                <option value="miestas">kaimas</option>
-              </select>
+              {typeof this.props.categories === "undefined" ? null : (
+                <Dropdowns
+                  parent="^(?![\s\S])"
+                  categories={this.props.categories}
+                  onChange={this.handleDropdownChange}
+                />
+              )}
             </div>
             <div className="pt-4">
               <h5>Phone number</h5>
@@ -224,12 +233,14 @@ class PostForm extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   const defaultUser = {
     userId: "Undefined",
   };
   return {
     user: state.sessions.user ? state.sessions.user : defaultUser,
+    categories: state.categories.categories,
   };
 }
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(mapStateToProps, { addPost, loadCategories })(PostForm);
