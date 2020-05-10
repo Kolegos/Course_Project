@@ -1,44 +1,208 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import * as postActions from "../../redux/actions/postActions";
+import { bindActionCreators } from "redux";
+import Spinner from "../misc/Spinner";
+import ImageGallery from "react-image-gallery";
+import xd from "bootstrap-fileinput";
 
-class EditComponent extends Component {
-  handleEdit = (e) => {
-    e.preventDefault();
-    const newTitle = this.getTitle.value;
-    const newDescription = this.getDescription.value;
-    const data = {
-      newTitle,
-      newDescription,
+function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    window.onpopstate = (e) => {
+      cleanOnePost();
     };
-    this.props.dispatch({ type: "UPDATE", id: this.props.post.id, data: data });
-  };
-  render() {
-    return (
-      <div key={this.props.post.id} className="post">
-        <form className="form" onSubmit={this.handleEdit}>
-          <input
-            required
-            type="text"
-            ref={(input) => (this.getTitle = input)}
-            defaultValue={this.props.post.title}
-            placeholder="Enter Post Title"
-          />
-          <br />
-          <br />
-          <textarea
-            required
-            rows="5"
-            ref={(input) => (this.getDescription = input)}
-            defaultValue={this.props.post.description}
-            cols="28"
-            placeholder="Enter Post"
-          />
-          <br />
-          <br />
-          <button>Update</button>
-        </form>
-      </div>
-    );
+  });
+
+  useEffect(() => {
+    if (post === null) {
+      loadOnePost(id)
+        .catch((error) => {
+          alert("loading post failed " + error);
+        })
+        .then();
+    }
+    if (post !== null && post.photos.length !== 0 && images.length === 0) {
+      let photos = [];
+      post.photos.map((photo) => {
+        photos.push({ original: photo, thumbnail: photo });
+        return 0;
+      });
+      setImages(photos);
+      //$("input-2").fileinput();
+    }
+  }, [post, images.length, loadOnePost, id]);
+
+  function handleLoad(e) {
+    e.preventDefault();
   }
+
+  return post === null ? (
+    <Spinner />
+  ) : (
+    <div>
+      <input
+        id="input-id"
+        type="file"
+        class="file"
+        data-preview-file-type="text"
+      ></input>
+      <form onSubmit={(e) => editPost(e, id)}>
+        <div id="container-wrapper" className="container-wrapper">
+          <div id="container-inner" className="container-inner">
+            <div>
+              {images.length !== 0 ? (
+                <ImageGallery
+                  slideOnThumbnailOver={false}
+                  onImageLoad={handleLoad}
+                  onErrorImageURL="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg"
+                  useBrowserFullscreen={false}
+                  lazyLoad={true}
+                  thumbnailPosition="bottom"
+                  showPlayButton={false}
+                  items={images}
+                />
+              ) : (
+                <h1>There are no images :(</h1>
+              )}
+              <table className="table table-striped table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="col">
+                      <h4>Title</h4>
+                    </th>
+                    <th scope="col">
+                      <h4 align="right">
+                        <input
+                          type="text"
+                          defaultValue={post.title}
+                          name="postTitle"
+                        ></input>
+                      </h4>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">
+                      <h4>Price</h4>
+                    </th>
+                    <th scope="col">
+                      <h4 align="right">
+                        <input
+                          type="number"
+                          defaultValue={post.price}
+                          name="postPrice"
+                        ></input>
+                        €
+                      </h4>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">
+                      <h4>Phone number</h4>
+                    </th>
+                    <th scope="col">
+                      <h4 align="right">
+                        <input
+                          type="text"
+                          defaultValue={post.phoneNumber}
+                          name="postPhoneNumber"
+                        ></input>
+                      </h4>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">
+                      <h4>Category</h4>
+                    </th>
+                    <th scope="col">
+                      <h4 align="right">
+                        <input
+                          rows="10"
+                          cols="40"
+                          type="text"
+                          defaultValue={post.category}
+                          name="postCategory"
+                        ></input>
+                      </h4>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">
+                      <h4>Description</h4>
+                    </th>
+                    <th scope="col">
+                      <h4 align="right">
+                        <textarea
+                          rows="10"
+                          cols="40"
+                          type="text"
+                          defaultValue={post.description}
+                          name="postDescription"
+                        ></textarea>
+                      </h4>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">
+                      <h4>Photos</h4>
+                    </th>
+                    <th scope="col">
+                      <h4 align="right">
+                        <div className="form">
+                          <div className="pt-4">
+                            <input
+                              type="file"
+                              id="input-2"
+                              multiple
+                              data-browse-on-zone-click="true"
+                            ></input>
+                          </div>
+                        </div>
+                      </h4>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button className="btn btn-secondary btn-block">Save</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  );
 }
-export default connect()(EditComponent);
+
+function mapStateToProps(state, ownProps) {
+  const id = ownProps.match.params.id;
+  const post = state.posts.onePost;
+
+  return {
+    id,
+    post,
+  };
+}
+
+const mapDispatchToProps = (dispatch) => ({
+  loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
+  cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
+  editPost(e, id) {
+    e.preventDefault();
+    let title = e.target[`postTitle`].value;
+    let description = e.target[`postDescription`].value;
+    let category = e.target[`postCategory`].value;
+    let phoneNumber = e.target[`postPhoneNumber`].value;
+    let price = e.target[`postPrice`].value;
+    let _id = id;
+    const editedPost = {
+      _id,
+      title,
+      description,
+      category,
+      phoneNumber,
+      price,
+    };
+    dispatch(postActions.editPost(editedPost));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPost);

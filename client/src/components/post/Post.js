@@ -4,6 +4,7 @@ import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 import Spinner from "../misc/Spinner";
 import ImageGallery from "react-image-gallery";
+import { history } from "../../redux/history";
 
 function Post({ loadOnePost, cleanOnePost, id, post = null }) {
   const [images, setImages] = useState([]);
@@ -97,6 +98,14 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
                   <th scope="col">Feature</th>
                   <th scope="col">Some kind of feature</th>
                 </tr>
+                <button
+                  className="btn btn-secondary btn-block"
+                  onClick={() => {
+                    history.push(`/Edit/${post._id}`);
+                  }}
+                >
+                  Edit
+                </button>
               </tbody>
             </table>
           </div>
@@ -172,7 +181,6 @@ function mapDispatchToProps(dispatch) {
   return {
     loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
     cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
-
   };
 }
 

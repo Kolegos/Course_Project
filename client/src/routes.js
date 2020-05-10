@@ -18,6 +18,7 @@ import { ToastContainer } from "react-toastify";
 import RequireAuth from "./components/login_signup/RequireAuth";
 import EditProfilePage from "./components/login_signup/EditProfilePage";
 import Test from "./test";
+import EditPost from "./components/post/EditPost";
 
 export default (
   <Router history={history}>
@@ -30,7 +31,7 @@ export default (
         <Route path="/profilePage" component={RequireAuth(ProfilePage)} />
         <Route path="/changePassword" component={ChangePassword} />
         <Route path="/post/:id" component={Post} />
-        <Route path="/post" component={Post} />
+        <Route path="/Edit/:id" component={EditPost} />
         <Route path="/Page" component={PostsPage} />
         <Route
           path="/EditProfilePage"
