@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Post from "./Post";
-import EditComponent from "./EditPost";
 import axios from "axios";
 
 const url =

@@ -85,3 +85,27 @@ export const addPost = (newPost) => (dispatch) => {
     })
   );
 };
+
+export function loadUserPosts(user) {
+  return function (dispatch) {
+    axios.post(url + "/userPosts", user).then((response) => {
+      // console.log(response.data);
+      if (response.status === 204) dispatch(loadUserPostsFailed(user));
+      if (response.status === 200)
+        dispatch(loadUserPostsSuccess(response.data));
+    });
+  };
+}
+
+export function loadUserPostsSuccess(posts) {
+  //console.log(posts);
+  return {
+    type: types.LOAD_USER_POSTS_SUCCESS,
+    posts: posts,
+  };
+}
+export function loadUserPostsFailed(user) {
+  return {
+    type: types.LOAD_USER_POSTS_FAILED,
+  };
+}
