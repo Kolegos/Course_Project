@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import Spinner from "../misc/Spinner";
-import { logOut } from "../../redux/actions/sessionActions";
-import { history } from "../../redux/history";
-import { bindActionCreators } from "redux";
-import { Link } from "react-router-dom";
-import { editUser } from "../../redux/actions/userActions";
 import * as userActions from "../../redux/actions/userActions";
 import axios from "axios";
 
@@ -52,7 +47,7 @@ const EditProfilePage = ({ user = null, editUser }) => {
               }
             } else {
               // Success
-              let fileName = response.data;
+              //let fileName = response.data;
             }
           }
         })
@@ -64,104 +59,106 @@ const EditProfilePage = ({ user = null, editUser }) => {
   return user === null ? (
     <Spinner />
   ) : (
-    <div>
-      <form onSubmit={(e) => editUser(e, user.email, profileImg)}>
-        <div className="row">
-          <div className="col-lg-8">
-            <table className="table table-striped table-borderless">
-              <tbody>
-                <tr>
-                  <th scope="col" style={{ width: "80%" }}>
-                    First Name
-                  </th>
-                  <th scope="col" style={{ width: "20%" }}>
-                    <input
-                      input={user.firstName}
-                      type="text"
-                      defaultValue={user.firstName}
-                      name="firstName"
-                    ></input>
-                  </th>
-                </tr>
-                <tr>
-                  <th scope="col" style={{ width: "80%" }}>
-                    Last Name
-                  </th>
-                  <th scope="col" style={{ width: "20%" }}>
-                    <input
-                      type="text"
-                      defaultValue={user.lastName}
-                      name="lastName"
-                    ></input>
-                  </th>
-                </tr>
+    <div id="container-wrapper" className="container-wrapper">
+      <div id="container-inner" className="container-inner">
+        <form onSubmit={(e) => editUser(e, user.email, profileImg)}>
+          <div className="row">
+            <div className="col-lg-8">
+              <table className="table table-striped table-borderless">
+                <tbody>
+                  <tr>
+                    <th scope="col" style={{ width: "80%" }}>
+                      First Name
+                    </th>
+                    <th scope="col" style={{ width: "20%" }}>
+                      <input
+                        input={user.firstName}
+                        type="text"
+                        defaultValue={user.firstName}
+                        name="firstName"
+                      ></input>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col" style={{ width: "80%" }}>
+                      Last Name
+                    </th>
+                    <th scope="col" style={{ width: "20%" }}>
+                      <input
+                        type="text"
+                        defaultValue={user.lastName}
+                        name="lastName"
+                      ></input>
+                    </th>
+                  </tr>
 
-                <tr>
-                  <th scope="col" style={{ width: "80%" }}>
-                    City
-                  </th>
-                  <th scope="col" style={{ width: "20%" }}>
-                    <input
-                      type="text"
-                      defaultValue={user.city}
-                      name="city"
-                    ></input>
-                  </th>
-                </tr>
-                <tr>
-                  <th scope="col" style={{ width: "80%" }}>
-                    Phone number
-                  </th>
-                  <th scope="col" style={{ width: "20%" }}>
-                    <input
-                      type="text"
-                      defaultValue={user.phoneNumber}
-                      name="phoneNumber"
-                    ></input>
-                  </th>
-                </tr>
-              </tbody>
-            </table>
+                  <tr>
+                    <th scope="col" style={{ width: "80%" }}>
+                      City
+                    </th>
+                    <th scope="col" style={{ width: "20%" }}>
+                      <input
+                        type="text"
+                        defaultValue={user.city}
+                        name="city"
+                      ></input>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col" style={{ width: "80%" }}>
+                      Phone number
+                    </th>
+                    <th scope="col" style={{ width: "20%" }}>
+                      <input
+                        type="text"
+                        defaultValue={user.phoneNumber}
+                        name="phoneNumber"
+                      ></input>
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className=" col-lg-4">
+              {profileImg ? (
+                <img
+                  src={profileImg}
+                  className="img-fluid img-thumbnail"
+                  alt="ProfilePicture"
+                />
+              ) : user.profilePicture ? (
+                <img
+                  src={user.profilePicture}
+                  className="img-fluid img-thumbnail"
+                  alt="ProfilePicture"
+                />
+              ) : (
+                <img
+                  src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
+                  className="img-fluid img-thumbnail"
+                  alt="ProfilePicture"
+                />
+              )}
+              <input
+                id="input-b1"
+                name="input-b1"
+                type="file"
+                onChange={singleFileChangedHandler}
+                className="file"
+                data-browse-on-zone-click="true"
+              ></input>
+            </div>
           </div>
 
-          <div className=" col-lg-4">
-            {profileImg ? (
-              <img
-                src={profileImg}
-                className="img-fluid img-thumbnail"
-                alt="ProfilePicture"
-              />
-            ) : user.profilePicture ? (
-              <img
-                src={user.profilePicture}
-                className="img-fluid img-thumbnail"
-                alt="ProfilePicture"
-              />
-            ) : (
-              <img
-                src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
-                className="img-fluid img-thumbnail"
-                alt="ProfilePicture"
-              />
-            )}
-            <input
-              id="input-b1"
-              name="input-b1"
-              type="file"
-              onChange={singleFileChangedHandler}
-              className="file"
-              data-browse-on-zone-click="true"
-            ></input>
-          </div>
-        </div>
-
-        <button
-          className="btn btn-secondary btn-block"
-          disabled={isloadedProfilePicture && isloadedProfilePicture2}
-        >
-          Save
-        </button>
-      </form>
+          <button
+            className="btn btn-secondary btn-block"
+            disabled={isloadedProfilePicture && isloadedProfilePicture2}
+          >
+            Save
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

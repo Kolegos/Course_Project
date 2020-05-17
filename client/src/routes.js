@@ -14,7 +14,6 @@ import Home from "./components/Home";
 import PageNotFound from "./components/misc/PageNotFound";
 import PostsPage from "./components/post/Page";
 import Post from "./components/post/Post";
-import LoginFirst from "./components/login_signup/LoginFirst";
 import { ToastContainer } from "react-toastify";
 import RequireAuth from "./components/login_signup/RequireAuth";
 import EditProfilePage from "./components/login_signup/EditProfilePage";
@@ -23,35 +22,30 @@ import Test from "./test";
 export default (
   <Router history={history}>
     <App>
-      <div className="auth-wrapper">
-        <div className="auth-inner">
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/forgotpassword" component={ForgotPassword} />
-            <Route path="/profilePage" component={RequireAuth(ProfilePage)} />
-            <Route path="/changePassword" component={ChangePassword} />
-            <Route path="/post/:id" component={Post} />
-            <Route path="/post" component={Post} />
-            <Route path="/loginFirst" component={LoginFirst} />
-            <Route path="/Page" component={PostsPage} />
-            <Route
-              path="/EditProfilePage"
-              component={RequireAuth(EditProfilePage)}
-            />
-            <Route
-              path="/admin/categories/createSubcategory/:id"
-              component={CreateSubcategory}
-            />
-            <Route path="/admin/categories/create" component={CreateCategory} />
-            <Route path="/admin/categories" component={Categories} />
-            <Route path="/test/:id+" component={Test} />4
-            <Route component={PageNotFound} />
-          </Switch>
-          <ToastContainer autoClose={5000} hideProgressBar />
-        </div>
-      </div>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={SignUp} />
+        <Route path="/forgotpassword" component={ForgotPassword} />
+        <Route path="/profilePage" component={RequireAuth(ProfilePage)} />
+        <Route path="/changePassword" component={ChangePassword} />
+        <Route path="/post/:id" component={Post} />
+        <Route path="/post" component={Post} />
+        <Route path="/Page" component={PostsPage} />
+        <Route
+          path="/EditProfilePage"
+          component={RequireAuth(EditProfilePage)}
+        />
+        <Route
+          path="/admin/categories/createSubcategory/:id"
+          component={CreateSubcategory}
+        />
+        <Route path="/admin/categories/create" component={CreateCategory} />
+        <Route path="/admin/categories" component={Categories} />
+        <Route path="/test/:id+" component={Test} />4
+        <Route component={PageNotFound} />
+      </Switch>
+      <ToastContainer autoClose={5000} hideProgressBar />
     </App>
   </Router>
 );

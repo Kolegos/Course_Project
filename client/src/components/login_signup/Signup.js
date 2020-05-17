@@ -22,60 +22,64 @@ const SignUp = ({ createUser, created, authenticated }) => {
     }
   });
   return (
-    <div>
-      <form onSubmit={createUser}>
-        <h3>Sign Up</h3>
-        <div className="form-group">
-          <label>First name</label>
-          <input
-            required={true}
-            type="text"
-            name="firstName"
-            className="form-control"
-            placeholder="First name"
-          />
-        </div>
+    <div id="container-wrapper" className="container-wrapper">
+      <div id="container-inner" className="container-inner small">
+        <div>
+          <form onSubmit={createUser}>
+            <h3>Sign Up</h3>
+            <div className="form-group">
+              <label>First name</label>
+              <input
+                required={true}
+                type="text"
+                name="firstName"
+                className="form-control"
+                placeholder="First name"
+              />
+            </div>
 
-        <div className="form-group">
-          <label>Last name</label>
-          <input
-            required={true}
-            type="text"
-            name="lastName"
-            className="form-control"
-            placeholder="Last name"
-          />
-        </div>
+            <div className="form-group">
+              <label>Last name</label>
+              <input
+                required={true}
+                type="text"
+                name="lastName"
+                className="form-control"
+                placeholder="Last name"
+              />
+            </div>
 
-        <div className="form-group">
-          <label>Email address</label>
-          <input
-            required={true}
-            type="email"
-            name="email"
-            className="form-control"
-            placeholder="Enter email"
-          />
-        </div>
+            <div className="form-group">
+              <label>Email address</label>
+              <input
+                required={true}
+                type="email"
+                name="email"
+                className="form-control"
+                placeholder="Enter email"
+              />
+            </div>
 
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            required={true}
-            type="password"
-            name="password"
-            className="form-control"
-            placeholder="Enter password"
-          />
-        </div>
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                required={true}
+                type="password"
+                name="password"
+                className="form-control"
+                placeholder="Enter password"
+              />
+            </div>
 
-        <button type="submit" className="btn btn-primary btn-block">
-          Sign Up
-        </button>
-        <p className="forgot-password text-right">
-          Already registered <a href="/login">sign in?</a>
-        </p>
-      </form>{" "}
+            <button type="submit" className="btn btn-primary btn-block">
+              Sign Up
+            </button>
+            <p className="forgot-password text-right">
+              Already registered <a href="/login">sign in?</a>
+            </p>
+          </form>{" "}
+        </div>
+      </div>
     </div>
   );
 };

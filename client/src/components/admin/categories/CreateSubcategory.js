@@ -68,84 +68,88 @@ const CreateSubcategory = ({
   return categories.length === 0 ? (
     <h1>loading...</h1>
   ) : (
-    <div className="container">
-      <form>
-        <h2>Add subcategory of {id}</h2>
-        <div>
-          <label>
-            <span>Name</span>
-            <input
-              type="text"
-              placeholder="name"
-              name="name"
-              className="form-control"
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            <span>Category path</span>
-            <input
-              type="text"
-              placeholder="category"
-              name="category"
-              className="form-control"
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            <span>Features</span>
-            {features.map((feature, index) => {
-              return (
-                <div key={`div${index}`}>
-                  <input
-                    key={`name${index}`}
-                    type="text"
-                    placeholder="feature"
-                    name={`name${index}`}
-                    className="form-control"
-                    onChange={handleFeatureChange}
-                  ></input>
-                  <button
-                    key={index}
-                    className="btn btn-sm btn-danger m-2"
-                    onClick={() => {
-                      setFeatures(
-                        features.filter((feature, id) => {
-                          return id !== index;
-                        })
-                      );
-                    }}
-                  >
-                    X
-                  </button>
-                </div>
-              );
-            })}
-          </label>
-          <div>
+    <div id="container-wrapper" className="container-wrapper">
+      <div id="container-inner" className="container-inner">
+        <div className="container">
+          <form>
+            <h2>Add subcategory of {id}</h2>
+            <div>
+              <label>
+                <span>Name</span>
+                <input
+                  type="text"
+                  placeholder="name"
+                  name="name"
+                  className="form-control"
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                <span>Category path</span>
+                <input
+                  type="text"
+                  placeholder="category"
+                  name="category"
+                  className="form-control"
+                  onChange={handleChange}
+                  required
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                <span>Features</span>
+                {features.map((feature, index) => {
+                  return (
+                    <div key={`div${index}`}>
+                      <input
+                        key={`name${index}`}
+                        type="text"
+                        placeholder="feature"
+                        name={`name${index}`}
+                        className="form-control"
+                        onChange={handleFeatureChange}
+                      ></input>
+                      <button
+                        key={index}
+                        className="btn btn-sm btn-danger m-2"
+                        onClick={() => {
+                          setFeatures(
+                            features.filter((feature, id) => {
+                              return id !== index;
+                            })
+                          );
+                        }}
+                      >
+                        X
+                      </button>
+                    </div>
+                  );
+                })}
+              </label>
+              <div>
+                <button
+                  className="btn btn-outline-secondary m-2"
+                  onClick={handleFeatureClick}
+                >
+                  Add Feature
+                </button>
+              </div>
+            </div>
             <button
-              className="btn btn-outline-secondary m-2"
-              onClick={handleFeatureClick}
+              className="btn btn-info"
+              type="submit"
+              disabled={typeof features[0] === "undefined" ? true : false}
+              onClick={handleSave}
             >
-              Add Feature
+              Save
             </button>
-          </div>
+          </form>
         </div>
-        <button
-          className="btn btn-info"
-          type="submit"
-          disabled={typeof features[0] === "undefined" ? true : false}
-          onClick={handleSave}
-        >
-          Save
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

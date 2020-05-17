@@ -49,6 +49,7 @@ function Home({ loadMore, loadLength, length = 0, posts = [] }) {
     <div>
       <ScrollUpButton style={{ color: "white", backgroundColor: "#1c8ef9" }} />
       <InfiniteScroll
+        style={{ overflow: "none" }}
         dataLength={posts.length}
         next={loadNewPosts}
         hasMore={continueLoading}
@@ -57,7 +58,6 @@ function Home({ loadMore, loadLength, length = 0, posts = [] }) {
           <h3 className="text-center">There are no more posts to show</h3>
         }
       >
-        <h1 className="text-center">Check out the latests posts</h1>
         <PostList posts={posts} />
       </InfiniteScroll>
     </div>
