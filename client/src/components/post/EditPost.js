@@ -4,7 +4,6 @@ import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 import Spinner from "../misc/Spinner";
 import ImageGallery from "react-image-gallery";
-import xd from "bootstrap-fileinput";
 
 function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
   const [images, setImages] = useState([]);
