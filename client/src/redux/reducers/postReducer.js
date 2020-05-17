@@ -19,6 +19,10 @@ export default function postReducer(state = [], action) {
       return { ...state, onePost: null };
     case types.LOAD_LENGTH_SUCCESS:
       return { ...state, length: action.length.data };
+    case types.LOAD_USER_POSTS_SUCCESS:
+      return { ...state, posts: action.posts };
+    case types.LOAD_USER_POSTS_FAILED:
+      return { ...state, posts: types.LOAD_USER_POSTS_FAILED };
     default:
       return state;
   }
