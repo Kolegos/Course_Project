@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import * as types from "../../redux/actions/actionTypes";
 import { logOut } from "../../redux/actions/sessionActions";
+import { history } from "../../redux/history";
 
 class Navibar extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Navibar extends React.Component {
       collapsed: true,
     };
   }
+
   toggleNavBar() {
     this.setState({
       collapsed: !this.state.collapsed,
@@ -75,13 +77,16 @@ class Navibar extends React.Component {
                 <a className="dropdown-item" href="/Page">
                   Add post
                 </a>
-                <a
-                  onClick={this.props.logout}
-                  className="dropdown-item"
-                  href="/"
+                <p
+                  onClick={() => {
+                    this.props.logout();
+                    history.push("/");
+                  }}
+                  className="dropdown-item my-0"
+                  style={{ cursor: "pointer" }}
                 >
                   Logout
-                </a>
+                </p>
               </NavDropDown>
             ) : null}
           </ul>

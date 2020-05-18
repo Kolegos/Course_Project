@@ -88,9 +88,6 @@ function ProfilePage({ user = null, logout }) {
         <Link to={"/EditProfilePage"}>
           <button className="btn btn-secondary btn-block">Edit</button>
         </Link>
-        <button className="btn btn-secondary btn-block" onClick={handleLogout}>
-          logout
-        </button>
       </div>
     </div>
   );
