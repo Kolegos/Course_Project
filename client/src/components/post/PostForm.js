@@ -63,7 +63,6 @@ class PostForm extends Component {
     else if (description === "") this.notify("description");
     else if (price === "") this.notify("price");
     else if (category === "") this.notify("category");
-
     else valid = true;
 
     if (!valid) return;
@@ -130,7 +129,6 @@ class PostForm extends Component {
   ifUploaded = (arr) => {
     if (this.state.isLoading === true) {
       if (arr.length === 0)
-
         return (
           <div
             class="p-3 mb-2 bg-danger text-white"
@@ -204,7 +202,6 @@ class PostForm extends Component {
               />
             </div>
             <div className="pt-4">
-              <h5>Photos</h5>
               <input
                 id="input-b1"
                 name="input-b1"

@@ -63,7 +63,6 @@ function ProfilePage({ user = null, logout }) {
               </tbody>
             </table>
           </div>
-          {console.log(user.profilePicture)}
           <div className=" col-lg-4">
             {user.profilePicture == null ? (
               <img
