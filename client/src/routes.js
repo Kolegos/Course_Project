@@ -19,12 +19,14 @@ import RequireAuth from "./components/login_signup/RequireAuth";
 import EditProfilePage from "./components/login_signup/EditProfilePage";
 import Test from "./test";
 import EditPost from "./components/post/EditPost";
+import AdminPanel from "./components/admin/AdminPanel";
 
 import UserPosts from "./components/post/UserPosts";
 export default (
   <Router history={history}>
     <App>
       <Switch>
+        <Route path="/admin" component={RequireAuth(AdminPanel, true)} />
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
@@ -46,8 +48,14 @@ export default (
           path="/admin/categories/createSubcategory/"
           component={CreateSubcategory}
         />
-        <Route path="/admin/categories/create" component={CreateCategory} />
-        <Route path="/admin/categories" component={Categories} />
+        <Route
+          path="/admin/categories/create"
+          component={RequireAuth(CreateCategory, true)}
+        />
+        <Route
+          path="/admin/categories"
+          component={RequireAuth(Categories, true)}
+        />
         <Route path="/test/:id+" component={Test} />
         <Route path="/YourPosts" component={RequireAuth(UserPosts)} />
         <Route component={PageNotFound} />
