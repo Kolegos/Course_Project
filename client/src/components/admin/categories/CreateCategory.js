@@ -64,7 +64,6 @@ const CreateCategory = ({ loadCategories, addCategory, categories = [] }) => {
                   placeholder="category"
                   name="category"
                   className="form-control"
-                  pattern="^\/.+"
                   onChange={handleChange}
                   required
                 />

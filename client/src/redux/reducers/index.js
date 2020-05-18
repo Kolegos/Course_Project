@@ -4,6 +4,7 @@ import sessions from "./sessionReducer";
 import users from "./userReducer";
 import posts2 from "./postReducer2";
 import categories from "./categoriesReducer";
+import features from "./featuresReducer";
 
 const rootReducer = combineReducers({
   posts,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   sessions,
   users,
   categories,
+  features,
 });
 
 export default rootReducer;

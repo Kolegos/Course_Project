@@ -30,6 +30,10 @@ export function deleteCategory(category) {
   };
 }
 
+export function updateCategory(updatedCategory) {
+  return { type: types.UPDATE_CATEGORY, updatedCategory };
+}
+
 export function loadCategoriesSuccess(categories) {
   return { type: types.LOAD_CATEGORIES_SUCCESS, categories };
 }

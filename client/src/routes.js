@@ -42,6 +42,10 @@ export default (
           path="/admin/categories/createSubcategory/:id"
           component={CreateSubcategory}
         />
+        <Route
+          path="/admin/categories/createSubcategory/"
+          component={CreateSubcategory}
+        />
         <Route path="/admin/categories/create" component={CreateCategory} />
         <Route path="/admin/categories" component={Categories} />
         <Route path="/test/:id+" component={Test} />

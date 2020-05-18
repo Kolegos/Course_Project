@@ -16,14 +16,25 @@ const CreateSubcategory = ({
   });
 
   const [features, setFeatures] = useState([]);
+  const [featuresFromParent, setFeaturesFromParent] = useState([]);
 
   useEffect(() => {
     if (categories.length === 0) loadCategoriesFromDB();
   });
 
+  useEffect(() => {
+    getFeaturesFromParent(id);
+  }, [categories, getFeaturesFromParent, id]);
+
   function loadCategoriesFromDB() {
     loadCategories().catch((error) => {
       console.log("loading categories failed" + error);
+    });
+  }
+
+  function getFeaturesFromParent(name) {
+    categories.map((category) => {
+      if (category.category === name) setFeaturesFromParent(category.features);
     });
   }
 
@@ -33,11 +44,10 @@ const CreateSubcategory = ({
       ...newCategory,
       [event.target.name]:
         event.target.name === "category"
-          ? `/${id}/${event.target.value}`
+          ? `${event.target.value}`
           : event.target.value,
     };
     setCategory(updatedCategory);
-    console.log(features[0]);
   }
 
   function handleFeatureChange(event) {
@@ -58,7 +68,8 @@ const CreateSubcategory = ({
 
   function handleSave(event) {
     event.preventDefault();
-    newCategory.features = features;
+    newCategory.features = featuresFromParent.concat(features);
+    newCategory.parent = id === "" ? "" : `/${id}/`;
     addCategory(newCategory).catch((error) => {
       console.log(error + "was not able to add category");
     });
@@ -112,6 +123,7 @@ const CreateSubcategory = ({
                         name={`name${index}`}
                         className="form-control"
                         onChange={handleFeatureChange}
+                        required
                       ></input>
                       <button
                         key={index}
@@ -155,7 +167,10 @@ const CreateSubcategory = ({
 };
 
 function mapStateToProps(state, ownProps) {
-  const id = ownProps.match.params.id;
+  const id =
+    typeof ownProps.match.params.id !== "undefined"
+      ? ownProps.match.params.id
+      : "";
   return {
     categories: state.categories.categories,
     id,

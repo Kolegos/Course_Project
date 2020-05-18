@@ -19,6 +19,7 @@ function Post({
 
   useEffect(() => {
     window.onpopstate = (e) => {
+      debugger;
       cleanOnePost();
     };
   });
@@ -107,16 +108,18 @@ function Post({
                   <th scope="col">Feature</th>
                   <th scope="col">Some kind of feature</th>
                 </tr>
-                {authenticated === types.AUTHENTICATED &&
-                user.email === post.userId ? (
-                  <button
-                    className="btn btn-secondary btn-block"
-                    onClick={() => {
-                      history.push(`/Edit/${post._id}`);
-                    }}
-                  >
-                    Edit
-                  </button>
+                {user ? (
+                  authenticated === types.AUTHENTICATED &&
+                  user.email === post.userId ? (
+                    <button
+                      className="btn btn-secondary btn-block"
+                      onClick={() => {
+                        history.push(`/Edit/${post._id}`);
+                      }}
+                    >
+                      Edit
+                    </button>
+                  ) : null
                 ) : null}
               </tbody>
             </table>

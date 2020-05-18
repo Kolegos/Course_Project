@@ -4,6 +4,10 @@ import { addPost } from "../../redux/actions/postActions";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { loadCategories } from "../../redux/actions/categoriesActions";
+import RecursiveDropdown from "./RecursiveDropdown";
+import Features from "./Features";
+
 const url =
   process.env.NODE_ENV === `production`
     ? ``
@@ -21,9 +25,17 @@ class PostForm extends Component {
       isTitle: false,
       isDescription: false,
       isPrice: false,
+      categories: [],
+      features: [{}],
     };
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.nameAppoint = this.nameAppoint.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.loadCategories().catch((error) => {
+      console.log(error + "Loading categories failed");
+    });
   }
 
   notify = (arr) => {
@@ -185,13 +197,23 @@ class PostForm extends Component {
             </div>
             <div className="pt-4">
               <h5>Category</h5>
-              <select id="dropdown" onChange={this.handleDropdownChange}>
-                <option value="N/A">N/A</option>
-                <option value="Skaudvile">Skaudvile</option>
-                <option value="yra">yra</option>
-                <option value="didelis">didelis</option>
-                <option value="miestas">kaimas</option>
-              </select>
+              {typeof this.props.categories === "undefined" ? null : (
+                <RecursiveDropdown
+                  parent="^(?![\s\S])"
+                  categories={this.props.categories}
+                />
+              )}
+            </div>
+            <div>
+              {typeof this.props.categories === "undefined" ? null : (
+                <div>
+                  {this.props.categories.map((category) => {
+                    if (category.category === this.props.selectedCategory) {
+                      return <Features features={category.features} />;
+                    }
+                  })}
+                </div>
+              )}
             </div>
             <div className="pt-4">
               <h5>Phone number</h5>
@@ -221,12 +243,16 @@ class PostForm extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   const defaultUser = {
     userId: "Undefined",
   };
   return {
+    selectedCategory: state.categories.updatedCategory,
     user: state.sessions.user ? state.sessions.user : defaultUser,
+    categories: state.categories.categories,
+    selectedFeatures: state.features.updatedFeatures,
   };
 }
-export default connect(mapStateToProps, { addPost })(PostForm);
+export default connect(mapStateToProps, { addPost, loadCategories })(PostForm);

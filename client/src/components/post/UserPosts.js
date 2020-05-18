@@ -1,12 +1,10 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Spinner from "../misc/Spinner";
 import * as postActions from "../../redux/actions/postActions";
 import PostList from "./PostList";
 
 function UserPosts({ user = null, loadUserPosts, posts = [] }) {
-  const [load, setLoad] = useState(null);
   useEffect(() => {}, []);
   return user === null ? (
     <Spinner />
