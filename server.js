@@ -104,7 +104,6 @@ app.post("/api/edit/EditProfilePage", (req, res) => {
         if (req.body.profileImage) {
           foundObject.profilePicture = req.body.profileImage;
         }
-
         foundObject.save(function (err, updatedObject) {
           if (err) {
             console.log(err);
@@ -130,6 +129,7 @@ async function getLength() {
     console.log(error);
   }
 }
+
 app.post("/api/users/", (req, res) => {
   User.findById(req.body.id, (err, user) => {
     if (err) console.log(err);
@@ -183,6 +183,44 @@ async function getMorePosts(number) {
 
 const Post = require("./models/post");
 
+
+app.post(`/api/Edit`, (req, res) => {
+  Post.findById({ _id: req.body._id }, function (err, foundObject) {
+    if (err) {
+      console.log(err);
+      res.status(500).send();
+    } else {
+      if (!foundObject) {
+        res.status(404).send();
+      } else {
+        if (req.body.title) {
+          foundObject.title = req.body.title;
+        }
+        if (req.body.description) {
+          foundObject.description = req.body.description;
+        }
+        if (req.body.price) {
+          foundObject.price = req.body.price;
+        }
+        if (req.body.category) {
+          foundObject.category = req.body.category;
+        }
+        if (req.body.phoneNumber) {
+          foundObject.phoneNumber = req.body.phoneNumber;
+        }
+
+        foundObject.save(function (err, updatedObject) {
+          if (err) {
+            console.log(err);
+            res.status(500).send();
+          } else {
+            res.send(updatedObject);
+          }
+        });
+      }
+    }
+  });
+});
 app.post("/api/userPosts", (req, res) => {
   Post.find({ userId: req.body._id }).exec((err, posts) => {
     if (err) {

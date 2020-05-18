@@ -23,6 +23,20 @@ export default function postReducer(state = [], action) {
       return { ...state, posts: action.posts };
     case types.LOAD_USER_POSTS_FAILED:
       return { ...state, posts: types.LOAD_USER_POSTS_FAILED };
+    case types.EDIT_POST:
+      return {
+        ...state,
+        onePost: {
+          ...state.post,
+          userId: action.post.userId,
+          title: action.post.title,
+          category: action.post.category,
+          description: action.post.description,
+          photos: action.post.photos,
+          phoneNumber: action.post.phoneNumber,
+          price: action.post.price,
+        },
+      };
     default:
       return state;
   }

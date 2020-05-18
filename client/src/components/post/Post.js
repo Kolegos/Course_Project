@@ -4,8 +4,17 @@ import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 import Spinner from "../misc/Spinner";
 import ImageGallery from "react-image-gallery";
+import { history } from "../../redux/history";
+import * as types from "../../redux/actions/actionTypes";
 
-function Post({ loadOnePost, cleanOnePost, id, post = null }) {
+function Post({
+  loadOnePost,
+  cleanOnePost,
+  id,
+  post = null,
+  authenticated,
+  user,
+}) {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -22,6 +31,7 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
         })
         .then();
     }
+
     if (post !== null && post.photos.length !== 0 && images.length === 0) {
       let photos = [];
       post.photos.map((photo) => {
@@ -97,6 +107,17 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
                   <th scope="col">Feature</th>
                   <th scope="col">Some kind of feature</th>
                 </tr>
+                {authenticated === types.AUTHENTICATED &&
+                user.email === post.userId ? (
+                  <button
+                    className="btn btn-secondary btn-block"
+                    onClick={() => {
+                      history.push(`/Edit/${post._id}`);
+                    }}
+                  >
+                    Edit
+                  </button>
+                ) : null}
               </tbody>
             </table>
           </div>
@@ -161,10 +182,14 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
 function mapStateToProps(state, ownProps) {
   const id = ownProps.match.params.id;
   const post = state.posts.onePost;
+  const authenticated = state.sessions.authenticated;
+  const user = state.sessions.user;
 
   return {
     id,
     post,
+    authenticated,
+    user,
   };
 }
 
@@ -172,7 +197,6 @@ function mapDispatchToProps(dispatch) {
   return {
     loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
     cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
-
   };
 }
 

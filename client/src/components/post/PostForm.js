@@ -202,7 +202,6 @@ class PostForm extends Component {
               />
             </div>
             <div className="pt-4">
-              <h5>Photos</h5>
               <input
                 id="input-b1"
                 name="input-b1"

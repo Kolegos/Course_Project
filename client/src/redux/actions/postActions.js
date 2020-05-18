@@ -41,14 +41,25 @@ export function cleanOnePost() {
   return { type: types.CLEAN_ONE_POST_SUCCESS };
 }
 
-export const editPost = (editedPost) => (dispatch) => {
-  axios.post(url + "/EditProfilePage", editedPost).then((post) =>
-    dispatch({
-      type: types.EDIT_POST,
-      data: post,
-    })
-  );
-};
+export function editPostSuccess(post) {
+  history.push(`/post/${post._id}`);
+
+  return {
+    type: types.EDIT_POST,
+    post: post,
+  };
+}
+
+export function editPost(post) {
+  return function (dispatch) {
+    axios.post(url + "/Edit", post).then((response) => {
+      if (response.status === 200) {
+        //console.log(response.data);
+        dispatch(editPostSuccess(response.data));
+      }
+    });
+  };
+}
 
 export function loadPosts() {
   return function (dispatch) {
