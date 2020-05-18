@@ -47,7 +47,7 @@ function Home({ loadMore, loadLength, length = 0, posts = [] }) {
     <Spinner />
   ) : (
     <div>
-      <ScrollUpButton style={{ color: "white", backgroundColor: "#1c8ef9" }} />
+      <ScrollUpButton style={{ color: "white", backgroundColor: "#004c3f" }} />
       <InfiniteScroll
         style={{ overflow: "none" }}
         dataLength={posts.length}
@@ -55,7 +55,9 @@ function Home({ loadMore, loadLength, length = 0, posts = [] }) {
         hasMore={continueLoading}
         loader={<h4>Loading...</h4>}
         endMessage={
-          <h3 className="text-center">There are no more posts to show</h3>
+          <h3 className="text-center" style={{ color: "white" }}>
+            There are no more posts to show
+          </h3>
         }
       >
         <PostList posts={posts} />
