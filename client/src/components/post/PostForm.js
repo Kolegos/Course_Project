@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { loadCategories } from "../../redux/actions/categoriesActions";
 import RecursiveDropdown from "./RecursiveDropdown";
+import Features from "./Features";
 
 const url =
   process.env.NODE_ENV === `production`
@@ -208,13 +209,7 @@ class PostForm extends Component {
                 <div>
                   {this.props.categories.map((category) => {
                     if (category.category === this.props.selectedCategory) {
-                      return (
-                        <div>
-                          {category.features.map((feature) => {
-                            return <h1>{feature}</h1>;
-                          })}
-                        </div>
-                      );
+                      return <Features features={category.features} />;
                     }
                   })}
                 </div>
