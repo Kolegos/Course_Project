@@ -253,6 +253,7 @@ function mapStateToProps(state) {
     selectedCategory: state.categories.updatedCategory,
     user: state.sessions.user ? state.sessions.user : defaultUser,
     categories: state.categories.categories,
+    selectedFeatures: state.features.updatedFeatures,
   };
 }
 export default connect(mapStateToProps, { addPost, loadCategories })(PostForm);

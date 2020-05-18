@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { updateFeatures } from "../../redux/actions/featuresActions";
 
-const Features = ({ features }) => {
+const Features = ({ features, dispatch }) => {
   const [selectedFeatures, setFeatures] = useState(
     features.map((feature) => {
       return {
@@ -10,6 +12,10 @@ const Features = ({ features }) => {
     })
   );
 
+  useEffect(() => {
+    dispatch(updateFeatures(selectedFeatures));
+  }, [selectedFeatures]);
+
   function handleChange(event) {
     event.preventDefault();
     selectedFeatures.map((feature) => {
@@ -17,7 +23,6 @@ const Features = ({ features }) => {
         feature.value = event.target.value;
       }
     });
-    console.log(selectedFeatures);
   }
 
   return features.map((feature, index) => {
@@ -43,4 +48,4 @@ const Features = ({ features }) => {
   });
 };
 
-export default Features;
+export default connect(null)(Features);
