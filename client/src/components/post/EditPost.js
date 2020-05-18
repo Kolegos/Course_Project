@@ -40,12 +40,6 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
     <Spinner />
   ) : (
     <div>
-      <input
-        id="input-id"
-        type="file"
-        class="file"
-        data-preview-file-type="text"
-      ></input>
       <form onSubmit={(e) => editPost(e, id)}>
         <div id="container-wrapper" className="container-wrapper">
           <div id="container-inner" className="container-inner">
@@ -138,25 +132,6 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
                           defaultValue={post.description}
                           name="postDescription"
                         ></textarea>
-                      </h4>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">
-                      <h4>Photos</h4>
-                    </th>
-                    <th scope="col">
-                      <h4 align="right">
-                        <div className="form">
-                          <div className="pt-4">
-                            <input
-                              type="file"
-                              id="input-2"
-                              multiple
-                              data-browse-on-zone-click="true"
-                            ></input>
-                          </div>
-                        </div>
                       </h4>
                     </th>
                   </tr>
