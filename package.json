@@ -23,6 +23,7 @@
     "nodemon": "^2.0.2",
     "path": "^0.12.7",
     "pbkdf2": "^3.0.17",
+    "react-dropzone": "^11.0.1",
     "react-image-gallery": "^1.0.7",
     "react-images": "^1.1.2",
     "react-infinite-scroll-component": "^5.0.4",
