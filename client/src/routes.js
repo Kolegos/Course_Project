@@ -26,7 +26,7 @@ export default (
   <Router history={history}>
     <App>
       <Switch>
-        <Route path="/admin" component={RequireAuth(AdminPanel, true)} />
+        <Route exact path="/admin" component={RequireAuth(AdminPanel, true)} />
         <Route exact path="/" component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
@@ -42,11 +42,11 @@ export default (
         />
         <Route
           path="/admin/categories/createSubcategory/:id"
-          component={CreateSubcategory}
+          component={RequireAuth(CreateSubcategory, true)}
         />
         <Route
           path="/admin/categories/createSubcategory/"
-          component={CreateSubcategory}
+          component={RequireAuth(CreateSubcategory, true)}
         />
         <Route
           path="/admin/categories/create"
