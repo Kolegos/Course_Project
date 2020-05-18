@@ -7,7 +7,7 @@ import SignUp from "./components/login_signup/Signup";
 import ForgotPassword from "./components/login_signup/ForgotPassword";
 import ProfilePage from "./components/login_signup/ProfilePage";
 import ChangePassword from "./components/login_signup/ChangePassword";
-import Categories from "./components/admin/categories/CategoriesConcept2";
+import Categories from "./components/admin/categories/Categories";
 import CreateCategory from "./components/admin/categories/CreateCategory";
 import CreateSubcategory from "./components/admin/categories/CreateSubcategory";
 import Home from "./components/Home";

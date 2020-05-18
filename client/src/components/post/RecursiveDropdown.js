@@ -11,7 +11,9 @@ const RecursiveDropdown = ({ parent, categories, dispatch }) => {
     categories.map((categoryFromArray) => {
       if (categoryFromArray.parent === `/${selectedCategory}/`) {
         setShow(true);
+        return 0;
       }
+      return 0;
     });
   }
 
@@ -22,7 +24,7 @@ const RecursiveDropdown = ({ parent, categories, dispatch }) => {
   useEffect(() => {
     checkIfHasChildren();
     dispatch(updateCategory(selectedCategory));
-  }, [selectedCategory]);
+  }, [selectedCategory, checkIfHasChildren, dispatch]);
 
   function handleChange(event) {
     setCategory(event.target.value);
@@ -38,6 +40,8 @@ const RecursiveDropdown = ({ parent, categories, dispatch }) => {
                 {category.name}
               </option>
             );
+          } else {
+            return null;
           }
         })}
       </select>

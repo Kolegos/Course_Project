@@ -24,7 +24,7 @@ const CreateSubcategory = ({
 
   useEffect(() => {
     getFeaturesFromParent(id);
-  }, [categories]);
+  }, [categories, getFeaturesFromParent, id]);
 
   function loadCategoriesFromDB() {
     loadCategories().catch((error) => {
@@ -171,7 +171,6 @@ function mapStateToProps(state, ownProps) {
     typeof ownProps.match.params.id !== "undefined"
       ? ownProps.match.params.id
       : "";
-  debugger;
   return {
     categories: state.categories.categories,
     id,

@@ -14,7 +14,7 @@ const Features = ({ features, dispatch }) => {
 
   useEffect(() => {
     dispatch(updateFeatures(selectedFeatures));
-  }, [selectedFeatures]);
+  }, [selectedFeatures, dispatch]);
 
   function handleChange(event) {
     event.preventDefault();
@@ -22,6 +22,7 @@ const Features = ({ features, dispatch }) => {
       if (feature.feature === event.target.name) {
         feature.value = event.target.value;
       }
+      return 0;
     });
   }
 
