@@ -10,6 +10,7 @@ function Post({ loadOnePost, cleanOnePost, id, post = null }) {
 
   useEffect(() => {
     window.onpopstate = (e) => {
+      debugger;
       cleanOnePost();
     };
   });
@@ -172,7 +173,6 @@ function mapDispatchToProps(dispatch) {
   return {
     loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
     cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
-
   };
 }
 

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import Subcategories from "./Subcategories";
 import * as categoriesActions from "../../../redux/actions/categoriesActions";
 import { Link } from "react-router-dom";
 
 const Categories = ({ loadCategories, deleteCategory, categories = [] }) => {
-  const [parentsToShow, setParents] = useState(["^(?![sS])"]);
-
   useEffect(() => {
     if (categories.length === 0) {
       loadCategoriesFromDB();
@@ -18,22 +15,6 @@ const Categories = ({ loadCategories, deleteCategory, categories = [] }) => {
     loadCategories().catch((error) => {
       console.log("loading categories failed" + error);
     });
-  }
-
-  function handleDelete(category) {
-    deleteCategory(category).catch((error) => {
-      console.log("wasn't able to delete the subcategory");
-    });
-    window.location.reload(false);
-  }
-  function getChildren(category) {
-    let children = [];
-    categories.map((categoryFromArray) => {
-      if (categoryFromArray.parent === category) {
-        children.push(categoryFromArray.category);
-      }
-    });
-    return children;
   }
 
   const RecursiveComponent = ({ parent }) => {

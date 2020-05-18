@@ -63,9 +63,6 @@ const Subcategories = ({ category, categories, deleteCategory }) => {
 };
 
 function mapStateToProps(state) {
-  let kategorija =
-    state.categories.categories[1].parent +
-    state.categories.categories[1].category;
   return {
     categories: state.categories.categories,
   };

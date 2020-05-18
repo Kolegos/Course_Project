@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { loadCategories } from "../../redux/actions/categoriesActions";
-import Dropdowns from "./Dropdowns";
+import RecursiveDropdown from "./RecursiveDropdown";
 
 const url =
   process.env.NODE_ENV === `production`
@@ -25,13 +25,13 @@ class PostForm extends Component {
       isDescription: false,
       isPrice: false,
       categories: [],
+      features: [{}],
     };
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
     this.nameAppoint = this.nameAppoint.bind(this);
   }
 
   componentDidMount() {
-    debugger;
     this.props.loadCategories().catch((error) => {
       console.log(error + "Loading categories failed");
     });
@@ -197,11 +197,27 @@ class PostForm extends Component {
             <div className="pt-4">
               <h5>Category</h5>
               {typeof this.props.categories === "undefined" ? null : (
-                <Dropdowns
+                <RecursiveDropdown
                   parent="^(?![\s\S])"
                   categories={this.props.categories}
-                  onChange={this.handleDropdownChange}
                 />
+              )}
+            </div>
+            <div>
+              {typeof this.props.categories === "undefined" ? null : (
+                <div>
+                  {this.props.categories.map((category) => {
+                    if (category.category === this.props.selectedCategory) {
+                      return (
+                        <div>
+                          {category.features.map((feature) => {
+                            return <h1>{feature}</h1>;
+                          })}
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
               )}
             </div>
             <div className="pt-4">
@@ -239,6 +255,7 @@ function mapStateToProps(state) {
     userId: "Undefined",
   };
   return {
+    selectedCategory: state.categories.updatedCategory,
     user: state.sessions.user ? state.sessions.user : defaultUser,
     categories: state.categories.categories,
   };

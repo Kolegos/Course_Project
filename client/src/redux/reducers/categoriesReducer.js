@@ -18,6 +18,8 @@ export default function categoriesReducer(state = [], action) {
       };
     case types.DELETE_CATEGORY_SUCCESS:
       return state;
+    case types.UPDATE_CATEGORY:
+      return { ...state, updatedCategory: action.updatedCategory };
     default:
       return state;
   }
