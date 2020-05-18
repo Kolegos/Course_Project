@@ -1,6 +1,10 @@
 import React from "react";
 import NavItem from "./NavItem";
 import NavDropDown from "./NavDropDown";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import * as types from "../../redux/actions/actionTypes";
+import { logOut } from "../../redux/actions/sessionActions";
 
 class Navibar extends React.Component {
   constructor(props) {
@@ -24,7 +28,7 @@ class Navibar extends React.Component {
       ? "navbar-toggler vanbar-toggler-right-collapsed"
       : "navbar-toggler navbar - toggler-right";
     return (
-      <nav className="navbar sticky-top navbar-expand-md navbar-light bg-info">
+      <nav className="navbar sticky-top navbar-expand-md navbar-light bg-muted">
         <a className="navbar-brand" href="/">
           <h4>
             Kolegos
@@ -47,37 +51,39 @@ class Navibar extends React.Component {
         <div className={`${classOne}`} id="navbarResponsive">
           <ul className="navbar-nav ml-auto">
             <NavItem path="/" name="Home" />
-            <NavItem path="/login" name="Login" />
-            <NavItem path="/signup" name="Sign up" />
-            <form className="form-inline my-2 my-lg-0">
-              <input
-                className="form-control mr-sm-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button
-                className="btn btn-outline-dark my-2 my-sm-0"
-                type="submit"
-              >
-                Search
-              </button>
-            </form>
-            <NavDropDown name="Profile">
-              <a className="dropdown-item" href="/YourPosts">
-                Your posts
-              </a>
-              <a className="dropdown-item" href="/">
-                Comments
-              </a>
-              <div className="dropdown-divider"></div>
-              <a className="dropdown-item" href="/profilePage">
-                Personal information
-              </a>
-              <a className="dropdown-item" href="/Page">
-                Add post
-              </a>
-            </NavDropDown>
+            {this.props.authenticated === types.NOT_AUTHENTICATED ? (
+              <>
+                <NavItem path="/login" name="Login" />
+                <NavItem path="/signup" name="Sign up" />
+              </>
+            ) : null}
+            {this.props.email === "admin@kolegos.lt" ? (
+              <NavItem path="/admin" name="Admin" />
+            ) : null}
+            {this.props.authenticated === types.AUTHENTICATED ? (
+              <NavDropDown name={this.props.email}>
+                <a className="dropdown-item" href="/YourPosts">
+                  Your posts
+                </a>
+                <a className="dropdown-item" href="/">
+                  Comments
+                </a>
+                <div className="dropdown-divider"></div>
+                <a className="dropdown-item" href="/profilePage">
+                  Personal information
+                </a>
+                <a className="dropdown-item" href="/Page">
+                  Add post
+                </a>
+                <a
+                  onClick={this.props.logout}
+                  className="dropdown-item"
+                  href="/"
+                >
+                  Logout
+                </a>
+              </NavDropDown>
+            ) : null}
           </ul>
         </div>
       </nav>
@@ -85,4 +91,21 @@ class Navibar extends React.Component {
   }
 }
 
-export default Navibar;
+function mapStateToProps(state) {
+  const authenticated = state.sessions.authenticated;
+  const email =
+    state.sessions && state.sessions.user ? state.sessions.user._id : "";
+
+  return {
+    authenticated,
+    email,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: bindActionCreators(logOut, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navibar);

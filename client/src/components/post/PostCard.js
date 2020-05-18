@@ -34,7 +34,7 @@ const PostCard = (props) => {
           textOverflow: "ellipsis",
         }}
       >
-        <h5 className="text-info">{props.post.title}</h5>
+        <h5 className="text-dark">{props.post.title}</h5>
       </div>
       <p
         style={{
