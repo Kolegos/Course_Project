@@ -156,3 +156,11 @@ html,
 .postcard:hover {
   transform: scale(1.02);
 }
+
+.image-gallery-content:not(.fullscreen) .image-gallery-image {
+  height: 256px;
+}
+
+.image-gallery-thumbnail-image {
+  height: 48px;
+}
