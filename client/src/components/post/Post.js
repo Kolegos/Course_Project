@@ -108,19 +108,6 @@ function Post({
                   <th scope="col">Feature</th>
                   <th scope="col">Some kind of feature</th>
                 </tr>
-                {user ? (
-                  authenticated === types.AUTHENTICATED &&
-                  user.email === post.userId ? (
-                    <button
-                      className="btn btn-secondary btn-block"
-                      onClick={() => {
-                        history.push(`/Edit/${post._id}`);
-                      }}
-                    >
-                      Edit
-                    </button>
-                  ) : null
-                ) : null}
               </tbody>
             </table>
           </div>
@@ -138,8 +125,11 @@ function Post({
             <div className="row">
               <div className="col-lg">
                 <img
-                  src="https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png
-"
+                  src={
+                    user && user.profilePicture
+                      ? user.profilePicture
+                      : "https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
+                  }
                   className="img-fluid img-thumbnail"
                   alt="ProfilePicture"
                 />
@@ -159,13 +149,27 @@ function Post({
                     </tr>
                     <tr>
                       <th scope="col">
-                        <h6>Location</h6>
+                        <h6>{user && user.city ? user.city : ""}</h6>
                       </th>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
+
+            {user ? (
+              authenticated === types.AUTHENTICATED &&
+              user.email === post.userId ? (
+                <button
+                  className="btn btn-secondary btn-block"
+                  onClick={() => {
+                    history.push(`/Edit/${post._id}`);
+                  }}
+                >
+                  Edit
+                </button>
+              ) : null
+            ) : null}
             <div className="col col-lg">
               <h3>
                 Kolegos
