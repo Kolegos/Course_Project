@@ -183,7 +183,6 @@ async function getMorePosts(number) {
 
 const Post = require("./models/post");
 
-
 app.post(`/api/Edit`, (req, res) => {
   Post.findById({ _id: req.body._id }, function (err, foundObject) {
     if (err) {
@@ -250,7 +249,9 @@ app.get("/api/posts/", (req, res) => {
 });
 
 app.post("/api/posts/add", (req, res) => {
-  const post = new Post(req.body).save();
+  const post = new Post(req.body).save().then((post) => {
+    res.send(post);
+  });
 });
 
 app.get("/api/get", authenticateToken, async (req, res) => {

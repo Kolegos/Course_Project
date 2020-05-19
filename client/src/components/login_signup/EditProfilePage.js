@@ -18,13 +18,6 @@ const EditProfilePage = ({ user = null, editUser }) => {
   const [isloadedProfilePicture, setLoadProfile] = useState(null);
   const [isloadedProfilePicture2, setLoadProfile2] = useState(null);
 
-  function singleFileChangedHandler(event) {
-    setFile(event.target.files[0]);
-    setLoad(true);
-    setLoadProfile(true);
-    setLoadProfile2(true);
-  }
-
   const handleFiles = (files) => {
     setNewProfileImg(files[0]);
   };

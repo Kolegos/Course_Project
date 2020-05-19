@@ -89,12 +89,18 @@ export function loadLengthSuccess(length) {
 }
 
 export const addPost = (newPost) => (dispatch) => {
-  axios.post(url + "/posts/add", newPost).then((post) =>
-    dispatch({
-      type: types.ADD_POST,
-      data: post,
+  axios
+    .post(url + "/posts/add", newPost)
+    .then((res) => {
+      dispatch({
+        type: types.ADD_POST,
+        data: res.data,
+      });
+      history.push(`/post/${res.data._id}`);
     })
-  );
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 export function loadUserPosts(user) {

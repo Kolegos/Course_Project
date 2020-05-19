@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { updateFeatures } from "../../redux/actions/featuresActions";
+import { InputRow } from "./PostForm";
 
 const Features = ({ features, dispatch }) => {
   const [selectedFeatures, setFeatures] = useState(
@@ -28,23 +29,20 @@ const Features = ({ features, dispatch }) => {
 
   return features.map((feature, index) => {
     return (
-      <>
-        <form>
-          <div>
-            <label>
-              <span>{feature}</span>
-              <input
-                type="text"
-                placeholder={feature}
-                name={feature}
-                className="form-control"
-                onChange={handleChange}
-                required
-              />
-            </label>
-          </div>
-        </form>
-      </>
+      <InputRow
+        key={index}
+        name={feature}
+        input={
+          <input
+            type="text"
+            placeholder={feature}
+            name={feature}
+            className="form-control"
+            onChange={handleChange}
+            required
+          />
+        }
+      />
     );
   });
 };

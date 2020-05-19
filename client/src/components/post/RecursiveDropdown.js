@@ -31,7 +31,7 @@ const RecursiveDropdown = ({ parent, categories, dispatch }) => {
   }
   return (
     <>
-      <select id="dropdown" onChange={handleChange}>
+      <select id="dropdown" onChange={handleChange} className="form-control">
         <option value="">------------</option>
         {categories.map((category) => {
           if (category.parent.match(parent)) {
