@@ -60,10 +60,11 @@ const img = {
   height: "100%",
 };
 
-const ImageUpload = (
-  props,
-  { accept = "image/*", maxSize = 2097152, multiple = false }
-) => {
+const ImageUpload = (props, { accept = "image/*", maxSize = 2097152 }) => {
+  const [multi, setMulti] = useState(false);
+  useEffect(() => {
+    if (typeof props.multiple !== "undefined") setMulti(props.multiple);
+  }, [props]);
   const [files, setFiles] = useState([]);
   const {
     getRootProps,
@@ -74,7 +75,7 @@ const ImageUpload = (
   } = useDropzone({
     accept: accept,
     maxSize: maxSize,
-    multiple: multiple,
+    multiple: multi,
     onDrop: (acceptedFiles) => {
       if (props.onDrop) props.onDrop(acceptedFiles);
       setFiles(
@@ -114,7 +115,7 @@ const ImageUpload = (
   );
 
   return (
-    <section className="container">
+    <section className="container my-1">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>

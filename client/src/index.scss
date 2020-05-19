@@ -55,8 +55,11 @@ html,
   transition: all 0.3s;
 }
 
+.container-inner.medium {
+  max-width: 800px;
+}
 .container-inner.small {
-  width: 400px;
+  max-width: 400px;
 }
 
 .container-wrapper .form-control:focus {

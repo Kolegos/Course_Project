@@ -7,7 +7,7 @@ class Page extends Component {
   render() {
     return (
       <div id="container-wrapper" className="container-wrapper">
-        <div id="container-inner" className="container-inner">
+        <div id="container-inner" className="container-inner medium">
           <PostForm />
         </div>
       </div>

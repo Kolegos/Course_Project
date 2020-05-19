@@ -7,11 +7,31 @@ import axios from "axios";
 import { loadCategories } from "../../redux/actions/categoriesActions";
 import RecursiveDropdown from "./RecursiveDropdown";
 import Features from "./Features";
+import ImageUpload from "../misc/ImageUpload";
+import Spinner from "../misc/Spinner";
 
 const url =
   process.env.NODE_ENV === `production`
     ? ``
     : "http://localhost:5000/api/images";
+
+export const InputRow = ({ name, input }) => {
+  return (
+    <tr>
+      <td className="text-right pt-2" style={{ maxWidth: 200, minWidth: 100 }}>
+        <h5>{name}</h5>
+      </td>
+      <td>
+        <div
+          style={{ maxWidth: 450, minWidth: 300 }}
+          className="row justify-content-start ml-0"
+        >
+          {input}
+        </div>
+      </td>
+    </tr>
+  );
+};
 
 class PostForm extends Component {
   constructor(props) {
@@ -45,12 +65,17 @@ class PostForm extends Component {
     else if (arr === "price") toast.error("Price field is empty", {});
     else if (arr === "photos") toast.error("Photos are required", {});
     else if (arr === "category") toast.error("Category is required", {});
+    else if (arr === "photo") toast.error("Photos are required", {});
     else toast.success("Post added");
   };
 
   handleDropdownChange(e) {
     this.setState({ selectValue: e.target.value });
   }
+
+  handleFiles = (files) => {
+    this.setState({ photos: files });
+  };
 
   nameAppoint(event) {
     let ph = [];
@@ -61,74 +86,77 @@ class PostForm extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
+    //e.preventDefault();
     const title = this.getTitle.value;
     const description = this.getDescription.value;
     const price = this.getPrice.value;
     const phoneNumber = this.getPhoneNumber.value;
-    const category = (this.handleDropdownChange = this.handleDropdownChange.bind(
-      this
-    ));
+    const category = this.props.selectedCategory;
+    const photos = this.state.photos;
 
     let valid = false;
     if (title === "") this.notify("title");
     else if (description === "") this.notify("description");
     else if (price === "") this.notify("price");
     else if (category === "") this.notify("category");
+    else if (photos.length === 0) this.notify("photo");
     else valid = true;
 
     if (!valid) return;
 
     const data = new FormData();
-    let selectedFiles = this.state.selectedFiles;
-    // If file selected
-    if (selectedFiles) {
-      for (let i = 0; i < selectedFiles.length; i++) {
-        data.append("galleryImage", selectedFiles[i], selectedFiles[i].name);
-      }
-      this.setState({ isLoading: true });
-      axios
-        .post(url + "/multi", data, {
-          headers: {
-            accept: "application/json",
-            "Accept-Language": "en-US,en;q=0.8",
-            "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
-          },
-        })
-        .then((response) => {
-          this.setState({ isLoading: false });
-          if (200 === response.status) {
-            // If file size is larger than expected.
-            if (response.data.error) {
-              if ("LIMIT_FILE_SIZE" === response.data.error.code) {
-                this.ocShowAlert("Max size: 2MB", "red");
-              } else if ("LIMIT_UNEXPECTED_FILE" === response.data.error.code) {
-                this.ocShowAlert("Max 4 images allowed", "red");
-              } else {
-                // If not the given file type
-                this.ocShowAlert(response.data.error, "red");
-              }
-            } else {
-              // Success
-              this.nameAppoint(response);
-              const post = {
-                userId: this.props.user.email,
-                title: title,
-                category: this.state.selectValue,
-                price: price,
-                phoneNumber: phoneNumber,
-                description: description,
-                photos: this.state.photos,
-              };
-              this.props.addPost(post);
-              this.notify("success");
-            }
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+
+    this.setState({ isLoading: true });
+    for (let i = 0; i < this.state.photos.length; i++) {
+      data.append(
+        "galleryImage",
+        this.state.photos[i],
+        this.state.photos[i].name
+      );
     }
+    this.setState({ isLoading: true });
+    axios
+      .post(url + "/multi", data, {
+        headers: {
+          accept: "application/json",
+          "Accept-Language": "en-US,en;q=0.8",
+          "Content-Type": `multipart/form-data; boundary=${data._boundary}`,
+        },
+      })
+      .then((response) => {
+        this.setState({ isLoading: false });
+        if (200 === response.status) {
+          // If file size is larger than expected.
+          if (response.data.error) {
+            this.setState({ isLoading: false });
+            if ("LIMIT_FILE_SIZE" === response.data.error.code) {
+              this.ocShowAlert("Max size: 2MB", "red");
+            } else if ("LIMIT_UNEXPECTED_FILE" === response.data.error.code) {
+              this.ocShowAlert("Max 4 images allowed", "red");
+            } else {
+              // If not the given file type
+              this.ocShowAlert(response.data.error, "red");
+            }
+          } else {
+            // Success
+            this.nameAppoint(response);
+            const post = {
+              userId: this.props.user.email,
+              title: title,
+              category: category,
+              price: price,
+              phoneNumber: phoneNumber,
+              description: description,
+              photos: this.state.photos,
+            };
+            this.props.addPost(post);
+            this.notify("success");
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   multipleFileChangedHandler = (event) => {
@@ -163,81 +191,100 @@ class PostForm extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <h1 className="row justify-content-center">Create Post</h1>
-        <div className="container">
-          <div className="form">
-            <div>
-              <h5>Title</h5>
-              <input
-                required
-                type="text"
-                ref={(input) => (this.getTitle = input)}
-                placeholder="Enter Post Title"
-              />
-            </div>
-            <div className="pt-4">
-              <h5>Description</h5>
-              <textarea
-                required
-                rows="5"
-                ref={(input) => (this.getDescription = input)}
-                cols="28"
-                placeholder="Enter description"
-              />
-            </div>
-            <div className="pt-4">
-              <h5>Price</h5>
-              <input
-                required
-                type="text"
-                ref={(input) => (this.getPrice = input)}
-                placeholder="Enter price in €"
-              />
-            </div>
-            <div className="pt-4">
-              <h5>Category</h5>
-              {typeof this.props.categories === "undefined" ? null : (
-                <RecursiveDropdown
-                  parent="^(?![\s\S])"
-                  categories={this.props.categories}
+        <table className="table table-borderless table-sm">
+          <tbody>
+            <InputRow
+              name="Title "
+              input={
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  ref={(input) => (this.getTitle = input)}
+                  placeholder="Enter Post Title"
                 />
-              )}
-            </div>
-            <div>
-              {typeof this.props.categories === "undefined" ? null : (
-                <div>
-                  {this.props.categories.map((category) => {
-                    if (category.category === this.props.selectedCategory) {
-                      return <Features features={category.features} />;
-                    }
-                  })}
-                </div>
-              )}
-            </div>
-            <div className="pt-4">
-              <h5>Phone number</h5>
-              <input
-                type="text"
-                ref={(input) => (this.getPhoneNumber = input)}
-                placeholder="Enter your phone number"
-              />
-            </div>
-            <div className="pt-4">
-              <input
-                id="input-b1"
-                name="input-b1"
-                type="file"
-                multiple
-                className="file"
-                onChange={this.multipleFileChangedHandler}
-                data-browse-on-zone-click="true"
-              ></input>
-            </div>
-          </div>
-          <form className="form" onSubmit={this.handleSubmit}>
-            <button className="mt-4 btn btn-primary">Post</button>
-          </form>
+              }
+            />
+            <InputRow
+              name="Description "
+              input={
+                <textarea
+                  required
+                  rows="5"
+                  className="form-control"
+                  ref={(input) => (this.getDescription = input)}
+                  cols="28"
+                  placeholder="Enter description"
+                />
+              }
+            />
+            <InputRow
+              name="Price "
+              input={
+                <input
+                  required
+                  type="text"
+                  className="form-control"
+                  ref={(input) => (this.getPrice = input)}
+                  placeholder="Enter price in €"
+                />
+              }
+            />
+            <InputRow
+              name="Category "
+              input={
+                typeof this.props.categories === "undefined" ? null : (
+                  <RecursiveDropdown
+                    parent="^(?![\s\S])"
+                    categories={this.props.categories}
+                  />
+                )
+              }
+            />
+            {typeof this.props.categories === "undefined" ? null : (
+              <tr style={{ height: 20 }}>
+                <td></td>
+              </tr>
+            )}
+            {typeof this.props.categories === "undefined"
+              ? null
+              : this.props.categories.map((category, index) => {
+                  if (category.category === this.props.selectedCategory) {
+                    return (
+                      <Features features={category.features} key={index} />
+                    );
+                  }
+                })}
+            <InputRow
+              name="Phone number "
+              input={
+                <input
+                  type="text"
+                  className="form-control"
+                  ref={(input) => (this.getPhoneNumber = input)}
+                  placeholder="Enter your phone number"
+                />
+              }
+            />
+          </tbody>
+        </table>
+        <div>
+          <h2 className="text-center">Photos</h2>
+          <ImageUpload onDrop={this.handleFiles} multiple={true} />
+          {this.state.isLoading ? (
+            <Spinner />
+          ) : (
+            <button
+              onClick={() => {
+                this.handleSubmit();
+              }}
+              className="mt-4 btn btn-lg btn-primary"
+            >
+              Post
+            </button>
+          )}
         </div>
       </div>
     );
