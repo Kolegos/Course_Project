@@ -103,6 +103,21 @@ export const addPost = (newPost) => (dispatch) => {
     });
 };
 
+export function searchForPosts(query) {
+  console.log(query);
+  return function (dispatch) {
+    return axios
+      .get(url + "/search", {
+        params: {
+          query,
+        },
+      })
+      .then((res) => {
+        dispatch(searchForPostsSuccess(res));
+      });
+  };
+}
+
 export function loadUserPosts(user) {
   return function (dispatch) {
     axios.post(url + "/userPosts", user).then((response) => {
@@ -124,5 +139,12 @@ export function loadUserPostsSuccess(posts) {
 export function loadUserPostsFailed(user) {
   return {
     type: types.LOAD_USER_POSTS_FAILED,
+  };
+}
+
+export function searchForPostsSuccess(posts) {
+  return {
+    type: types.SEARCH_POSTS_SUCCESS,
+    posts: posts,
   };
 }

@@ -59,6 +59,7 @@ class Navibar extends React.Component {
                 <NavItem path="/signup" name="Sign up" />
               </>
             ) : null}
+            <NavItem path="/search" name="Search" />
             {this.props.email === "admin@kolegos.lt" ? (
               <NavItem path="/admin" name="Admin" />
             ) : null}

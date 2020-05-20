@@ -37,6 +37,8 @@ export default function postReducer(state = [], action) {
           price: action.post.price,
         },
       };
+    case types.SEARCH_POSTS_SUCCESS:
+      return { ...state, postsFromSearch: action.posts.data };
     default:
       return state;
   }

@@ -55,6 +55,9 @@ html,
   transition: all 0.3s;
 }
 
+.container-inner.large {
+  max-width: 1500px;
+}
 .container-inner.medium {
   max-width: 800px;
 }
