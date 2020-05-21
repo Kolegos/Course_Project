@@ -297,6 +297,15 @@ app.post("/api/categories/delete", async (req, res) => {
   res.send(req.body);
 });
 
+app.get("/api/search", async (req, res) => {
+  let db = await connectDB();
+  let posts = db.collection(`posts`);
+  let results = await posts
+    .find({ title: { $regex: req.query.query, $options: "i" } })
+    .toArray();
+  res.send(results);
+});
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   app.get("*", (req, res) => {
