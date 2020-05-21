@@ -273,7 +273,7 @@ class PostForm extends Component {
         </table>
         <div>
           <h2 className="text-center">Photos</h2>
-          <ImageUpload onDrop={this.handleFiles} multiple={true} />
+          <ImageUpload onDrop={this.handleFiles} multiple={true} />;
           {this.state.isLoading ? (
             <Spinner />
           ) : (

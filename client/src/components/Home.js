@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../redux/actions/postActions";
+import * as categoriesActions from "../redux/actions/categoriesActions";
 import { bindActionCreators } from "redux";
 import PostList from "./post/PostList";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "./misc/Spinner";
 import ScrollUpButton from "react-scroll-up-button";
 import useDebounce from "./misc/useDebounce";
+import RecursiveDropdown from "./post/RecursiveDropdown";
 
 function Home({
   loadMore,
   loadLength,
   searchForPosts,
+  loadCategories,
+  categories,
   length = 0,
   posts = [],
   foundPosts,
   clearPosts,
+  categoryFilter,
 }) {
   const [continueLoading, setLoad] = useState(true);
   const [tempLength, setLength] = useState(length);
@@ -38,6 +43,10 @@ function Home({
       setLength(lengthToSend - 10);
     }
   }
+
+  useEffect(() => {
+    loadCategories().catch((err) => console.log(err));
+  }, []);
 
   function getLength() {
     if (isLoading) return;
@@ -85,18 +94,33 @@ function Home({
     setLoading(false);
   }, [foundPosts]);
 
+  useEffect(() => {
+    console.log(categoryFilter);
+  }, [categoryFilter]);
+
   return (
-    <div>
-      <input
-        className="form-control"
-        type="text"
-        placeholder="Ko ieškosite šiandien?"
-        value={inputText}
-        onChange={(e) => {
-          setInputText(e.target.value);
-          setLoad(true);
-        }}
-      ></input>
+    <div className="container-wrapper">
+      <div className="row">
+        <div className="col-lg-8">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Ko ieškosite šiandien?"
+            value={inputText}
+            onChange={(e) => {
+              setInputText(e.target.value);
+              setLoad(true);
+            }}
+          ></input>
+        </div>
+        <div className="col-lg-4">
+          {categories ? (
+            <RecursiveDropdown parent="^(?![\s\S])" categories={categories} />
+          ) : (
+            <select className="form-control" />
+          )}
+        </div>
+      </div>
       {posts.length === 0 ? (
         <Spinner />
       ) : (
@@ -129,6 +153,8 @@ function mapStateToProps(state) {
     length: state.posts.length,
     posts: state.posts.posts,
     foundPosts: state.posts.postsFromSearch,
+    categories: state.categories.categories,
+    categoryFilter: state.categories.updatedCategory,
   };
 }
 
@@ -139,6 +165,10 @@ function mapDispatchToProps(dispatch) {
     loadMore: bindActionCreators(postActions.loadMorePosts, dispatch),
     loadLength: bindActionCreators(postActions.loadLength, dispatch),
     searchForPosts: bindActionCreators(postActions.searchForPosts, dispatch),
+    loadCategories: bindActionCreators(
+      categoriesActions.loadCategories,
+      dispatch
+    ),
   };
 }
 
