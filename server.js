@@ -117,14 +117,15 @@ app.post("/api/edit/EditProfilePage", (req, res) => {
   });
 });
 
-async function getLength(search) {
+async function getLength(search, category) {
   try {
     let db = await connectDB();
 
     let length = 0;
-    length = await db
-      .collection(`posts`)
-      .countDocuments({ title: { $regex: search, $options: "i" } });
+    length = await db.collection(`posts`).countDocuments({
+      title: { $regex: search, $options: "i" },
+      category: { $regex: category },
+    });
     return {
       length,
     };
@@ -165,13 +166,18 @@ async function getPosts() {
     console.log(error);
   }
 }
-async function getMorePosts(number, search) {
+async function getMorePosts(number, search, category) {
   try {
     let db = await connectDB();
     let posts = await db
       .collection(`posts`)
       .aggregate([
-        { $match: { title: { $regex: search, $options: "i" } } },
+        {
+          $match: {
+            title: { $regex: search, $options: "i" },
+            category: { $regex: category },
+          },
+        },
         { $sort: { updatedAt: 1 } },
         { $limit: parseInt(number) }, //mazinant sita imi sekancius elementus nuo virsaus
         { $sort: { updatedAt: -1 } },
@@ -266,15 +272,19 @@ app.get("/api/get", authenticateToken, async (req, res) => {
 
 app.get("/api/getMore", async (req, res) => {
   let search = "";
+  let category = "";
   if (req.query.search) search = req.query.search;
-  let state = await getMorePosts(req.query.number, search);
+  if (req.query.category) category = req.query.category;
+  let state = await getMorePosts(req.query.number, search, category);
   res.send(state.posts);
 });
 
 app.get("/api/postsLength", async (req, res) => {
   let search = "";
+  let category = "";
   if (req.query.search) search = req.query.search;
-  let state = await getLength(search);
+  if (req.query.category) category = req.query.category;
+  let state = await getLength(search, category);
   res.send(state.length.toString());
 });
 

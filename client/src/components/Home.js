@@ -1,29 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import * as postActions from "../redux/actions/postActions";
-import * as categoriesActions from "../redux/actions/categoriesActions";
 import { bindActionCreators } from "redux";
 import PostList from "./post/PostList";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Spinner from "./misc/Spinner";
 import ScrollUpButton from "react-scroll-up-button";
 import useDebounce from "./misc/useDebounce";
-import RecursiveDropdown from "./post/RecursiveDropdown";
 
 function Home({
   loadMore,
   loadLength,
   searchForPosts,
-  loadCategories,
-  categories,
   length = 0,
   posts = [],
   foundPosts,
   clearPosts,
-  categoryFilter,
 }) {
   const [continueLoading, setLoad] = useState(true);
   const [tempLength, setLength] = useState(length);
+  const [inputText, setInputText] = useState("");
+  const [isLoading, setLoading] = useState(true);
+  const debouncedSearch = useDebounce(inputText, 300);
 
   function loadNewPosts() {
     if (length !== 0 && posts.length !== 0) {
@@ -36,6 +34,7 @@ function Home({
         setLoad(false);
       }
       if (lengthToSend - 10 > 0) {
+        debugger;
         loadMore(lengthToSend - 10, inputText).catch((error) => {
           alert("loading posts failed " + error);
         });
@@ -44,18 +43,16 @@ function Home({
     }
   }
 
-  useEffect(() => {
-    loadCategories().catch((err) => console.log(err));
-  }, []);
-
   function getLength() {
     if (isLoading) return;
     if (length === 0) {
+      debugger;
       loadLength(inputText).catch((error) => {
         alert("loading length failed" + error);
       });
     }
     if (posts.length === 0 && length !== 0) {
+      debugger;
       loadMore(length, inputText).catch((error) => {
         alert("loading posts failed " + error);
       });
@@ -63,66 +60,42 @@ function Home({
   }
 
   useEffect(() => {
+    debugger;
     setLoading(false);
   }, [length]);
 
   useEffect(() => {
     getLength();
-  });
-
-  const [inputText, setInputText] = useState("");
-  const [results, setResults] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-
-  const debouncedSearch = useDebounce(inputText, 300);
+  }, [isLoading]);
 
   useEffect(() => {
-    if (debouncedSearch) {
-      setLength(0);
-      loadLength(inputText).catch((error) => {
-        alert("loading length failed" + error);
-      });
-      clearPosts();
-      setLoading(true);
-    } else {
-      setResults([]);
-    }
+    debugger;
+    setLoading(true);
+    clearPosts();
+    setLength(0);
+    loadLength(inputText).catch((error) => {
+      alert("loading length failed" + error);
+    });
   }, [debouncedSearch]);
 
-  useEffect(() => {
-    setResults(foundPosts);
-    setLoading(false);
-  }, [foundPosts]);
-
-  useEffect(() => {
-    console.log(categoryFilter);
-  }, [categoryFilter]);
-
   return (
-    <div className="container-wrapper">
-      <div className="row">
-        <div className="col-lg-8">
-          <input
-            className="form-control"
-            type="text"
-            placeholder="Ko ieškosite šiandien?"
-            value={inputText}
-            onChange={(e) => {
-              setInputText(e.target.value);
-              setLoad(true);
-            }}
-          ></input>
-        </div>
-        <div className="col-lg-4">
-          {categories ? (
-            <RecursiveDropdown parent="^(?![\s\S])" categories={categories} />
-          ) : (
-            <select className="form-control" />
-          )}
-        </div>
-      </div>
-      {posts.length === 0 ? (
+    <div>
+      <input
+        className="form-control"
+        type="text"
+        placeholder="Ko ieškosite šiandien?"
+        value={inputText}
+        onChange={(e) => {
+          setInputText(e.target.value);
+          setLoad(true);
+        }}
+      ></input>
+      {posts.length === 0 && isLoading ? (
         <Spinner />
+      ) : length === 0 ? (
+        <h3 className="text-center m-2 p-2" style={{ color: "white" }}>
+          Pagal Jūsų užklausą rezultatų nerasta
+        </h3>
       ) : (
         <>
           <ScrollUpButton
@@ -133,7 +106,7 @@ function Home({
             dataLength={posts.length}
             next={loadNewPosts}
             hasMore={continueLoading}
-            loader={<h4>Loading...</h4>}
+            loader={<Spinner />}
             endMessage={
               <h3 className="text-center" style={{ color: "white" }}>
                 There are no more posts to show
@@ -153,8 +126,6 @@ function mapStateToProps(state) {
     length: state.posts.length,
     posts: state.posts.posts,
     foundPosts: state.posts.postsFromSearch,
-    categories: state.categories.categories,
-    categoryFilter: state.categories.updatedCategory,
   };
 }
 
@@ -165,10 +136,6 @@ function mapDispatchToProps(dispatch) {
     loadMore: bindActionCreators(postActions.loadMorePosts, dispatch),
     loadLength: bindActionCreators(postActions.loadLength, dispatch),
     searchForPosts: bindActionCreators(postActions.searchForPosts, dispatch),
-    loadCategories: bindActionCreators(
-      categoriesActions.loadCategories,
-      dispatch
-    ),
   };
 }
 

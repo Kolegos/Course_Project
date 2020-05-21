@@ -14,12 +14,13 @@ export function loadOnePostSuccess(post) {
   return { type: types.LOAD_ONE_POST_SUCCESS, post };
 }
 
-export function loadMorePosts(number, search) {
+export function loadMorePosts(number, search, category) {
   return function (dispatch) {
     return axios
       .get(url + `/getMore`, {
         params: {
           search,
+          category,
           number,
         },
       })
@@ -87,12 +88,13 @@ export function loadPosts() {
   };
 }
 
-export function loadLength(search) {
+export function loadLength(search, category) {
   return function (dispatch) {
     return axios
       .get(url + `/postsLength`, {
         params: {
           search,
+          category,
         },
       })
       .then((length) => dispatch(loadLengthSuccess(length)));
