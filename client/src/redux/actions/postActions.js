@@ -13,11 +13,12 @@ export function loadOnePostSuccess(post) {
   return { type: types.LOAD_ONE_POST_SUCCESS, post };
 }
 
-export function loadMorePosts(number) {
+export function loadMorePosts(number, search) {
   return function (dispatch) {
     return axios
       .get(url + `/getMore`, {
         params: {
+          search,
           number,
         },
       })
@@ -58,6 +59,12 @@ export function editPost(post) {
         dispatch(editPostSuccess(response.data));
       }
     });
+  };
+}
+
+export function clearPosts() {
+  return {
+    type: types.CLEAR_POSTS,
   };
 }
 

@@ -15,6 +15,7 @@ function Home({
   length = 0,
   posts = [],
   foundPosts,
+  clearPosts,
 }) {
   const [continueLoading, setLoad] = useState(true);
   const [tempLength, setLength] = useState(length);
@@ -30,7 +31,7 @@ function Home({
         setLoad(false);
       }
       if (lengthToSend - 10 > 0) {
-        loadMore(lengthToSend - 10).catch((error) => {
+        loadMore(lengthToSend - 10, inputText).catch((error) => {
           alert("loading posts failed " + error);
         });
       }
@@ -38,17 +39,21 @@ function Home({
     }
   }
 
-  useEffect(() => {
+  function getLength() {
     if (length === 0) {
       loadLength().catch((error) => {
         alert("loading length failed" + error);
       });
     }
     if (posts.length === 0 && length !== 0) {
-      loadMore(length).catch((error) => {
+      loadMore(length, inputText).catch((error) => {
         alert("loading posts failed " + error);
       });
     }
+  }
+
+  useEffect(() => {
+    getLength();
   });
 
   const [inputText, setInputText] = useState("");
@@ -59,7 +64,10 @@ function Home({
 
   useEffect(() => {
     if (debouncedSearch) {
-      searchForPosts(inputText);
+      //searchForPosts(inputText);
+      setLength(0);
+      clearPosts();
+      getLength();
       setLoading(true);
     } else {
       setResults([]);
@@ -83,35 +91,25 @@ function Home({
         onChange={(e) => setInputText(e.target.value)}
       ></input>
 
-      {results && results.length === 0 && inputText !== "" && !isLoading ? (
-        <div id="container-inner" className="container">
-          <h4 style={{ color: "white" }}>
-            Pagal Jūsų pateiktą užklausą rezultatų nerasta
-          </h4>
-        </div>
-      ) : null}
-      {results && results.length !== 0 ? <PostList posts={results} /> : null}
-      {inputText === "" ? (
-        <>
-          <ScrollUpButton
-            style={{ color: "white", backgroundColor: "#004c3f" }}
-          />
-          <InfiniteScroll
-            style={{ overflow: "none" }}
-            dataLength={posts.length}
-            next={loadNewPosts}
-            hasMore={continueLoading}
-            loader={<h4>Loading...</h4>}
-            endMessage={
-              <h3 className="text-center" style={{ color: "white" }}>
-                There are no more posts to show
-              </h3>
-            }
-          >
-            <PostList posts={posts} />
-          </InfiniteScroll>
-        </>
-      ) : null}
+      <>
+        <ScrollUpButton
+          style={{ color: "white", backgroundColor: "#004c3f" }}
+        />
+        <InfiniteScroll
+          style={{ overflow: "none" }}
+          dataLength={posts.length}
+          next={loadNewPosts}
+          hasMore={continueLoading}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <h3 className="text-center" style={{ color: "white" }}>
+              There are no more posts to show
+            </h3>
+          }
+        >
+          <PostList posts={posts} />
+        </InfiniteScroll>
+      </>
     </div>
   );
 }
@@ -126,6 +124,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    clearPosts: bindActionCreators(postActions.clearPosts, dispatch),
     load: bindActionCreators(postActions.loadPosts, dispatch),
     loadMore: bindActionCreators(postActions.loadMorePosts, dispatch),
     loadLength: bindActionCreators(postActions.loadLength, dispatch),
