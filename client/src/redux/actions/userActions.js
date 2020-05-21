@@ -41,3 +41,17 @@ export function createUser(user) {
     });
   };
 }
+
+export function getUser(user) {
+  return function (dispatch) {
+    axios.post(url + "/users/", { id: user }).then((response) => {
+      if (response.status === 200) {
+        dispatch(getUserSuccess(response.data));
+      }
+    });
+  };
+}
+
+export function getUserSuccess(user) {
+  return { type: types.GET_USER, user: user };
+}

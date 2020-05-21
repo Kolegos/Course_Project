@@ -22,6 +22,7 @@ export const CLEAR_POSTS = "CLEAR_POSTS";
 export const CREATE_USER = "CREATE_USER";
 export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
 export const CREATE_USER_FAILED = "CREATE_USER_FAILED";
+export const GET_USER = "GET_USER";
 
 export const EDIT_USER = "EDIT_USER";
 export const LOAD_USER_POSTS_SUCCESS = "LOAD_USER_POSTS_SUCCESS";

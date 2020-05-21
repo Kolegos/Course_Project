@@ -14,6 +14,7 @@ function Post({
   post = null,
   authenticated,
   user,
+  owner,
 }) {
   const [images, setImages] = useState([]);
 
@@ -107,8 +108,8 @@ function Post({
               <img
                 style={{ width: 256 }}
                 src={
-                  user && user.profilePicture
-                    ? user.profilePicture
+                  owner && owner.profilePicture
+                    ? owner.profilePicture
                     : "https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
                 }
                 className="img-fluid img-thumbnail"
@@ -131,7 +132,7 @@ function Post({
                 </tr>
                 <tr>
                   <th scope="col">
-                    <h6>{user && user.city ? user.city : ""}</h6>
+                    <h6>{owner && owner.city ? owner.city : ""}</h6>
                   </th>
                 </tr>
                 <tr>
@@ -178,12 +179,14 @@ function mapStateToProps(state, ownProps) {
   const post = state.posts.onePost;
   const authenticated = state.sessions.authenticated;
   const user = state.sessions.user;
+  const owner = state.users ? state.users : null;
 
   return {
     id,
     post,
     authenticated,
     user,
+    owner,
   };
 }
 

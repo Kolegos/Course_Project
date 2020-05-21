@@ -1,4 +1,5 @@
 import * as types from "../actions/actionTypes";
+import { bindActionCreators } from "redux";
 
 export default function userReducer(state = [], action) {
   switch (action.type) {
@@ -8,6 +9,8 @@ export default function userReducer(state = [], action) {
       return { ...state, created: types.CREATE_USER_FAILED };
     case types.EDIT_USER:
       return { ...state, edited: types.EDIT_USER };
+    case types.GET_USER:
+      return { ...state, users: action.user };
     default:
       return state;
   }

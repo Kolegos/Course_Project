@@ -1,4 +1,5 @@
 import * as types from "./actionTypes";
+import { getUser } from "./userActions";
 import axios from "axios";
 import { history } from "../../redux/history";
 
@@ -34,7 +35,10 @@ export function loadOnePost(id) {
           id,
         },
       })
-      .then((post) => dispatch(loadOnePostSuccess(post)));
+      .then((post) => {
+        dispatch(loadOnePostSuccess(post));
+        dispatch(getUser(post.data[0].userId));
+      });
   };
 }
 
