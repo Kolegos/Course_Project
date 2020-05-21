@@ -69,7 +69,7 @@ function Post({
               <h1>There are no images :(</h1>
             )}
           </div>
-          <div className=" col-lg-4">
+          <div className="col-lg-4">
             <table className="table table-striped table-borderless">
               <tbody>
                 <tr>
@@ -80,33 +80,76 @@ function Post({
                     <h4 align="right">{post.price} €</h4>
                   </th>
                 </tr>
+                {post.features.map((ft, index) => {
+                  return (
+                    <tr key={index}>
+                      <th>{ft.feature}</th>
+                      <th>{ft.value}</th>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <div className="col col-lg-8">
+            <div className="card bg-light mb-3 card border-light mb-3">
+              <div className="card-body">
+                <div className="row">
+                  <h4 className="card-title mr-4">{post.title}</h4>
+                  <p className="text-muted">{post.category}</p>
+                </div>
+                <p className="card-text lead">{post.description}</p>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-lg">
+              <img
+                style={{ width: 256 }}
+                src={
+                  user && user.profilePicture
+                    ? user.profilePicture
+                    : "https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
+                }
+                className="img-fluid img-thumbnail"
+                alt="ProfilePicture"
+              />
+            </div>
+          </div>
+          <div className="col col-lg">
+            <table>
+              <tbody>
                 <tr>
-                  <th scope="col">Feature</th>
-                  <th scope="col">Some kind of feature</th>
+                  <th scope="col">
+                    <h5>{post.userId}</h5>
+                  </th>
                 </tr>
                 <tr>
-                  <th scope="col">Feature</th>
-                  <th scope="col">Some kind of feature</th>
+                  <th scope="col">
+                    <h6>{post.phoneNumber}</h6>
+                  </th>
                 </tr>
                 <tr>
-                  <th scope="col">Feature</th>
-                  <th scope="col">Some kind of feature</th>
+                  <th scope="col">
+                    <h6>{user && user.city ? user.city : ""}</h6>
+                  </th>
                 </tr>
                 <tr>
-                  <th scope="col">Feature</th>
-                  <th scope="col">Some kind of feature</th>
-                </tr>
-                <tr>
-                  <th scope="col">Feature</th>
-                  <th scope="col">Some kind of feature</th>
-                </tr>
-                <tr>
-                  <th scope="col">Feature</th>
-                  <th scope="col">Some kind of feature</th>
-                </tr>
-                <tr>
-                  <th scope="col">Feature</th>
-                  <th scope="col">Some kind of feature</th>
+                  <th>
+                    {user ? (
+                      authenticated === types.AUTHENTICATED &&
+                      user.email === post.userId ? (
+                        <button
+                          className="btn btn-secondary btn-block"
+                          onClick={() => {
+                            history.push(`/Edit/${post._id}`);
+                          }}
+                        >
+                          Edit
+                        </button>
+                      ) : null
+                    ) : null}
+                  </th>
                 </tr>
               </tbody>
             </table>
@@ -114,62 +157,6 @@ function Post({
         </div>
         <div className="row">
           <div className="col col-lg">
-            <div className="card bg-light mb-3 card border-light mb-3">
-              <div className="card-body">
-                <h4 className="card-title">{post.title}</h4>
-                <p className="card-text lead">{post.description}</p>
-              </div>
-            </div>
-          </div>
-          <div className="col col-lg">
-            <div className="row">
-              <div className="col-lg">
-                <img
-                  src={
-                    user && user.profilePicture
-                      ? user.profilePicture
-                      : "https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
-                  }
-                  className="img-fluid img-thumbnail"
-                  alt="ProfilePicture"
-                />
-              </div>
-              <div className="col col-lg">
-                <table>
-                  <tbody>
-                    <tr>
-                      <th scope="col">
-                        <h5>{post.userId}</h5>
-                      </th>
-                    </tr>
-                    <tr>
-                      <th scope="col">
-                        <h6>{post.phoneNumber}</h6>
-                      </th>
-                    </tr>
-                    <tr>
-                      <th scope="col">
-                        <h6>{user && user.city ? user.city : ""}</h6>
-                      </th>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            {user ? (
-              authenticated === types.AUTHENTICATED &&
-              user.email === post.userId ? (
-                <button
-                  className="btn btn-secondary btn-block"
-                  onClick={() => {
-                    history.push(`/Edit/${post._id}`);
-                  }}
-                >
-                  Edit
-                </button>
-              ) : null
-            ) : null}
             <div className="col col-lg">
               <h3>
                 Kolegos
