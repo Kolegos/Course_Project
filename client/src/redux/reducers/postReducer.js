@@ -40,6 +40,8 @@ export default function postReducer(state = [], action) {
       };
     case types.SEARCH_POSTS_SUCCESS:
       return { ...state, postsFromSearch: action.posts.data };
+    case types.CLEAR_POSTS:
+      return { ...state, posts: [] };
     default:
       return state;
   }

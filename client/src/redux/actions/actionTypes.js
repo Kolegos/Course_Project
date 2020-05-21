@@ -17,6 +17,7 @@ export const EDIT_POST = "EDIT_POST";
 export const DELETE_POST = "DELETE_POST";
 export const UPDATE = "UPDATE";
 export const GET_POST = "GET_POST";
+export const CLEAR_POSTS = "CLEAR_POSTS";
 
 export const CREATE_USER = "CREATE_USER";
 export const CREATE_USER_SUCCESS = "CREATE_USER_SUCCESS";
