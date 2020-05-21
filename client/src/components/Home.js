@@ -40,8 +40,9 @@ function Home({
   }
 
   function getLength() {
+    if (isLoading) return;
     if (length === 0) {
-      loadLength().catch((error) => {
+      loadLength(inputText).catch((error) => {
         alert("loading length failed" + error);
       });
     }
@@ -51,6 +52,10 @@ function Home({
       });
     }
   }
+
+  useEffect(() => {
+    setLoading(false);
+  }, [length]);
 
   useEffect(() => {
     getLength();
@@ -64,10 +69,11 @@ function Home({
 
   useEffect(() => {
     if (debouncedSearch) {
-      //searchForPosts(inputText);
       setLength(0);
+      loadLength(inputText).catch((error) => {
+        alert("loading length failed" + error);
+      });
       clearPosts();
-      getLength();
       setLoading(true);
     } else {
       setResults([]);
@@ -79,37 +85,41 @@ function Home({
     setLoading(false);
   }, [foundPosts]);
 
-  return posts.length === 0 ? (
-    <Spinner />
-  ) : (
+  return (
     <div>
       <input
-        class="form-control"
+        className="form-control"
         type="text"
         placeholder="Ko ieškosite šiandien?"
         value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
+        onChange={(e) => {
+          setInputText(e.target.value);
+          setLoad(true);
+        }}
       ></input>
-
-      <>
-        <ScrollUpButton
-          style={{ color: "white", backgroundColor: "#004c3f" }}
-        />
-        <InfiniteScroll
-          style={{ overflow: "none" }}
-          dataLength={posts.length}
-          next={loadNewPosts}
-          hasMore={continueLoading}
-          loader={<h4>Loading...</h4>}
-          endMessage={
-            <h3 className="text-center" style={{ color: "white" }}>
-              There are no more posts to show
-            </h3>
-          }
-        >
-          <PostList posts={posts} />
-        </InfiniteScroll>
-      </>
+      {posts.length === 0 ? (
+        <Spinner />
+      ) : (
+        <>
+          <ScrollUpButton
+            style={{ color: "white", backgroundColor: "#004c3f" }}
+          />
+          <InfiniteScroll
+            style={{ overflow: "none" }}
+            dataLength={posts.length}
+            next={loadNewPosts}
+            hasMore={continueLoading}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <h3 className="text-center" style={{ color: "white" }}>
+                There are no more posts to show
+              </h3>
+            }
+          >
+            <PostList posts={posts} />
+          </InfiniteScroll>
+        </>
+      )}
     </div>
   );
 }

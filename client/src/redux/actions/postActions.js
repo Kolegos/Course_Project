@@ -83,10 +83,14 @@ export function loadPosts() {
   };
 }
 
-export function loadLength() {
+export function loadLength(search) {
   return function (dispatch) {
     return axios
-      .get(url + `/postsLength`)
+      .get(url + `/postsLength`, {
+        params: {
+          search,
+        },
+      })
       .then((length) => dispatch(loadLengthSuccess(length)));
   };
 }
