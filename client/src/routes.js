@@ -20,7 +20,6 @@ import EditProfilePage from "./components/login_signup/EditProfilePage";
 import Test from "./test";
 import EditPost from "./components/post/EditPost";
 import AdminPanel from "./components/admin/AdminPanel";
-import Search from "./components/Search";
 
 import UserPosts from "./components/post/UserPosts";
 export default (
@@ -37,7 +36,6 @@ export default (
         <Route path="/post/:id" component={Post} />
         <Route path="/Edit/:id" component={EditPost} />
         <Route path="/Page" component={PostsPage} />
-        <Route path="/search" component={Search} />
         <Route
           path="/EditProfilePage"
           component={RequireAuth(EditProfilePage)}

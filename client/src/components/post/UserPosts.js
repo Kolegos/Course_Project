@@ -12,9 +12,14 @@ function UserPosts({ user = null, loadUserPosts, posts = [] }) {
     <div>
       <form>
         {loadUserPosts(user)}
-
         <div>
-          <PostList posts={posts} />
+          {posts.length === 0 ? (
+            <div className="container" style={{ color: "white" }}>
+              <h1>Jūs dar nesate įkėlęs nei vieno skelbimo</h1>
+            </div>
+          ) : (
+            <PostList posts={posts} />
+          )}
         </div>
       </form>
     </div>

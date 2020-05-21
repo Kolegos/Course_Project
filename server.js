@@ -301,7 +301,7 @@ app.get("/api/search", async (req, res) => {
   let db = await connectDB();
   let posts = db.collection(`posts`);
   let results = await posts
-    .find({ $text: { $search: req.query.query } })
+    .find({ title: { $regex: req.query.query, $options: "i" } })
     .toArray();
   res.send(results);
 });
