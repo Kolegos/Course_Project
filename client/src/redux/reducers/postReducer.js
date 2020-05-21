@@ -31,6 +31,7 @@ export default function postReducer(state = [], action) {
           userId: action.post.userId,
           title: action.post.title,
           category: action.post.category,
+          features: action.post.features,
           description: action.post.description,
           photos: action.post.photos,
           phoneNumber: action.post.phoneNumber,
