@@ -144,6 +144,7 @@ class PostForm extends Component {
               userId: this.props.user.email,
               title: title,
               category: category,
+              features: this.props.selectedFeatures,
               price: price,
               phoneNumber: phoneNumber,
               description: description,

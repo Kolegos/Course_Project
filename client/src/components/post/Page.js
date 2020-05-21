@@ -7,7 +7,11 @@ class Page extends Component {
   render() {
     return (
       <div id="container-wrapper" className="container-wrapper">
-        <div id="container-inner" className="container-inner medium">
+        <div
+          style={{ width: "auto" }}
+          id="container-inner"
+          className="container-inner medium"
+        >
           <PostForm />
         </div>
       </div>

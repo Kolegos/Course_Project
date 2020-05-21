@@ -7,6 +7,7 @@ const postSchema = new Schema(
     userId: { type: String, required: true },
     title: { type: String, required: true },
     category: { type: String, required: true },
+    features: { type: Array, required: true },
     description: { type: String, required: true },
     photos: { type: [String], required: false },
     phoneNumber: { type: String, required: false },

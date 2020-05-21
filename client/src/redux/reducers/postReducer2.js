@@ -3,7 +3,7 @@ import * as types from "../actions/actionTypes";
 const postReducer2 = (state = [], action) => {
   switch (action.type) {
     case types.ADD_POST: {
-      return state.concat([action.data]);
+      return state;
     }
     case types.GET_POST: {
       return state.concat([action.data]);
