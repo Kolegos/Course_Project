@@ -19,32 +19,43 @@ const RecursiveDropdown = ({ parent, categories, dispatch }) => {
 
   useEffect(() => {
     setCategory("");
+    if (parent !== "") dispatch(updateCategory(parent));
   }, [parent]);
 
   useEffect(() => {
     checkIfHasChildren();
-    dispatch(updateCategory(selectedCategory));
+    if (selectedCategory !== "") {
+      dispatch(updateCategory(selectedCategory));
+    } else {
+      dispatch(updateCategory(parent));
+    }
   }, [selectedCategory, checkIfHasChildren, dispatch]);
 
   function handleChange(event) {
     setCategory(event.target.value);
   }
   return (
-    <>
-      <select id="dropdown" onChange={handleChange} className="form-control">
-        <option value="">------------</option>
-        {categories.map((category) => {
-          if (category.parent.match(parent)) {
-            return (
-              <option key={category.category} value={category.category}>
-                {category.name}
-              </option>
-            );
-          } else {
-            return null;
-          }
-        })}
-      </select>
+    <div className={document.location.pathname === "/" ? "row  " : ""}>
+      <div
+        className={
+          document.location.pathname !== "/" ? "mb-1 pb-1" : "mr-3 pr-2"
+        }
+      >
+        <select id="dropdown" onChange={handleChange} className="form-control">
+          <option value="">------------</option>
+          {categories.map((category) => {
+            if (category.parent.match(parent)) {
+              return (
+                <option key={category.category} value={category.category}>
+                  {category.name}
+                </option>
+              );
+            } else {
+              return null;
+            }
+          })}
+        </select>
+      </div>
       {shouldShow ? (
         <RecursiveDropdown
           parent={selectedCategory}
@@ -52,7 +63,7 @@ const RecursiveDropdown = ({ parent, categories, dispatch }) => {
           dispatch={dispatch}
         />
       ) : null}
-    </>
+    </div>
   );
 };
 
