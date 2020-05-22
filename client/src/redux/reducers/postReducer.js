@@ -14,11 +14,15 @@ export default function postReducer(state = [], action) {
         return { ...state, posts: action.posts.data };
       }
     case types.LOAD_ONE_POST_SUCCESS:
-      return { ...state, onePost: action.post.data[0] };
+      return { ...state, onePost: action.post.data[0], length: 0, posts: [] };
     case types.CLEAN_ONE_POST_SUCCESS:
       return { ...state, onePost: null };
     case types.LOAD_LENGTH_SUCCESS:
-      return { ...state, length: action.length.data };
+      return {
+        ...state,
+        length: action.length.data,
+        loaded: state.loaded === "0" ? "1" : "0",
+      };
     case types.LOAD_USER_POSTS_SUCCESS:
       return { ...state, posts: action.posts };
     case types.LOAD_USER_POSTS_FAILED:

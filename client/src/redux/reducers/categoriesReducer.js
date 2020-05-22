@@ -20,6 +20,8 @@ export default function categoriesReducer(state = [], action) {
       return state;
     case types.UPDATE_CATEGORY:
       return { ...state, updatedCategory: action.updatedCategory };
+    case types.LOAD_ONE_POST_SUCCESS:
+      return { ...state, updatedCategory: "", categories: [] };
     default:
       return state;
   }
