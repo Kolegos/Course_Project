@@ -59,14 +59,13 @@ class PostForm extends Component {
   }
 
   notify = (arr) => {
-    if (arr === "title") toast.error("Title field is empty", {});
-    else if (arr === "description")
-      toast.error("Description field is empty!", {});
-    else if (arr === "price") toast.error("Price field is empty", {});
-    else if (arr === "photos") toast.error("Photos are required", {});
-    else if (arr === "category") toast.error("Category is required", {});
-    else if (arr === "photo") toast.error("Photos are required", {});
-    else toast.success("Post added");
+    if (arr === "title") toast.error("Reikalingas pavadinimas", {});
+    else if (arr === "description") toast.error("Reikalingas aprašymas", {});
+    else if (arr === "price") toast.error("Reikalinga kaina", {});
+    else if (arr === "photos") toast.error("Reikalingos nuotraukos", {});
+    else if (arr === "category") toast.error("Reikalinga kategorija", {});
+    else if (arr === "photo") toast.error("Reikalingos nuotraukos", {});
+    else toast.success("Skelbimas sėkmingai pridėtas");
   };
 
   handleDropdownChange(e) {
@@ -175,7 +174,7 @@ class PostForm extends Component {
             class="p-3 mb-2 bg-danger text-white"
             style={{ width: 400, textAlign: "center" }}
           >
-            Press the button to upload the pictures
+            Pridėti paveikslėlį
           </div>
         );
       else
@@ -184,7 +183,7 @@ class PostForm extends Component {
             class="p-3 mb-2 bg-success text-white"
             style={{ width: 400, textAlign: "center" }}
           >
-            Images uploaded, you can post now
+            Paveikslėliai pridėti
           </div>
         );
     }
@@ -193,23 +192,23 @@ class PostForm extends Component {
   render() {
     return (
       <div className="container">
-        <h1 className="row justify-content-center">Create Post</h1>
+        <h1 className="row justify-content-center">Pridėti skelbimą</h1>
         <table className="table table-borderless table-sm">
           <tbody>
             <InputRow
-              name="Title "
+              name="Pavadinimas "
               input={
                 <input
                   required
                   type="text"
                   className="form-control"
                   ref={(input) => (this.getTitle = input)}
-                  placeholder="Enter Post Title"
+                  placeholder="Įveskite pavadinimą"
                 />
               }
             />
             <InputRow
-              name="Description "
+              name="Aprašymas "
               input={
                 <textarea
                   required
@@ -217,24 +216,24 @@ class PostForm extends Component {
                   className="form-control"
                   ref={(input) => (this.getDescription = input)}
                   cols="28"
-                  placeholder="Enter description"
+                  placeholder="Įveskite aprašymą"
                 />
               }
             />
             <InputRow
-              name="Price "
+              name="Kaina "
               input={
                 <input
                   required
                   type="text"
                   className="form-control"
                   ref={(input) => (this.getPrice = input)}
-                  placeholder="Enter price in €"
+                  placeholder="Įveskite kainą eurais"
                 />
               }
             />
             <InputRow
-              name="Category "
+              name="Kategorija "
               input={
                 typeof this.props.categories === "undefined" ? null : (
                   <RecursiveDropdown
@@ -252,27 +251,27 @@ class PostForm extends Component {
             {typeof this.props.categories === "undefined"
               ? null
               : this.props.categories.map((category, index) => {
-                  if (category.category === this.props.selectedCategory) {
+                  if (category._id === this.props.selectedCategory) {
                     return (
                       <Features features={category.features} key={index} />
                     );
                   }
                 })}
             <InputRow
-              name="Phone number "
+              name="Telefono numeris"
               input={
                 <input
                   type="text"
                   className="form-control"
                   ref={(input) => (this.getPhoneNumber = input)}
-                  placeholder="Enter your phone number"
+                  placeholder="Įveskite telefono numerį"
                 />
               }
             />
           </tbody>
         </table>
         <div>
-          <h2 className="text-center">Photos</h2>
+          <h2 className="text-center">Nuotraukos</h2>
           <ImageUpload onDrop={this.handleFiles} multiple={true} />
           {this.state.isLoading ? (
             <Spinner />
@@ -283,7 +282,7 @@ class PostForm extends Component {
               }}
               className="mt-4 btn btn-lg btn-primary"
             >
-              Post
+              Pridėti skelbimą
             </button>
           )}
         </div>

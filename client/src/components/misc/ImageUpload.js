@@ -118,7 +118,9 @@ const ImageUpload = (props, { accept = "image/*", maxSize = 2097152 }) => {
     <section className="container my-1">
       <div {...getRootProps({ style })}>
         <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
+        <p>
+          Paspauskite arba atitempkite ir paleiskite norimas įkelti nuotraukas
+        </p>
       </div>
       <aside style={thumbsContainer}>{thumbs}</aside>
     </section>

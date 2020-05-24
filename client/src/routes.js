@@ -58,7 +58,7 @@ export default (
         />
         <Route path="/test/:id+" component={Test} />
         <Route path="/YourPosts" component={RequireAuth(UserPosts)} />
-        <Route component={PageNotFound} />
+        <Route component={Home} />
       </Switch>
       <ToastContainer autoClose={5000} hideProgressBar />
     </App>

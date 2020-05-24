@@ -22,7 +22,7 @@ function ProfilePage({ user = null, logout }) {
               <tbody>
                 <tr>
                   <th scope="col" style={{ width: "80%" }}>
-                    First Name
+                    Vardas
                   </th>
                   <th scope="col" style={{ width: "20%" }}>
                     {user.firstName}
@@ -30,7 +30,7 @@ function ProfilePage({ user = null, logout }) {
                 </tr>
                 <tr>
                   <th scope="col" style={{ width: "80%" }}>
-                    Last Name
+                    Pavardė
                   </th>
                   <th scope="col" style={{ width: "20%" }}>
                     {user.lastName}
@@ -38,7 +38,7 @@ function ProfilePage({ user = null, logout }) {
                 </tr>
                 <tr>
                   <th scope="col" style={{ width: "80%" }}>
-                    Email address
+                    El. pašto adresas
                   </th>
                   <th scope="col" style={{ width: "20%" }}>
                     {user.email}
@@ -46,7 +46,7 @@ function ProfilePage({ user = null, logout }) {
                 </tr>
                 <tr>
                   <th scope="col" style={{ width: "80%" }}>
-                    City
+                    Miestas
                   </th>
                   <th scope="col" style={{ width: "20%" }}>
                     {user.city}
@@ -54,7 +54,7 @@ function ProfilePage({ user = null, logout }) {
                 </tr>
                 <tr>
                   <th scope="col" style={{ width: "80%" }}>
-                    Phone number
+                    Telefono numeris
                   </th>
                   <th scope="col" style={{ width: "20%" }}>
                     {user.phoneNumber}
@@ -86,7 +86,7 @@ function ProfilePage({ user = null, logout }) {
           </h3>
         </div>
         <Link to={"/EditProfilePage"}>
-          <button className="btn btn-secondary btn-block">Edit</button>
+          <button className="btn btn-secondary btn-block">Redaguoti</button>
         </Link>
       </div>
     </div>

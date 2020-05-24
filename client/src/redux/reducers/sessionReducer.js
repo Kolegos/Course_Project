@@ -1,5 +1,6 @@
 import * as types from "../actions/actionTypes";
 import initialState from "./initialState";
+import { toast } from "react-toastify";
 
 export default function sessionReducer(
   userSession = initialState.session || {},

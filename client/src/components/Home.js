@@ -38,7 +38,6 @@ function Home({
         setLoad(false);
       }
       if (lengthToSend - 10 > 0) {
-        debugger;
         loadMore(lengthToSend - 10, inputText, categoryFilter).catch(
           (error) => {
             alert("loading posts failed " + error);
@@ -52,13 +51,11 @@ function Home({
   function getLength() {
     if (isLoading) return;
     if (length === 0) {
-      debugger;
       loadLength(inputText, categoryFilter).catch((error) => {
         alert("loading length failed" + error);
       });
     }
     if (posts.length === 0 && length !== 0) {
-      debugger;
       loadMore(length, inputText, categoryFilter).catch((error) => {
         alert("loading posts failed " + error);
       });
@@ -70,7 +67,6 @@ function Home({
   }, []);
 
   useEffect(() => {
-    debugger;
     setLoading(false);
   }, [loaded]);
 
@@ -79,7 +75,6 @@ function Home({
   }, [isLoading]);
 
   useEffect(() => {
-    debugger;
     setLoading(true);
     clearPosts();
     setLength(0);
@@ -136,7 +131,7 @@ function Home({
             loader={<Spinner />}
             endMessage={
               <h3 className="text-center" style={{ color: "white" }}>
-                There are no more posts to show
+                Daugiau nebėra skelbimų, kuriuos galėtume parodyti...
               </h3>
             }
           >

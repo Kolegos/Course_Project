@@ -3,62 +3,43 @@ import { connect } from "react-redux";
 import * as sessionActions from "../../redux/actions/sessionActions";
 import * as sessionTypes from "../../redux/actions/actionTypes";
 import { history } from "../../redux/history";
+import { toast } from "react-toastify";
 
-const Login = ({ authenticateUser, authenticated }) => {
+const Login = ({ authenticateUser, authenticated, user }) => {
   useEffect(() => {
-    if (authenticated === sessionTypes.AUTHENTICATED)
+    if (authenticated === sessionTypes.AUTHENTICATED) {
+      toast.success(`Sveiki, ${user}`);
       history.push("/profilePage");
-  });
+    }
+  }, [user]);
 
   return (
     <div id="container-wrapper" className="container-wrapper">
       <div id="container-inner" className="container-inner small">
         <form onSubmit={authenticateUser}>
-          <h3>Login</h3>
+          <h3>Prisijungti</h3>
           <div className="form-group">
-            <label>Email address</label>
+            <label>El. pašto adresas</label>
             <input
               type="email"
               name="email"
               className="form-control"
-              placeholder="Enter email"
+              placeholder="Įveskite el. pašto adresą"
             />
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label>Slaptažodis</label>
             <input
               type="password"
               name="password"
               className="form-control"
-              placeholder="Enter password"
+              placeholder="Įveskite slaptažodį"
             />
           </div>
-          <div>
-            {authenticated === sessionTypes.NOT_AUTHENTICATED ? (
-              <p> Login incorrect </p>
-            ) : null}
-          </div>
-
-          <div className="form-group">
-            <div className="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-              />
-              <label className="custom-control-label" htmlFor="customCheck1">
-                Remember me
-              </label>
-            </div>
-          </div>
-
           <button type="submit" className="btn btn-primary btn-block">
-            Submit
+            Prisijungti
           </button>
-          <p className="forgot-password text-right">
-            Forgot <a href="/forgotpassword">password?</a>
-          </p>
         </form>
       </div>
     </div>
@@ -67,6 +48,7 @@ const Login = ({ authenticateUser, authenticated }) => {
 
 const mapStateToProps = ({ sessions }) => ({
   authenticated: sessions !== undefined ? sessions.authenticated : null,
+  user: sessions && sessions.user ? sessions.user.firstName : null,
 });
 
 const mapDispatchToProps = (dispatch) => ({
