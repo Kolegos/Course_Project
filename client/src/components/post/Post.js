@@ -108,52 +108,52 @@ function Post({
               <img
                 style={{ width: 256 }}
                 src={
-                  owner && owner.profilePicture
-                    ? owner.profilePicture
+                  owner.users && owner.users.profilePicture
+                    ? owner.users.profilePicture
                     : "https://baltmodus.lt/wp-content/uploads/2018/08/profile-icon-empty.png"
                 }
                 className="img-fluid img-thumbnail"
                 alt="ProfilePicture"
               />
             </div>
-          </div>
-          <div className="col col-lg">
-            <table>
-              <tbody>
-                <tr>
-                  <th scope="col">
-                    <h5>{post.userId}</h5>
-                  </th>
-                </tr>
-                <tr>
-                  <th scope="col">
-                    <h6>{post.phoneNumber}</h6>
-                  </th>
-                </tr>
-                <tr>
-                  <th scope="col">
-                    <h6>{owner && owner.city ? owner.city : ""}</h6>
-                  </th>
-                </tr>
-                <tr>
-                  <th>
-                    {user ? (
-                      authenticated === types.AUTHENTICATED &&
-                      user.email === post.userId ? (
-                        <button
-                          className="btn btn-secondary btn-block"
-                          onClick={() => {
-                            history.push(`/Edit/${post._id}`);
-                          }}
-                        >
-                          Edit
-                        </button>
-                      ) : null
-                    ) : null}
-                  </th>
-                </tr>
-              </tbody>
-            </table>
+            <div className="col col-lg">
+              <table>
+                <tbody>
+                  <tr>
+                    <th scope="col">
+                      <h5>{post.userId}</h5>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">
+                      <h6>{post.phoneNumber}</h6>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th scope="col">
+                      <h6>{owner && owner.city ? owner.city : ""}</h6>
+                    </th>
+                  </tr>
+                  <tr>
+                    <th>
+                      {user ? (
+                        authenticated === types.AUTHENTICATED &&
+                        user.email === post.userId ? (
+                          <button
+                            className="btn btn-secondary btn-block"
+                            onClick={() => {
+                              history.push(`/Edit/${post._id}`);
+                            }}
+                          >
+                            Edit
+                          </button>
+                        ) : null
+                      ) : null}
+                    </th>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div className="row">
