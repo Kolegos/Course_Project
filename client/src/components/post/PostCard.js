@@ -49,7 +49,7 @@ const PostCard = (props) => {
       </p>
       <div style={{ height: 77 }}>
         <h6>{props.post.price} €</h6>
-        <p>{props.post.category}</p>
+        <p>{props.post.categoryObj[0].name}</p>
       </div>
     </div>
   );

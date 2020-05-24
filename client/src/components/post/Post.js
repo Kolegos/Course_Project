@@ -97,7 +97,7 @@ function Post({
               <div className="card-body">
                 <div className="row">
                   <h4 className="card-title mr-4">{post.title}</h4>
-                  <p className="text-muted">{post.category}</p>
+                  <p className="text-muted">{post.categoryObj[0].name}</p>
                 </div>
                 <p className="card-text lead">{post.description}</p>
               </div>
