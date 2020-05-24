@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const path = require("path");
 const { connectDB } = require("./database/connect-db");
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const {
   authenticationRoute,
   authenticateToken,
@@ -195,6 +196,42 @@ async function getMorePosts(number, search, category) {
             category: { $regex: category },
           },
         },
+        {
+          $project: {
+            features: 1,
+            photos: 1,
+            userId: 1,
+            title: 1,
+            price: 1,
+            phoneNumber: 1,
+            description: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            category: { $toObjectId: "$category" },
+          },
+        },
+        {
+          $lookup: {
+            from: "categories",
+            let: { id: "$category" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [{ $eq: ["$_id", "$$id"] }],
+                  },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  name: 1,
+                },
+              },
+            ],
+            as: "categoryObj",
+          },
+        },
         { $sort: { updatedAt: 1 } },
         { $limit: parseInt(number) }, //mazinant sita imi sekancius elementus nuo virsaus
         { $sort: { updatedAt: -1 } },
@@ -257,13 +294,55 @@ app.post("/api/userPosts", (req, res) => {
     res.send(posts);
   });
 });
-app.get("/api/posts/getOne", (req, res) => {
-  Post.find({ _id: req.query.id }).exec((err, post) => {
-    if (err) {
-      return console.log(err);
-    }
+app.get("/api/posts/getOne", async (req, res) => {
+  try {
+    let db = await connectDB();
+    let post = await db
+      .collection("posts")
+      .aggregate([
+        { $match: { _id: ObjectId(req.query.id) } },
+        {
+          $project: {
+            features: 1,
+            photos: 1,
+            userId: 1,
+            title: 1,
+            price: 1,
+            phoneNumber: 1,
+            description: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            category: { $toObjectId: "$category" },
+          },
+        },
+        {
+          $lookup: {
+            from: "categories",
+            let: { id: "$category" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [{ $eq: ["$_id", "$$id"] }],
+                  },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  name: 1,
+                },
+              },
+            ],
+            as: "categoryObj",
+          },
+        },
+      ])
+      .toArray();
     res.send(post);
-  });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 app.get("/api/posts/", (req, res) => {
