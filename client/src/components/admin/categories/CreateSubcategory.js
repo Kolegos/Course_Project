@@ -34,7 +34,9 @@ const CreateSubcategory = ({
 
   function getFeaturesFromParent(name) {
     categories.map((category) => {
-      if (category.category === name) setFeaturesFromParent(category.features);
+      if (category._id === name) {
+        setFeaturesFromParent(category.features);
+      }
     });
   }
 
@@ -70,6 +72,7 @@ const CreateSubcategory = ({
     event.preventDefault();
     newCategory.features = featuresFromParent.concat(features);
     newCategory.parent = id === "" ? "" : `/${id}/`;
+    console.log(newCategory.parent, id, "aass");
     addCategory(newCategory).catch((error) => {
       console.log(error + "was not able to add category");
     });

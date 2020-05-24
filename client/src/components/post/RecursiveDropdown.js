@@ -46,7 +46,7 @@ const RecursiveDropdown = ({ parent, categories, dispatch }) => {
           {categories.map((category) => {
             if (category.parent.match(parent)) {
               return (
-                <option key={category.category} value={category.category}>
+                <option key={category._id} value={category._id}>
                   {category.name}
                 </option>
               );

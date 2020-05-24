@@ -56,13 +56,13 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
                   items={images}
                 />
               ) : (
-                <h1>There are no images :(</h1>
+                <h1>Nėra nuotraukų</h1>
               )}
               <table className="table table-striped table-borderless">
                 <tbody>
                   <tr>
                     <th scope="col">
-                      <h4>Title</h4>
+                      <h4>Pavadinimas</h4>
                     </th>
                     <th scope="col">
                       <h4 align="right">
@@ -76,7 +76,7 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
                   </tr>
                   <tr>
                     <th scope="col">
-                      <h4>Price</h4>
+                      <h4>Kaina</h4>
                     </th>
                     <th scope="col">
                       <h4 align="right">
@@ -91,7 +91,7 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
                   </tr>
                   <tr>
                     <th scope="col">
-                      <h4>Phone number</h4>
+                      <h4>Telefono numeris</h4>
                     </th>
                     <th scope="col">
                       <h4 align="right">
@@ -105,7 +105,7 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
                   </tr>
                   <tr>
                     <th scope="col">
-                      <h4>Category</h4>
+                      <h4>Kategorija</h4>
                     </th>
                     <th scope="col">
                       <h4 align="right">
@@ -121,7 +121,7 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
                   </tr>
                   <tr>
                     <th scope="col">
-                      <h4>Description</h4>
+                      <h4>Aprašymas</h4>
                     </th>
                     <th scope="col">
                       <h4 align="right">
@@ -138,7 +138,7 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
                 </tbody>
               </table>
             </div>
-            <button className="btn btn-secondary btn-block">Save</button>
+            <button className="btn btn-secondary btn-block">Išsaugoti</button>
           </div>
         </div>
       </form>

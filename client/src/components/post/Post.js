@@ -67,7 +67,7 @@ function Post({
                 items={images}
               />
             ) : (
-              <h1>There are no images :(</h1>
+              <h1>Nėra nuotraukų</h1>
             )}
           </div>
           <div className="col-lg-4">
@@ -75,7 +75,7 @@ function Post({
               <tbody>
                 <tr>
                   <th scope="col">
-                    <h4>Price</h4>
+                    <h4>Kaina</h4>
                   </th>
                   <th scope="col">
                     <h4 align="right">{post.price} €</h4>
@@ -145,7 +145,7 @@ function Post({
                               history.push(`/Edit/${post._id}`);
                             }}
                           >
-                            Edit
+                            Redaguoti
                           </button>
                         ) : null
                       ) : null}

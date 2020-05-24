@@ -26,58 +26,55 @@ const SignUp = ({ createUser, created, authenticated }) => {
       <div id="container-inner" className="container-inner small">
         <div>
           <form onSubmit={createUser}>
-            <h3>Sign Up</h3>
+            <h3>Užsiregistruoti</h3>
             <div className="form-group">
-              <label>First name</label>
+              <label>Vardas</label>
               <input
                 required={true}
                 type="text"
                 name="firstName"
                 className="form-control"
-                placeholder="First name"
+                placeholder="Vardas"
               />
             </div>
 
             <div className="form-group">
-              <label>Last name</label>
+              <label>Pavardė</label>
               <input
                 required={true}
                 type="text"
                 name="lastName"
                 className="form-control"
-                placeholder="Last name"
+                placeholder="Pavardė"
               />
             </div>
 
             <div className="form-group">
-              <label>Email address</label>
+              <label>El. pašto adresas</label>
               <input
                 required={true}
                 type="email"
                 name="email"
                 className="form-control"
-                placeholder="Enter email"
+                placeholder="El. paštas"
               />
             </div>
 
             <div className="form-group">
-              <label>Password</label>
+              <label>Slaptažodis</label>
               <input
                 required={true}
                 type="password"
                 name="password"
                 className="form-control"
-                placeholder="Enter password"
+                placeholder="Slaptažodis"
               />
             </div>
 
             <button type="submit" className="btn btn-primary btn-block">
-              Sign Up
+              Užsiregistruoti
             </button>
-            <p className="forgot-password text-right">
-              Already registered <a href="/login">sign in?</a>
-            </p>
-          </form>{" "}
+          </form>
         </div>
       </div>
     </div>

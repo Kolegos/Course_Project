@@ -1,5 +1,6 @@
 import * as types from "./actionTypes";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const url =
   process.env.NODE_ENV === `production` ? `` : "http://localhost:5000/api";
@@ -18,7 +19,7 @@ export function authenticateUser(email, password) {
       })
       .catch((error) => {
         if (error.response) {
-          console.log("Can't authenticate");
+          toast.error("Neteisingi prisijungimo duomenys");
           dispatch(processAuthenticateUser(types.NOT_AUTHENTICATED));
         }
       });

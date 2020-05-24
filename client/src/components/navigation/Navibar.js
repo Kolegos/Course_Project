@@ -52,30 +52,27 @@ class Navibar extends React.Component {
 
         <div className={`${classOne}`} id="navbarResponsive">
           <ul className="navbar-nav ml-auto">
-            <NavItem path="/" name="Home" />
+            <NavItem path="/" name="Pagrindinis" />
             {this.props.authenticated === types.NOT_AUTHENTICATED ? (
               <>
-                <NavItem path="/login" name="Login" />
-                <NavItem path="/signup" name="Sign up" />
+                <NavItem path="/login" name="Prisijungti" />
+                <NavItem path="/signup" name="Užsiregistruoti" />
               </>
             ) : null}
             {this.props.email === "admin@kolegos.lt" ? (
-              <NavItem path="/admin" name="Admin" />
+              <NavItem path="/admin" name="Admino sekcija" />
             ) : null}
             {this.props.authenticated === types.AUTHENTICATED ? (
               <NavDropDown name={this.props.email}>
                 <a className="dropdown-item" href="/YourPosts">
-                  Your posts
-                </a>
-                <a className="dropdown-item" href="/">
-                  Comments
+                  Jūsų skelbimai
                 </a>
                 <div className="dropdown-divider"></div>
                 <a className="dropdown-item" href="/profilePage">
-                  Personal information
+                  Jūsų profilis
                 </a>
                 <a className="dropdown-item" href="/Page">
-                  Add post
+                  Pridėti naują skelbimą
                 </a>
                 <p
                   onClick={() => {
@@ -85,7 +82,7 @@ class Navibar extends React.Component {
                   className="dropdown-item my-0"
                   style={{ cursor: "pointer" }}
                 >
-                  Logout
+                  Atsijungti
                 </p>
               </NavDropDown>
             ) : null}

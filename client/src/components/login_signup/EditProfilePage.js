@@ -36,7 +36,7 @@ const EditProfilePage = ({ user = null, editUser }) => {
                 <tbody>
                   <tr>
                     <th scope="col" style={{ width: "80%" }}>
-                      First Name
+                      Vardas
                     </th>
                     <th scope="col" style={{ width: "20%" }}>
                       <input
@@ -49,7 +49,7 @@ const EditProfilePage = ({ user = null, editUser }) => {
                   </tr>
                   <tr>
                     <th scope="col" style={{ width: "80%" }}>
-                      Last Name
+                      Pavardė
                     </th>
                     <th scope="col" style={{ width: "20%" }}>
                       <input
@@ -62,7 +62,7 @@ const EditProfilePage = ({ user = null, editUser }) => {
 
                   <tr>
                     <th scope="col" style={{ width: "80%" }}>
-                      City
+                      Miestas
                     </th>
                     <th scope="col" style={{ width: "20%" }}>
                       <input
@@ -74,7 +74,7 @@ const EditProfilePage = ({ user = null, editUser }) => {
                   </tr>
                   <tr>
                     <th scope="col" style={{ width: "80%" }}>
-                      Phone number
+                      Telefono numeris
                     </th>
                     <th scope="col" style={{ width: "20%" }}>
                       <input
@@ -115,7 +115,7 @@ const EditProfilePage = ({ user = null, editUser }) => {
             className="btn btn-secondary btn-block"
             disabled={isloadedProfilePicture && isloadedProfilePicture2}
           >
-            Save
+            Išsaugoti
           </button>
         </form>
       </div>

@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import * as categoriesActions from "../../../redux/actions/categoriesActions";
 import { Link } from "react-router-dom";
 
-const Categories = ({ loadCategories, deleteCategory, categories = [] }) => {
+const Categories = ({ loadCategories, categories = [] }) => {
   useEffect(() => {
     if (categories.length === 0) {
       loadCategoriesFromDB();
@@ -32,11 +32,9 @@ const Categories = ({ loadCategories, deleteCategory, categories = [] }) => {
                     return <li key={feature}>{feature}</li>;
                   })}
                 </ol>
-                <RecursiveComponent parent={`^/${category.category}`} />
+                <RecursiveComponent parent={`^/${category._id}`} />
                 <Link
-                  to={
-                    "/admin/categories/createSubcategory/" + category.category
-                  }
+                  to={"/admin/categories/createSubcategory/" + category._id}
                 >
                   Create Subcategory of {category.category}
                 </Link>
@@ -54,7 +52,7 @@ const Categories = ({ loadCategories, deleteCategory, categories = [] }) => {
     <div id="container-wrapper" className="container-wrapper">
       <div id="container-inner" className="container-inner">
         <ul>
-          <RecursiveComponent parent="^(?![\s\S])" />{" "}
+          <RecursiveComponent parent="^(?![\s\S])" />
           <Link to={"/admin/categories/createSubcategory/"}>
             Create Category
           </Link>
