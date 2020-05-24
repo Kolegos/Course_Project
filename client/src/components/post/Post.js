@@ -110,7 +110,7 @@ function Post({
               </div>
             </div>
           </div>
-          <div className="row">
+          <div className="row ml-1">
             <div className="col-lg">
               <img
                 style={{ width: 256 }}
@@ -163,7 +163,7 @@ function Post({
             </div>
           </div>
         </div>
-        <div className="container-wrapper">
+        <div className="container-wrapper mt-3">
           <div className="container-inner">
             <form onSubmit={(e) => addNewComment(e, post, user)}>
               <h2>Komentarai</h2>
