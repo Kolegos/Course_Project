@@ -5,7 +5,7 @@ export default function commentsReducer(state = [], action) {
     case types.LOAD_COMMENTS:
       return { ...state, comment: action.comments.data };
     case types.ADD_COMMENT:
-      return { ...state, newcomment: action.comments.data };
+      return { ...state, newcomment: action.data };
     default:
       return state;
   }

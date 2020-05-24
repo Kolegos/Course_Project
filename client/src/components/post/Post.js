@@ -163,55 +163,60 @@ function Post({
             </div>
           </div>
         </div>
-
-        <div className="row">
-          <form onSubmit={(e) => addNewComment(e, post, user)}>
-            <table className="table table-striped table-borderless">
-              <tbody>
-                <tr>
-                  <th scope="col">
-                    <div>Komentarai</div>
-                  </th>
-                </tr>
-
-                {comments ? (
-                  comments.map((comment) => {
-                    return (
-                      <tr>
-                        <th>{comment.UserID}</th>
-                        <th>{comment.Comment}</th>
-                      </tr>
-                    );
-                  })
-                ) : (
-                  <th>Komentarų nėra</th>
-                )}
-
-                {authenticated === types.AUTHENTICATED ? (
+        <div className="container-wrapper">
+          <div className="container-inner">
+            <form onSubmit={(e) => addNewComment(e, post, user)}>
+              <h2>Komentarai</h2>
+              {authenticated === types.AUTHENTICATED ? (
+                <div>
                   <div>
-                    <th>
-                      <textarea name="comment"></textarea>
-                    </th>
-                    <th>
-                      <button>Skelbti komentarą</button>
-                    </th>
+                    <textarea
+                      className="overflow-auto col-8"
+                      style={{ height: 100, width: 800 }}
+                      name="comment"
+                    ></textarea>
                   </div>
-                ) : null}
-              </tbody>
-            </table>
+                  <button className="btn btn-primary mb-5">
+                    Skelbti komentarą
+                  </button>
+                </div>
+              ) : null}
 
-            <div className="col col-lg">
+              {comments && comments.length !== 0 ? (
+                comments.map((comment) => {
+                  return (
+                    <div key={comment._id} className="popout">
+                      <div className="col col-lg-8 ml-0 pl-0 ">
+                        <div className="card bg-light mb-3 card border-light mb-3">
+                          <div className="card-body">
+                            <h4 className="card-title mr-4">
+                              {comment.UserID}
+                            </h4>
+
+                            <p className="card-text lead">{comment.Comment}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div>Komentarų nėra</div>
+              )}
+
               <div className="col col-lg">
-                <h3>
-                  Kolegos
-                  <small className="text-muted">
-                    {" "}
-                    geriausias skelbimų portalas
-                  </small>
-                </h3>
+                <div className="col col-lg">
+                  <h3>
+                    Kolegos
+                    <small className="text-muted">
+                      {" "}
+                      geriausias skelbimų portalas
+                    </small>
+                  </h3>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -242,7 +247,6 @@ function mapDispatchToProps(dispatch) {
     cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
     LoadComments: bindActionCreators(commentActions.LoadComments, dispatch),
     addNewComment(e, post, user) {
-      console.log("labas");
       e.preventDefault();
       let Comment = e.target[`comment`].value;
       let UserID = user._id;
