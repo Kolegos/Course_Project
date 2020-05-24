@@ -50,6 +50,29 @@ addNewPost = async (post) => {
     console.log(error);
   }
 };
+const Comment = require("./models/comment");
+
+app.post("/api/comments/add", (req, res) => {
+  console.log("labas");
+  const comment = new Comment(req.body).save().then((comment) => {
+    res.send(comment);
+  });
+});
+
+app.get("/api/comments/", (req, res) => {
+  /*com = {
+    PostID: req.query.PostID,
+    UserID: "edga@gmail.com",
+    Comment: "geras",
+  };
+  addNewComment(com);*/
+  //console.log(req.query.PostID);
+  Comment.find({ PostID: req.query.PostID }).exec((err, comments) => {
+    if (err) return console.log(err);
+    //console.log(comments);
+    res.send(comments);
+  });
+});
 
 const User = require("./models/user");
 

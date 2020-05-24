@@ -6,6 +6,7 @@ import Spinner from "../misc/Spinner";
 import ImageGallery from "react-image-gallery";
 import { history } from "../../redux/history";
 import * as types from "../../redux/actions/actionTypes";
+import * as commentActions from "../../redux/actions/commentActions";
 
 function Post({
   loadOnePost,
@@ -15,14 +16,20 @@ function Post({
   authenticated,
   user,
   owner,
+  comments = null,
+  LoadComments,
+  addNewComment,
 }) {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
     window.onpopstate = (e) => {
-      debugger;
       cleanOnePost();
     };
+  });
+
+  useEffect(() => {
+    if (post !== null) LoadComments(post._id);
   });
 
   useEffect(() => {
@@ -156,18 +163,55 @@ function Post({
             </div>
           </div>
         </div>
+
         <div className="row">
-          <div className="col col-lg">
+          <form onSubmit={(e) => addNewComment(e, post, user)}>
+            <table className="table table-striped table-borderless">
+              <tbody>
+                <tr>
+                  <th scope="col">
+                    <div>Komentarai</div>
+                  </th>
+                </tr>
+
+                {comments ? (
+                  comments.map((comment) => {
+                    return (
+                      <tr>
+                        <th>{comment.UserID}</th>
+                        <th>{comment.Comment}</th>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <th>Komentarų nėra</th>
+                )}
+
+                {authenticated === types.AUTHENTICATED ? (
+                  <div>
+                    <th>
+                      <textarea name="comment"></textarea>
+                    </th>
+                    <th>
+                      <button>Skelbti komentarą</button>
+                    </th>
+                  </div>
+                ) : null}
+              </tbody>
+            </table>
+
             <div className="col col-lg">
-              <h3>
-                Kolegos
-                <small className="text-muted">
-                  {" "}
-                  geriausias skelbimų portalas
-                </small>
-              </h3>
+              <div className="col col-lg">
+                <h3>
+                  Kolegos
+                  <small className="text-muted">
+                    {" "}
+                    geriausias skelbimų portalas
+                  </small>
+                </h3>
+              </div>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -180,6 +224,7 @@ function mapStateToProps(state, ownProps) {
   const authenticated = state.sessions.authenticated;
   const user = state.sessions.user;
   const owner = state.users ? state.users : null;
+  const comments = state.comments.comment;
 
   return {
     id,
@@ -187,6 +232,7 @@ function mapStateToProps(state, ownProps) {
     authenticated,
     user,
     owner,
+    comments,
   };
 }
 
@@ -194,6 +240,22 @@ function mapDispatchToProps(dispatch) {
   return {
     loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
     cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
+    LoadComments: bindActionCreators(commentActions.LoadComments, dispatch),
+    addNewComment(e, post, user) {
+      console.log("labas");
+      e.preventDefault();
+      let Comment = e.target[`comment`].value;
+      let UserID = user._id;
+      let PostID = post._id;
+      e.target[`comment`].value = "";
+
+      const comment = {
+        Comment,
+        UserID,
+        PostID,
+      };
+      dispatch(commentActions.addNewComment(comment));
+    },
   };
 }
 

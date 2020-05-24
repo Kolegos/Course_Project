@@ -5,6 +5,7 @@ import users from "./userReducer";
 import posts2 from "./postReducer2";
 import categories from "./categoriesReducer";
 import features from "./featuresReducer";
+import comments from "./commentReducer";
 
 const rootReducer = combineReducers({
   posts,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   users,
   categories,
   features,
+  comments,
 });
 
 export default rootReducer;
