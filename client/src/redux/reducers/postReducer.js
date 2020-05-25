@@ -1,4 +1,5 @@
 import * as types from "../actions/actionTypes";
+import { toast } from "react-toastify";
 
 export default function postReducer(state = [], action) {
   switch (action.type) {
@@ -28,19 +29,10 @@ export default function postReducer(state = [], action) {
     case types.LOAD_USER_POSTS_FAILED:
       return { ...state, posts: types.LOAD_USER_POSTS_FAILED };
     case types.EDIT_POST:
+      toast.success("Skelbimo redagavimas išsaugotas");
       return {
         ...state,
-        onePost: {
-          ...state.post,
-          userId: action.post.userId,
-          title: action.post.title,
-          category: action.post.category,
-          features: action.post.features,
-          description: action.post.description,
-          photos: action.post.photos,
-          phoneNumber: action.post.phoneNumber,
-          price: action.post.price,
-        },
+        onePost: null,
       };
     case types.SEARCH_POSTS_SUCCESS:
       return { ...state, postsFromSearch: action.posts.data };
