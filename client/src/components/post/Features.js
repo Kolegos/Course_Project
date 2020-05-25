@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { updateFeatures } from "../../redux/actions/featuresActions";
 import { InputRow } from "./PostForm";
 
-const Features = ({ features, features2, dispatch }) => {
+const Features = ({ features, features2, dispatch, value = null }) => {
   const [selectedFeatures, setFeatures] = useState(
     features.map((feature) => {
       return {
@@ -13,8 +13,11 @@ const Features = ({ features, features2, dispatch }) => {
     })
   );
 
+  const [defaultValue, setDefaultValue] = useState(value);
+
   useEffect(() => {
-    dispatch(updateFeatures(selectedFeatures));
+    if (value) dispatch(updateFeatures(value));
+    else dispatch(updateFeatures(selectedFeatures));
   }, []);
 
   function handleChange(event, index) {
@@ -25,17 +28,18 @@ const Features = ({ features, features2, dispatch }) => {
     dispatch(updateFeatures(features));
   }
 
-  return features.map((feature, index) => {
+  return features2.map((feature, index) => {
     return (
       <InputRow
         key={index}
-        name={feature}
+        name={feature.feature}
         input={
           <input
             type="text"
-            placeholder={feature}
-            name={feature}
+            placeholder={feature.feature}
+            name={feature.feature}
             className="form-control"
+            value={feature.value}
             onChange={(e) => handleChange(e, index)}
             required
           />

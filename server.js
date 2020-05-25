@@ -249,7 +249,7 @@ async function getMorePosts(number, search, category) {
 const Post = require("./models/post");
 
 app.post(`/api/Edit`, (req, res) => {
-  Post.findById({ _id: req.body._id }, function (err, foundObject) {
+  Post.findById({ _id: req.body.id }, function (err, foundObject) {
     if (err) {
       console.log(err);
       res.status(500).send();
@@ -266,11 +266,8 @@ app.post(`/api/Edit`, (req, res) => {
         if (req.body.price) {
           foundObject.price = req.body.price;
         }
-        if (req.body.category) {
-          foundObject.category = req.body.category;
-        }
-        if (req.body.phoneNumber) {
-          foundObject.phoneNumber = req.body.phoneNumber;
+        if (req.body.features) {
+          foundObject.features = req.body.features;
         }
 
         foundObject.save(function (err, updatedObject) {

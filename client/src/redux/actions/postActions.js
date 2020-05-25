@@ -52,7 +52,7 @@ export function editPostSuccess(post) {
 
   return {
     type: types.EDIT_POST,
-    post: post,
+    post: null,
   };
 }
 
@@ -60,7 +60,6 @@ export function editPost(post) {
   return function (dispatch) {
     axios.post(url + "/Edit", post).then((response) => {
       if (response.status === 200) {
-        //console.log(response.data);
         dispatch(editPostSuccess(response.data));
       }
     });

@@ -3,34 +3,67 @@ import { connect } from "react-redux";
 import * as postActions from "../../redux/actions/postActions";
 import { bindActionCreators } from "redux";
 import Spinner from "../misc/Spinner";
-import ImageGallery from "react-image-gallery";
+import Features from "./Features";
+import { loadCategories } from "../../redux/actions/categoriesActions";
 
-function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
+export const InputRow = ({ name, input }) => {
+  return (
+    <tr>
+      <td className="text-right pt-2" style={{ maxWidth: 200, minWidth: 100 }}>
+        <h5>{name}</h5>
+      </td>
+      <td>
+        <div
+          style={{ maxWidth: 450, minWidth: 300 }}
+          className="row justify-content-start ml-0"
+        >
+          {input}
+        </div>
+      </td>
+    </tr>
+  );
+};
+
+function EditPost({
+  loadOnePost,
+  cleanOnePost,
+  loadCats,
+  id,
+  post = null,
+  editPost,
+  selectedCategory,
+  selectedFeatures,
+  user,
+  categories,
+}) {
   const [images, setImages] = useState([]);
+
+  const [getTitle, setTitle] = useState("");
+  const [getDescription, setDescription] = useState("");
+  const [getPrice, setPrice] = useState("");
+  const [isLoading, setLoading] = useState(false);
+
   useEffect(() => {
     window.onpopstate = (e) => {
       cleanOnePost();
     };
-  });
+  }, []);
 
   useEffect(() => {
     if (post === null) {
-      loadOnePost(id)
-        .catch((error) => {
-          alert("loading post failed " + error);
-        })
-        .then();
-    }
-    if (post !== null && post.photos.length !== 0 && images.length === 0) {
-      let photos = [];
-      post.photos.map((photo) => {
-        photos.push({ original: photo, thumbnail: photo });
-        return 0;
+      loadOnePost(id).catch((error) => {
+        alert("loading post failed " + error);
       });
-      setImages(photos);
-      //$("input-2").fileinput();
     }
-  }, [post, images.length, loadOnePost, id]);
+    if (post !== null) {
+      loadCats().catch((error) => {
+        console.log(error + "Loading categories failed");
+      });
+      setTitle(post.title);
+      setDescription(post.description);
+      setPrice(post.price);
+    }
+  }, [post]);
 
   function handleLoad(e) {
     e.preventDefault();
@@ -39,109 +72,95 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
   return post === null ? (
     <Spinner />
   ) : (
-    <div>
-      <form onSubmit={(e) => editPost(e, id)}>
-        <div id="container-wrapper" className="container-wrapper">
-          <div id="container-inner" className="container-inner">
-            <div>
-              {images.length !== 0 ? (
-                <ImageGallery
-                  slideOnThumbnailOver={false}
-                  onImageLoad={handleLoad}
-                  onErrorImageURL="https://i.kym-cdn.com/entries/icons/facebook/000/000/091/TrollFace.jpg"
-                  useBrowserFullscreen={false}
-                  lazyLoad={true}
-                  thumbnailPosition="bottom"
-                  showPlayButton={false}
-                  items={images}
-                />
-              ) : (
-                <h1>Nėra nuotraukų</h1>
-              )}
-              <table className="table table-striped table-borderless">
-                <tbody>
-                  <tr>
-                    <th scope="col">
-                      <h4>Pavadinimas</h4>
-                    </th>
-                    <th scope="col">
-                      <h4 align="right">
-                        <input
-                          type="text"
-                          defaultValue={post.title}
-                          name="postTitle"
-                        ></input>
-                      </h4>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">
-                      <h4>Kaina</h4>
-                    </th>
-                    <th scope="col">
-                      <h4 align="right">
-                        <input
-                          type="number"
-                          defaultValue={post.price}
-                          name="postPrice"
-                        ></input>
-                        €
-                      </h4>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">
-                      <h4>Telefono numeris</h4>
-                    </th>
-                    <th scope="col">
-                      <h4 align="right">
-                        <input
-                          type="text"
-                          defaultValue={post.phoneNumber}
-                          name="postPhoneNumber"
-                        ></input>
-                      </h4>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">
-                      <h4>Kategorija</h4>
-                    </th>
-                    <th scope="col">
-                      <h4 align="right">
-                        <input
-                          rows="10"
-                          cols="40"
-                          type="text"
-                          defaultValue={post.category}
-                          name="postCategory"
-                        ></input>
-                      </h4>
-                    </th>
-                  </tr>
-                  <tr>
-                    <th scope="col">
-                      <h4>Aprašymas</h4>
-                    </th>
-                    <th scope="col">
-                      <h4 align="right">
-                        <textarea
-                          rows="10"
-                          cols="40"
-                          type="text"
-                          defaultValue={post.description}
-                          name="postDescription"
-                        ></textarea>
-                      </h4>
-                    </th>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <button className="btn btn-secondary btn-block">Išsaugoti</button>
+    <div className="container-wrapper">
+      <div className="container-inner">
+        <div className="container">
+          <h1 className="row justify-content-center">Redaguoti skelbimą</h1>
+          <table className="table table-borderless table-sm">
+            <tbody>
+              <InputRow
+                name="Pavadinimas "
+                input={
+                  <input
+                    required
+                    type="text"
+                    className="form-control"
+                    value={getTitle}
+                    onChange={(e) => {
+                      setTitle(e.target.value);
+                    }}
+                    placeholder="Įveskite pavadinimą"
+                  />
+                }
+              />
+              <InputRow
+                name="Aprašymas "
+                input={
+                  <textarea
+                    required
+                    rows="5"
+                    className="form-control"
+                    value={getDescription}
+                    onChange={(e) => {
+                      setDescription(e.target.value);
+                    }}
+                    cols="28"
+                    placeholder="Įveskite aprašymą"
+                  />
+                }
+              />
+              <InputRow
+                name="Kaina "
+                input={
+                  <input
+                    required
+                    type="text"
+                    className="form-control"
+                    value={getPrice}
+                    onChange={(e) => {
+                      setPrice(e.target.value);
+                    }}
+                    placeholder="Įveskite kainą eurais"
+                  />
+                }
+              />
+              {typeof categories === "undefined"
+                ? null
+                : categories.map((category, index) => {
+                    if (category._id === selectedCategory) {
+                      return (
+                        <Features
+                          features={category.features}
+                          key={index}
+                          value={post.features}
+                        />
+                      );
+                    }
+                  })}
+            </tbody>
+          </table>
+          <div>
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <button
+                onClick={() => {
+                  editPost(
+                    post._id,
+                    getTitle,
+                    getDescription,
+                    getPrice,
+                    selectedFeatures
+                  );
+                }}
+                className="mt-4 btn btn-lg btn-primary"
+              >
+                Išsaugoti skelbimą
+              </button>
+            )}
           </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
@@ -149,31 +168,31 @@ function EditPost({ loadOnePost, cleanOnePost, id, post = null, editPost }) {
 function mapStateToProps(state, ownProps) {
   const id = ownProps.match.params.id;
   const post = state.posts.onePost;
+  const defaultUser = {
+    userId: "Undefined",
+  };
 
   return {
     id,
     post,
+    selectedCategory: post ? post.category : null,
+    user: state.sessions.user ? state.sessions.user : defaultUser,
+    categories: state.categories.categories,
+    selectedFeatures: state.features.updatedFeatures,
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
   loadOnePost: bindActionCreators(postActions.loadOnePost, dispatch),
   cleanOnePost: bindActionCreators(postActions.cleanOnePost, dispatch),
-  editPost(e, id) {
-    e.preventDefault();
-    let title = e.target[`postTitle`].value;
-    let description = e.target[`postDescription`].value;
-    let category = e.target[`postCategory`].value;
-    let phoneNumber = e.target[`postPhoneNumber`].value;
-    let price = e.target[`postPrice`].value;
-    let _id = id;
+  loadCats: bindActionCreators(loadCategories, dispatch),
+  editPost(id, title, description, price, features) {
     const editedPost = {
-      _id,
+      id,
       title,
       description,
-      category,
-      phoneNumber,
       price,
+      features,
     };
     dispatch(postActions.editPost(editedPost));
   },
