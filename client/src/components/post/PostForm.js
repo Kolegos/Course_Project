@@ -12,7 +12,7 @@ import Spinner from "../misc/Spinner";
 
 const url =
   process.env.NODE_ENV === `production`
-    ? ``
+    ? `/api/images`
     : "http://localhost:5000/api/images";
 
 export const InputRow = ({ name, input }) => {

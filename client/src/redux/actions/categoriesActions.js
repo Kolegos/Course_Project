@@ -3,7 +3,7 @@ import axios from "axios";
 
 const url =
   process.env.NODE_ENV === `production`
-    ? `/api`
+    ? `/api/categories`
     : "http://localhost:5000/api/categories";
 
 export function loadCategories() {

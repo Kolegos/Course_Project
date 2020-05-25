@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const url =
-  process.env.NODE_ENV === `production` ? `` : "http://localhost:5000/api";
+  process.env.NODE_ENV === `production` ? `/api` : "http://localhost:5000/api";
 
 export function authenticateUser(email, password) {
   return function (dispatch) {

@@ -7,7 +7,7 @@ import ImageUpload from "../misc/ImageUpload";
 
 const url =
   process.env.NODE_ENV === `production`
-    ? ``
+    ? `/api/images`
     : "http://localhost:5000/api/images";
 
 const EditProfilePage = ({ user = null, editUser }) => {
