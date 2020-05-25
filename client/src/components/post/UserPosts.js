@@ -4,14 +4,16 @@ import Spinner from "../misc/Spinner";
 import * as postActions from "../../redux/actions/postActions";
 import PostList from "./PostList";
 
-function UserPosts({ user = null, loadUserPosts, posts = [] }) {
-  useEffect(() => {}, []);
-  return user === null ? (
+function UserPosts({ user = null, loadUserPosts, posts = null }) {
+  useEffect(() => {
+    loadUserPosts(user);
+  }, []);
+
+  return posts === null ? (
     <Spinner />
   ) : (
     <div>
       <form>
-        {loadUserPosts(user)}
         <div>
           {posts.length === 0 ? (
             <div className="container" style={{ color: "white" }}>

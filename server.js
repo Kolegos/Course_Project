@@ -285,14 +285,60 @@ app.post(`/api/Edit`, (req, res) => {
     }
   });
 });
-app.post("/api/userPosts", (req, res) => {
-  Post.find({ userId: req.body._id }).exec((err, posts) => {
-    if (err) {
-      return console.log(err);
-    }
-
+app.post("/api/userPosts", async (req, res) => {
+  try {
+    let db = await connectDB();
+    let posts = await db
+      .collection(`posts`)
+      .aggregate([
+        {
+          $match: {
+            userId: req.body.email,
+          },
+        },
+        {
+          $project: {
+            features: 1,
+            photos: 1,
+            userId: 1,
+            title: 1,
+            price: 1,
+            phoneNumber: 1,
+            description: 1,
+            createdAt: 1,
+            updatedAt: 1,
+            category: { $toObjectId: "$category" },
+          },
+        },
+        {
+          $lookup: {
+            from: "categories",
+            let: { id: "$category" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [{ $eq: ["$_id", "$$id"] }],
+                  },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  name: 1,
+                },
+              },
+            ],
+            as: "categoryObj",
+          },
+        },
+        { $sort: { updatedAt: -1 } },
+      ])
+      .toArray();
     res.send(posts);
-  });
+  } catch (error) {
+    console.log(error);
+  }
 });
 app.get("/api/posts/getOne", async (req, res) => {
   try {
