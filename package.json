@@ -38,7 +38,8 @@
     "url": "^0.11.0"
   },
   "devDependencies": {
-    "concurrently": "^4.1.2"
+    "concurrently": "^4.1.2",
+    "jest": "^27.3.1"
   },
   "scripts": {
     "build": "cd client && npm run build",
@@ -46,6 +47,7 @@
     "heroku-postbuild": "npm run install-client && npm run build",
     "start": "cross-env NODE_ENV=production node server.js",
     "client": "cd client && npm start",
+    "test": "jest",
     "dev": "concurrently -n 'server,client' -c 'red,green'  \"nodemon server.js\" \"npm run client\""
   },
   "repository": {
