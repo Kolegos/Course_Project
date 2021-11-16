@@ -4,7 +4,7 @@
   "description": "Prerequisite node modules (type this in the terminal):  \r npm install bootstrap  \r npm install --save react-router-dom  \r npm install --save react-mdl\r npm install --save react-infinite-scroll-component\r npm install axios\r npm install node-sass",
   "main": "server.js",
   "dependencies": {
-    "aws-sdk": "^2.657.0",
+    "aws-sdk": "^2.814.0",
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
