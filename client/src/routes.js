@@ -13,7 +13,7 @@ import CreateSubcategory from "./components/admin/categories/CreateSubcategory";
 import Home from "./components/Home";
 import PageNotFound from "./components/misc/PageNotFound";
 import PostsPage from "./components/post/Page";
-import Post from "./components/post/Post";
+import PostGuest from "./components/post/PostGuest";
 import { ToastContainer } from "react-toastify";
 import RequireAuth from "./components/login_signup/RequireAuth";
 import EditProfilePage from "./components/login_signup/EditProfilePage";
@@ -22,6 +22,8 @@ import EditPost from "./components/post/EditPost";
 import AdminPanel from "./components/admin/AdminPanel";
 
 import UserPosts from "./components/post/UserPosts";
+import PostLoggedIn from "./components/post/PostLoggedIn";
+import PostAdmin from "./components/post/PostAdmin";
 export default (
   <Router history={history}>
     <App>
@@ -33,7 +35,9 @@ export default (
         <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/profilePage" component={RequireAuth(ProfilePage)} />
         <Route path="/changePassword" component={ChangePassword} />
-        <Route path="/post/:id" component={Post} />
+        <Route path="/post-guest" component={PostGuest} />
+        <Route path="/post-logged-in" component={PostLoggedIn} />
+        <Route path="/post-admin" component={PostAdmin} />
         <Route path="/Edit/:id" component={EditPost} />
         <Route path="/Page" component={PostsPage} />
         <Route
