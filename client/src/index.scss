@@ -216,3 +216,53 @@ html,
     -webkit-transform: scale(1);
   }
 }
+
+.adminhome {
+  border-collapse: separate;
+  border-spacing: 0 5px;
+
+  thead {
+    text-align: center;
+    font-size: 16px;
+  }
+
+  tr {
+    background-color: white;
+  }
+
+  tbody {
+    font-size: 14px;
+    vertical-align: top;
+    .desc {
+      color: #999999;
+      vertical-align: top;
+      text-align: start;
+    }
+    .title {
+      div {
+        display: flex;
+      }
+      span {
+        margin: 4px 8px;
+      }
+    }
+    .cat {
+      color: #999999;
+    }
+    .buttons {
+      a {
+        padding: 4px;
+      }
+    }
+    tr {
+      td {
+        text-align: center;
+        vertical-align: middle;
+      }
+      img {
+        width: 64px;
+        height: 64px;
+      }
+    }
+  }
+}

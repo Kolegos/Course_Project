@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "body-parser": "^1.19.0",
     "bootstrap-fileinput": "^5.0.8",
+    "concurrently": "^4.1.2",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "csprng": "^0.1.2",
@@ -19,11 +20,11 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
+    "mysql": "^2.18.1",
     "mongodb": "^3.5.5",
     "mongoose": "^5.9.6",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
-    "mysql": "^2.18.1",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.2",
     "path": "^0.12.7",
@@ -47,8 +48,7 @@
     "superagent": "^5.2.2",
     "url": "^0.11.0",
     "use-constant": "^1.0.0",
-    "use-debounce": "^3.4.2",
-    "concurrently": "^4.1.2"
+    "use-debounce": "^3.4.2"
   },
   "devDependencies": {
     "concurrently": "^4.1.2"
