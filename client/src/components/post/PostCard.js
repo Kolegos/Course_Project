@@ -9,7 +9,7 @@ const PostCard = (props) => {
       href="/post/"
       className="postcard"
       onClick={() => {
-        history.push(`/post/${props.post._id}`);
+        history.push(`/post-guest`);
       }}
     >
       <div className="img-wrapper">
