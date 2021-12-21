@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
-import 'react-toastify/dist/ReactToastify.css';
-import ImageUpload from '../misc/ImageUpload';
-import Spinner from '../misc/Spinner';
+import React, { Component } from "react";
+import "react-toastify/dist/ReactToastify.css";
+import { history } from "../../redux/history";
+import ImageUpload from "../misc/ImageUpload";
+import Spinner from "../misc/Spinner";
 
 export const InputRow = ({ name, input }) => {
   return (
@@ -25,7 +26,7 @@ class PostAddLoggedIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectValue: '',
+      selectValue: "",
       photos: [],
       selectedFiles: null,
       isLoading: false,
@@ -33,7 +34,7 @@ class PostAddLoggedIn extends Component {
       isTitle: false,
       isDescription: false,
       isPrice: false,
-      categories: [{ _id: 1, name: 'Šaldytuvas' }],
+      categories: [{ _id: 1, name: "Šaldytuvas" }],
       features: [{}],
     };
     this.handleDropdownChange = this.handleDropdownChange.bind(this);
@@ -56,11 +57,15 @@ class PostAddLoggedIn extends Component {
     this.setState({ photos: ph });
   }
 
+  handleSubmit(e) {
+    history.push("/");
+  }
+
   render() {
     return (
       <div id="container-wrapper" className="container-wrapper">
         <div
-          style={{ width: 'auto' }}
+          style={{ width: "auto" }}
           id="container-inner"
           className="container-inner medium"
         >
